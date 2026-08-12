@@ -16,7 +16,8 @@ The release build performs these gates in order:
 4. fail-closed Python dependency license-policy verification and collection;
 5. native redistribution review gate;
 6. PyInstaller onedir build;
-7. fail-closed inventory of every final executable, DLL, and Python extension;
+7. fail-closed inventory of every final executable, DLL, Python extension, and
+   embedded pure-Python module, plus PyInstaller bootloader/archive validation;
 8. frozen-app health/UI smoke test;
 9. NSIS installer and SHA-256 checksum generation.
 
@@ -41,6 +42,22 @@ native-library inventory. It emits `FINAL_BINARY_INVENTORY.json` and copies it,
 the runtime policy, combined runtime notices, and build-tool licenses into the
 installed legal bundle before smoke testing. There is no engineering override
 for an unrecognized final native file.
+
+The same audit parses `EXE-00.toc`, `PYZ-00.toc`, and the actual final
+executable. It requires the embedded archive inventory and PYZ bytes to match
+the controlled build artifacts, matches immutable PE code sections to the
+hash-pinned bootloader in `build-components.json`, and maps every PYZ module to
+the verified runtime archive, application source, or an approved Python wheel
+with a matching `RECORD` hash. It emits `PURE_PYTHON_INVENTORY.json` and
+`EXECUTABLE_PROVENANCE.json`. Setuptools and `_distutils_hack` are intentionally
+excluded from the application as build-only components.
+
+Frontend notices are driven by the production graph returned from the locked
+pnpm installation. `frontend-components.json` approves the exact graph,
+declared licenses, lockfile digest, and license-file hashes. Any new, missing,
+or changed runtime package blocks the frontend production build. The final
+frozen-app audit rechecks the copied policy, exact license directory set, and
+each installed frontend license hash and emits `FRONTEND_BUNDLE_INVENTORY.json`.
 
 An approval is valid only for the wheel directories listed in its approval record. The collector verifies the pinned distribution version, hashes and required markers in every license-evidence file, records a SHA-256 digest for every DLL, copies approved native evidence and required corresponding source into the installed license bundle, and generates `NATIVE_REVIEW_SUMMARY.md`. A dependency update invalidates the approval until its evidence is reviewed again.
 

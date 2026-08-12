@@ -71,7 +71,8 @@ For every external release, retain:
 - the reviewed Python component policy, required Python corresponding source,
   source-availability instructions, and Visual Studio entitlement record;
 - the approved immutable CPython runtime manifest, combined runtime notices,
-  PyInstaller build-component policy, and final frozen native-file inventory;
+  frontend and PyInstaller build-component policies, final frozen native and
+  pure-Python inventories, and executable-provenance report;
 - the configured tile provider's attribution and usage terms; and
 - records showing the origin and review of material newly added to the release;
   and

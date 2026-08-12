@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "status": "approved",
+  "lockfile_sha256": "e8742dfbdd54ccee2bed63eab492663f0f4d85984bd898f2e3385605faf99309",
+  "components": [
+    {"name": "leaflet", "display_name": "Leaflet", "version": "1.9.4", "license": "BSD-2-Clause", "license_file": "LICENSE", "license_sha256": "53e8dc25862014e4324741ca18fbe3611e11d42ef69f59f86ea8c5389647d4cb"},
+    {"name": "lucide-react", "display_name": "Lucide React / Lucide Icons", "version": "1.24.0", "license": "ISC", "license_file": "LICENSE", "license_sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57"},
+    {"name": "react", "display_name": "React", "version": "19.2.7", "license": "MIT", "license_file": "LICENSE", "license_sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"},
+    {"name": "react-dom", "display_name": "React DOM", "version": "19.2.7", "license": "MIT", "license_file": "LICENSE", "license_sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"},
+    {"name": "scheduler", "display_name": "Scheduler", "version": "0.27.0", "license": "MIT", "license_file": "LICENSE", "license_sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"},
+    {"name": "three", "display_name": "three.js", "version": "0.185.1", "license": "MIT", "license_file": "LICENSE", "license_sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"}
+  ]
+}

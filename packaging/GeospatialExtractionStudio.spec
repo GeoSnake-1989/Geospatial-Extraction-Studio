@@ -56,6 +56,8 @@ a = Analysis(
         "pluggy",
         "pytest",
         "Pygments",
+        "setuptools",
+        "_distutils_hack",
         "watchfiles",
         "websockets",
         "yaml",

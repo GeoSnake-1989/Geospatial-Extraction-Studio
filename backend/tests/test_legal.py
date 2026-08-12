@@ -1,3 +1,4 @@
+import json
 import re
 from importlib import metadata
 from pathlib import Path
@@ -165,8 +166,37 @@ def test_source_release_excludes_generated_data_and_package_caches():
 
     assert 'runtime-components.json' in packager
     assert 'build-components.json' in packager
+    assert 'frontend-components.json' in packager
     assert 'prepare-runtime.ps1' in packager
     assert 'audit_frozen_binary.py' in packager
+
+
+def test_frontend_notices_follow_the_locked_approved_production_graph():
+    policy = json.loads(
+        (PROJECT_ROOT / 'packaging' / 'frontend-components.json').read_text(
+            encoding='utf-8'
+        )
+    )
+    assert policy['schema_version'] == 1
+    assert policy['status'] == 'approved'
+    assert len(policy['lockfile_sha256']) == 64
+    assert {item['name'] for item in policy['components']} == {
+        'leaflet',
+        'lucide-react',
+        'react',
+        'react-dom',
+        'scheduler',
+        'three',
+    }
+    assert all(len(item['license_sha256']) == 64 for item in policy['components'])
+
+    collector = (
+        PROJECT_ROOT / 'frontend' / 'scripts' / 'copy-legal-notices.mjs'
+    ).read_text(encoding='utf-8')
+    assert "['list', '--prod', '--depth', 'Infinity', '--json']" in collector
+    assert 'Frontend production graph differs from approved policy' in collector
+    assert 'Frontend lockfile changed without an approved component-policy update' in collector
+    assert 'runtimePackages = [' not in collector
 
 
 def test_custom_tile_configuration_requires_visible_terms():

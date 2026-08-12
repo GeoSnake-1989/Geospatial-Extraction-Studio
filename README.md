@@ -235,11 +235,22 @@ CPython 3.12.13, verifies the archive and combined-license SHA-256 values in
 `packaging/runtime-components.json`, freshly extracts it, and builds from a
 virtual environment tied to that exact runtime. After PyInstaller completes,
 `packaging/audit_frozen_binary.py` inventories every `.exe`, `.dll`, and `.pyd`
-in the finished application. An unrecognized file, a missing pinned runtime
-DLL, or a changed binary hash blocks smoke testing and installer publication.
-The installed legal bundle includes `FINAL_BINARY_INVENTORY.json`, the runtime
-policy, the complete runtime notices, and the exact PyInstaller bootloader and
-runtime-hook licenses.
+and every pure-Python module in the finished application. It independently
+matches the executable's code sections to a hash-pinned PyInstaller bootloader,
+compares its embedded archives with the controlled build artifacts, and maps
+each PYZ module to the verified runtime archive, application source, or an
+approved distribution whose source hash matches its installed `RECORD`.
+Setuptools is excluded because it is not a runtime dependency. An unrecognized
+native file or Python module, a missing pinned runtime DLL, or changed executable
+or archive content blocks smoke testing and publication. The installed legal
+bundle includes the native, pure-Python, and executable-provenance inventories,
+runtime policy and notices, and exact PyInstaller licenses.
+
+The frontend legal step derives the complete production dependency graph from
+the pnpm lock/install state and compares it with
+`packaging/frontend-components.json`. Package versions, declared licenses, and
+license-file hashes must match. The final frozen-app audit verifies those copied
+files and ships `FRONTEND_BUNDLE_INVENTORY.json` with the installed legal bundle.
 All 38 pinned Python runtime packages must also match approved canonical license
 classifications and exact license-file hashes in `packaging/python-components.json`.
 Certifi's exact MPL-2.0 source distribution is retained, hash-verified, and

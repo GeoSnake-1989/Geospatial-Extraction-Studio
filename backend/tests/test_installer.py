@@ -281,6 +281,23 @@ def test_publication_build_freshly_extracts_and_audits_the_pinned_runtime():
     assert 'Unrecognized frozen native files' in auditor
     assert 'Frozen application is missing pinned runtime files' in auditor
     assert 'FINAL_BINARY_INVENTORY.json' in auditor
+    assert 'PURE_PYTHON_INVENTORY.json' in auditor
+    assert 'EXECUTABLE_PROVENANCE.json' in auditor
+    assert 'FRONTEND_BUNDLE_INVENTORY.json' in auditor
+    assert 'Embedded PYZ module inventory differs' in auditor
+    assert 'Unapproved Python distribution in embedded PYZ' in auditor
+    assert "project_root / 'backend' / 'app'" in auditor
+    assert 'Generated executable does not retain the pinned bootloader code sections' in auditor
+    assert 'Frozen frontend license directories differ from approved policy' in auditor
+    assert '--pyz-toc' in builder
+    assert '--exe-toc' in builder
+    assert '--frontend-manifest' in builder
+
+    spec = (PROJECT_ROOT / 'packaging' / 'GeospatialExtractionStudio.spec').read_text(
+        encoding='utf-8'
+    )
+    assert '"setuptools"' in spec
+    assert '"_distutils_hack"' in spec
 
 
 def test_pyinstaller_toolchain_and_embedded_licenses_are_exactly_pinned():
@@ -310,6 +327,13 @@ def test_pyinstaller_toolchain_and_embedded_licenses_are_exactly_pinned():
         'pyinstaller-hooks-contrib',
     }
     assert all(len(entry['license_sha256']) == 64 for entry in manifest['components'])
+    assert {entry['path'] for entry in manifest['pyinstaller_bootloaders']} == {
+        'PyInstaller/bootloader/Windows-64bit-intel/run.exe',
+        'PyInstaller/bootloader/Windows-64bit-intel/runw.exe',
+    }
+    assert all(
+        len(entry['sha256']) == 64 for entry in manifest['pyinstaller_bootloaders']
+    )
 
 
 def test_corresponding_source_includes_rebuild_and_replacement_instructions():

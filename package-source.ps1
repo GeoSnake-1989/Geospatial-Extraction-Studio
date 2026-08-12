@@ -97,6 +97,7 @@ try {
         'packaging\audit_frozen_binary.py',
         'packaging\runtime-components.json',
         'packaging\build-components.json',
+        'packaging\frontend-components.json',
         'packaging\collect_licenses.py',
         'packaging\inspect_native_versions.py',
         'packaging\GeospatialExtractionStudio.spec',

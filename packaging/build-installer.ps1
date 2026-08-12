@@ -87,7 +87,10 @@ $licenseRoot = Join-Path $installerBuildRoot 'licenses'
     '--runtime-license' $runtimeLicensePath `
     '--runtime-archive' $runtimeArchivePath `
     '--build-manifest' (Join-Path $projectRoot 'packaging\build-components.json') `
-    '--native-report' (Join-Path $licenseRoot 'THIRD_PARTY_COMPONENTS.json')
+    '--native-report' (Join-Path $licenseRoot 'THIRD_PARTY_COMPONENTS.json') `
+    '--pyz-toc' (Join-Path $installerBuildRoot 'pyinstaller\GeospatialExtractionStudio\PYZ-00.toc') `
+    '--exe-toc' (Join-Path $installerBuildRoot 'pyinstaller\GeospatialExtractionStudio\EXE-00.toc') `
+    '--frontend-manifest' (Join-Path $projectRoot 'packaging\frontend-components.json')
 if ($LASTEXITCODE -ne 0) { throw 'Final frozen-binary copyright/license audit failed.' }
 
 $smokePort = $null

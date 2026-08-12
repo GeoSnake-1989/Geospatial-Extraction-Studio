@@ -119,6 +119,15 @@ contributed hooks package is Apache-2.0 or GPL-2.0-or-later. Their exact license
 files are hash-pinned in `packaging/build-components.json` and copied into the
 installed legal bundle.
 
+The final release audit also reads the actual PyInstaller PYZ and executable
+archives. Every compiled Python module must map to this application, the pinned
+CPython archive, or one of the 38 approved runtime distributions with a matching
+wheel `RECORD` hash. Build-only Setuptools and `_distutils_hack` modules are
+explicitly excluded from the frozen application. The selected PyInstaller
+bootloader and its immutable executable code sections are hash-verified, and
+the exact outer archive and embedded PYZ inventories are retained with the
+installed notices.
+
 The current pinned wheel build inventories 73 DLLs across 33 component families. All
 73 have evidence-backed approval for their exact wheel scope. Exact upstream
 open-source notices are hash-pinned in `packaging/native-evidence`; GEOS, GNU libiconv,
