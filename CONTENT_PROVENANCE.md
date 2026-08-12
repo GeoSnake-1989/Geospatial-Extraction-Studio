@@ -68,6 +68,7 @@ For every external release, retain:
   files, and the excluded PDFs;
 - all dependency `LICENSE`, `NOTICE`, `COPYING`, and
   `*.dist-info/licenses/` files if dependency binaries are distributed;
+- the reviewed Python component policy and Visual Studio entitlement record;
 - the configured tile provider's attribution and usage terms; and
 - records showing the origin and review of material newly added to the release;
   and

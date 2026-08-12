@@ -1,0 +1,846 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-08-12",
+  "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+  "components": [
+    {
+      "name": "affine",
+      "distribution": "affine",
+      "version": "2.4.0",
+      "status": "approved",
+      "license": "BSD-3-Clause",
+      "license_evidence": [
+        {
+          "path": "affine-2.4.0.dist-info/LICENSE.txt",
+          "sha256": "fc3636b54ff4072cf4b013ed9893c171ed25f88dae2b32722050499c1878cd6e",
+          "contains": [
+            "Copyright (c) 2014, Sean C. Gillies"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "annotated-doc",
+      "distribution": "annotated-doc",
+      "version": "0.0.4",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "annotated_doc-0.0.4.dist-info/licenses/LICENSE",
+          "sha256": "fff170779a6acbf65abdb405c087f1cee1786691e4a96a4034517e4a504a0cdf",
+          "contains": [
+            "The MIT License (MIT)"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "annotated-types",
+      "distribution": "annotated-types",
+      "version": "0.7.0",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "annotated_types-0.7.0.dist-info/licenses/LICENSE",
+          "sha256": "fe1049884b1a0d9342901e88e07f32925d24b3121d9972b6a6805fb9824b095d",
+          "contains": [
+            "The MIT License (MIT)"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "anyio",
+      "distribution": "anyio",
+      "version": "4.14.2",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "anyio-4.14.2.dist-info/licenses/LICENSE",
+          "sha256": "5361ac9dc58f2ef5fd2e9b09c68297c17f04950909bbc8023bdb82eacf22c2b0",
+          "contains": [
+            "The MIT License (MIT)"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "attrs",
+      "distribution": "attrs",
+      "version": "26.1.0",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "attrs-26.1.0.dist-info/licenses/LICENSE",
+          "sha256": "882115c95dfc2af1eeb6714f8ec6d5cbcabf667caff8729f42420da63f714e9f",
+          "contains": [
+            "The MIT License (MIT)"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "certifi",
+      "distribution": "certifi",
+      "version": "2026.6.17",
+      "status": "approved",
+      "license": "MPL-2.0",
+      "license_evidence": [
+        {
+          "path": "certifi-2026.6.17.dist-info/licenses/LICENSE",
+          "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7",
+          "contains": [
+            "This package contains a modified version of ca-bundle.crt:"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "charset-normalizer",
+      "distribution": "charset-normalizer",
+      "version": "3.4.9",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "charset_normalizer-3.4.9.dist-info/licenses/LICENSE",
+          "sha256": "18577485d3704f1a479ded8e573c0976cfed315fd2fd17983fa988da4c2f70d1",
+          "contains": [
+            "Copyright (c) 2025 TAHRI Ahmed R."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "click",
+      "distribution": "click",
+      "version": "8.4.2",
+      "status": "approved",
+      "license": "BSD-3-Clause",
+      "license_evidence": [
+        {
+          "path": "click-8.4.2.dist-info/licenses/LICENSE.txt",
+          "sha256": "9a8ad106a394e853bfe21f42f4e72d592819a22805d991b5f3275029292b658d",
+          "contains": [
+            "Copyright 2014 Pallets"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cligj",
+      "distribution": "cligj",
+      "version": "0.7.2",
+      "status": "approved",
+      "license": "BSD-3-Clause",
+      "license_evidence": [
+        {
+          "path": "cligj-0.7.2.dist-info/LICENSE",
+          "sha256": "5902d716544ddf9a34849b345c391abaf7c21ca16ed22706d6ac2f5503712594",
+          "contains": [
+            "Copyright (c) 2014, Mapbox"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "colorama",
+      "distribution": "colorama",
+      "version": "0.4.6",
+      "status": "approved",
+      "license": "BSD-3-Clause",
+      "license_evidence": [
+        {
+          "path": "colorama-0.4.6.dist-info/licenses/LICENSE.txt",
+          "sha256": "cac35c02686e5d04a5a7140bfb3b36e73aed496656e891102e428886d7930318",
+          "contains": [
+            "Copyright (c) 2010 Jonathan Hartley"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fastapi",
+      "distribution": "fastapi",
+      "version": "0.139.0",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "fastapi-0.139.0.dist-info/licenses/LICENSE",
+          "sha256": "4ec89ffc81485b97fec584b2d4a961032eeffe834453894fd9c1274906cc744e",
+          "contains": [
+            "The MIT License (MIT)"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "geopandas",
+      "distribution": "geopandas",
+      "version": "1.1.4",
+      "status": "approved",
+      "license": "BSD-3-Clause",
+      "license_evidence": [
+        {
+          "path": "geopandas-1.1.4.dist-info/licenses/LICENSE.txt",
+          "sha256": "c60efa15937a5a82a5a2786a26be7452936fffec7a845724db0740e54535c8ea",
+          "contains": [
+            "Copyright (c) 2013-2022, GeoPandas developers."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "h11",
+      "distribution": "h11",
+      "version": "0.16.0",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "h11-0.16.0.dist-info/licenses/LICENSE.txt",
+          "sha256": "37db5bb85926db28a427a25867f10b1232003aea1be69ccb851138adb8e6f361",
+          "contains": [
+            "The MIT License (MIT)"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "httpcore",
+      "distribution": "httpcore",
+      "version": "1.0.9",
+      "status": "approved",
+      "license": "BSD-3-Clause",
+      "license_evidence": [
+        {
+          "path": "httpcore-1.0.9.dist-info/licenses/LICENSE.md",
+          "sha256": "fdcb59154c74cbaba16a11242f7740bea9f23d6feb5547917d8c5f94a80392a5",
+          "contains": [
+            "Copyright \u00a9 2020, [Encode OSS Ltd](https://www.encode.io/)."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "httpx",
+      "distribution": "httpx",
+      "version": "0.28.1",
+      "status": "approved",
+      "license": "BSD-3-Clause",
+      "license_evidence": [
+        {
+          "path": "httpx-0.28.1.dist-info/licenses/LICENSE.md",
+          "sha256": "4ec59d544f12b5f539a3a716fd321ac58ccd8030b465221f2c880200cdf28d8d",
+          "contains": [
+            "Copyright \u00a9 2019, [Encode OSS Ltd](https://www.encode.io/)."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "idna",
+      "distribution": "idna",
+      "version": "3.18",
+      "status": "approved",
+      "license": "BSD-3-Clause",
+      "license_evidence": [
+        {
+          "path": "idna-3.18.dist-info/licenses/LICENSE.md",
+          "sha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04",
+          "contains": [
+            "BSD 3-Clause License"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "networkx",
+      "distribution": "networkx",
+      "version": "3.6.1",
+      "status": "approved",
+      "license": "BSD-3-Clause",
+      "license_evidence": [
+        {
+          "path": "networkx-3.6.1.dist-info/licenses/LICENSE.txt",
+          "sha256": "3cf7c3a179d817b23b8b8568211769fefdf93797d207d984b8b2fa24d0220b33",
+          "contains": [
+            "NetworkX is distributed with the 3-clause BSD license."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "numpy",
+      "distribution": "numpy",
+      "version": "2.5.1",
+      "status": "approved",
+      "license": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "license_evidence": [
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/LICENSE.txt",
+          "sha256": "a804dff0ead9fadc5293456410bcbfc32bf024be9c4513459663fb7b442d2341",
+          "contains": [
+            "Copyright (c) 2005-2025, NumPy Developers."
+          ]
+        },
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt",
+          "sha256": "d544761558b510866c21f7e8a2d5716fca76e0b98117e3b6b86314db7244d150",
+          "contains": [
+            "zlib License"
+          ]
+        },
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING",
+          "sha256": "aea41976c720f91bd19725c16916a1ace40eb1ea42620d340e587a5de4bbcea0",
+          "contains": [
+            "BSD Zero Clause License"
+          ]
+        },
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/numpy/_core/src/highway/LICENSE",
+          "sha256": "d208152e2777ffd0126eacc1bd21c0320d69e4e6b622d21a2a12a47e8ef73763",
+          "contains": [
+            "This project is primarily dual-licensed under your choice of either the Apache"
+          ]
+        },
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+          "sha256": "a732977853530066790c42817087f4829b518dd98d340c916acbfd227e39d3cb",
+          "contains": [
+            "BSD 3-Clause License"
+          ]
+        },
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE",
+          "sha256": "585483905b13d4b42f800c55ba99e89d6e2e33ccd5f503e201c07531d148ff41",
+          "contains": [
+            "Copyright (c) 2005-2021, NumPy Developers."
+          ]
+        },
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
+          "sha256": "8db000e158c162e7249787852d8c69764706502ccee725c06641b31c1e95c8af",
+          "contains": [
+            "Copyright (C) 2010-2018 Max-Planck-Society"
+          ]
+        },
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt",
+          "sha256": "19060ef465e1797d682ee0fc3081bd25ab1395e995e43d25c9d13c95d9a3cd6b",
+          "contains": [
+            "Copyright (c) 1992-2013 The University of Tennessee and The University"
+          ]
+        },
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/numpy/ma/LICENSE",
+          "sha256": "d78dbb208b80d92b4d333e41a4baae50d12444f46e53199fa7726a91de6e2da7",
+          "contains": [
+            "* Copyright (c) 2006, University of Georgia and Pierre G.F. Gerard-Marchant"
+          ]
+        },
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/numpy/random/LICENSE.md",
+          "sha256": "b4bc2f4fa1c95778f1ed3dd8f14706bece399475b978f9f34b5d3cd72521b48a",
+          "contains": [
+            "**This software is dual-licensed under the The University of Illinois/NCSA"
+          ]
+        },
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+          "sha256": "cf5619f25b112d5ce7c896efffc8e610bcb345dfadcc19f2c1460aa48fff2c9e",
+          "contains": [
+            "Copyright (c) 2005-2017, NumPy Developers."
+          ]
+        },
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
+          "sha256": "92c10699884321f1c2947fe2a70ab23b0fbf1507f756d89dd08f38c61fc3d4fa",
+          "contains": [
+            "Copyright (c) 2003-2005, Jean-Sebastien Roy (js@jeannot.org)"
+          ]
+        },
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
+          "sha256": "41190663b77bee5302386495a07b7eabfbfa571aa0ae2f11da6764162062fc4f",
+          "contains": [
+            "## The MIT License"
+          ]
+        },
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
+          "sha256": "322ac46d870c8aeead6c53adcccc839296fb3c8e456eae155081297daf7f8013",
+          "contains": [
+            "Copyright 2010-2012, D. E. Shaw Research."
+          ]
+        },
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+          "sha256": "28cad82ce1379dc529df30da78ec012d7d0d1d576b03ddcb93388aee53659f59",
+          "contains": [
+            "## The MIT License"
+          ]
+        },
+        {
+          "path": "numpy-2.5.1.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
+          "sha256": "454ec7350e478e037061850b67395753b425b1cb0a34bbc26290b020bf89d763",
+          "contains": [
+            "# SPLITMIX64"
+          ]
+        },
+        {
+          "path": "numpy/_core/include/numpy/random/LICENSE.txt",
+          "sha256": "d544761558b510866c21f7e8a2d5716fca76e0b98117e3b6b86314db7244d150",
+          "contains": [
+            "zlib License"
+          ]
+        },
+        {
+          "path": "numpy/ma/LICENSE",
+          "sha256": "d78dbb208b80d92b4d333e41a4baae50d12444f46e53199fa7726a91de6e2da7",
+          "contains": [
+            "* Copyright (c) 2006, University of Georgia and Pierre G.F. Gerard-Marchant"
+          ]
+        },
+        {
+          "path": "numpy/random/LICENSE.md",
+          "sha256": "b4bc2f4fa1c95778f1ed3dd8f14706bece399475b978f9f34b5d3cd72521b48a",
+          "contains": [
+            "**This software is dual-licensed under the The University of Illinois/NCSA"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "osmnx",
+      "distribution": "osmnx",
+      "version": "2.1.0",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "osmnx-2.1.0.dist-info/licenses/LICENSE.txt",
+          "sha256": "8c8ef0c1483045fe4c23c124d678f7eb2fc7fda933aae8fcba006dc753b8e595",
+          "contains": [
+            "The MIT License (MIT)"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "packaging",
+      "distribution": "packaging",
+      "version": "26.2",
+      "status": "approved",
+      "license": "Apache-2.0 OR BSD-2-Clause",
+      "license_evidence": [
+        {
+          "path": "packaging-26.2.dist-info/licenses/LICENSE",
+          "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
+          "contains": [
+            "This software is made available under the terms of *either* of the licenses"
+          ]
+        },
+        {
+          "path": "packaging-26.2.dist-info/licenses/LICENSE.APACHE",
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+          "contains": [
+            "Apache License"
+          ]
+        },
+        {
+          "path": "packaging-26.2.dist-info/licenses/LICENSE.BSD",
+          "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
+          "contains": [
+            "Copyright (c) Donald Stufft and individual contributors."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pandas",
+      "distribution": "pandas",
+      "version": "3.0.3",
+      "status": "approved",
+      "license": "BSD-3-Clause",
+      "license_evidence": [
+        {
+          "path": "pandas-3.0.3.dist-info/LICENSE",
+          "sha256": "9850f6b5bdef7346503065807b878deb8058b976c5c329f4c4d23bf4796ce9ae",
+          "contains": [
+            "BSD 3-Clause License"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pydantic",
+      "distribution": "pydantic",
+      "version": "2.13.4",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "pydantic-2.13.4.dist-info/licenses/LICENSE",
+          "sha256": "a9e186f3ca16b5eef84318e7a701721351a00cb7b8ae3a4394b67b49e3529ef3",
+          "contains": [
+            "The MIT License (MIT)"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pydantic-core",
+      "distribution": "pydantic_core",
+      "version": "2.46.4",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "pydantic_core-2.46.4.dist-info/licenses/LICENSE",
+          "sha256": "fbe7f615f18d135c07000e5a86325db27f42c7729699ef166ac1f7a3f4586bf4",
+          "contains": [
+            "The MIT License (MIT)"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pyogrio",
+      "distribution": "pyogrio",
+      "version": "0.13.0",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "pyogrio-0.13.0.dist-info/licenses/LICENSE",
+          "sha256": "d4f257af1744b6dbd7700cebe02830d87e7ef9fe997d2b6262743358acffde22",
+          "contains": [
+            "Copyright (c) 2020-2024 Brendan C. Ward and pyogrio contributors"
+          ]
+        },
+        {
+          "path": "pyogrio/gdal_data/LICENSE.TXT",
+          "sha256": "1dae3468e81d00da56e2936f74d33b8b3ad09d726437f19ce209a5dabea41f77",
+          "contains": [
+            "GDAL/OGR Licensing"
+          ]
+        },
+        {
+          "path": "pyogrio/gdal_data/copyright",
+          "sha256": "1dae3468e81d00da56e2936f74d33b8b3ad09d726437f19ce209a5dabea41f77",
+          "contains": [
+            "GDAL/OGR Licensing"
+          ]
+        },
+        {
+          "path": "pyogrio/proj_data/copyright",
+          "sha256": "6a8f30793e877d32e3f88b972f0970a051a3b5a26cd057d3993cb51e21c43319",
+          "contains": [
+            "All source, data files and other contents of the PROJ package are"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pyparsing",
+      "distribution": "pyparsing",
+      "version": "3.3.2",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "pyparsing-3.3.2.dist-info/licenses/LICENSE",
+          "sha256": "a5425f9dc14ac74d4c5f0b679e941f2442e32cca7452a4418d5b1a49893ebe4e",
+          "contains": [
+            "Copyright (c) 2003-2025  Paul McGuire"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pyproj",
+      "distribution": "pyproj",
+      "version": "3.7.2",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "pyproj-3.7.2.dist-info/licenses/LICENSE",
+          "sha256": "c25d436b6fc9009a3d337ca024ed1caf615e55e10f4a0ace1673b9953821c8da",
+          "contains": [
+            "Copyright (c) 2006-2018, Jeffrey Whitaker."
+          ]
+        },
+        {
+          "path": "pyproj-3.7.2.dist-info/licenses/LICENSE_proj",
+          "sha256": "ec8ad0defdbcfac5083e510c000c05a5b63144c685e0a879b7c081b5e44e24c7",
+          "contains": [
+            "All source, data files and other contents of the PROJ.4 package are"
+          ]
+        },
+        {
+          "path": "pyproj/proj_dir/share/proj/copyright",
+          "sha256": "6a8f30793e877d32e3f88b972f0970a051a3b5a26cd057d3993cb51e21c43319",
+          "contains": [
+            "All source, data files and other contents of the PROJ package are"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "python-dateutil",
+      "distribution": "python-dateutil",
+      "version": "2.9.0.post0",
+      "status": "approved",
+      "license": "Apache-2.0 OR BSD-3-Clause",
+      "license_evidence": [
+        {
+          "path": "python_dateutil-2.9.0.post0.dist-info/LICENSE",
+          "sha256": "ba00f51a0d92823b5a1cde27d8b5b9d2321e67ed8da9bc163eff96d5e17e577e",
+          "contains": [
+            "Copyright 2017- Paul Ganssle <paul@ganssle.io>"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "python-multipart",
+      "distribution": "python-multipart",
+      "version": "0.0.32",
+      "status": "approved",
+      "license": "Apache-2.0",
+      "license_evidence": [
+        {
+          "path": "python_multipart-0.0.32.dist-info/licenses/LICENSE.txt",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "contains": [
+            "Apache License"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "rasterio",
+      "distribution": "rasterio",
+      "version": "1.5.0",
+      "status": "approved",
+      "license": "BSD-3-Clause",
+      "license_evidence": [
+        {
+          "path": "rasterio-1.5.0.dist-info/licenses/AUTHORS.txt",
+          "sha256": "39fca2241566ac24bf7dd2db32ac94489f2d218cf92bd5d519edb6995570e062",
+          "contains": [
+            "* Adam J. Stewart"
+          ]
+        },
+        {
+          "path": "rasterio-1.5.0.dist-info/licenses/LICENSE.txt",
+          "sha256": "6332e0bd7836f930a5ef39c0a6b84c348bf746fe9020c5c9811d543274d88ec5",
+          "contains": [
+            "Copyright (c) 2013-2021, Mapbox"
+          ]
+        },
+        {
+          "path": "rasterio/gdal_data/LICENSE.TXT",
+          "sha256": "1dae3468e81d00da56e2936f74d33b8b3ad09d726437f19ce209a5dabea41f77",
+          "contains": [
+            "GDAL/OGR Licensing"
+          ]
+        },
+        {
+          "path": "rasterio/gdal_data/copyright",
+          "sha256": "1dae3468e81d00da56e2936f74d33b8b3ad09d726437f19ce209a5dabea41f77",
+          "contains": [
+            "GDAL/OGR Licensing"
+          ]
+        },
+        {
+          "path": "rasterio/proj_data/copyright",
+          "sha256": "6a8f30793e877d32e3f88b972f0970a051a3b5a26cd057d3993cb51e21c43319",
+          "contains": [
+            "All source, data files and other contents of the PROJ package are"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "requests",
+      "distribution": "requests",
+      "version": "2.34.2",
+      "status": "approved",
+      "license": "Apache-2.0",
+      "license_evidence": [
+        {
+          "path": "requests-2.34.2.dist-info/licenses/LICENSE",
+          "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
+          "contains": [
+            "Apache License"
+          ]
+        },
+        {
+          "path": "requests-2.34.2.dist-info/licenses/NOTICE",
+          "sha256": "f5110972dedad2b4e9d314518daf3b7d72d6e02e499acd802181de6f74571dcc",
+          "contains": [
+            "Copyright 2019 Kenneth Reitz"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "shapely",
+      "distribution": "shapely",
+      "version": "2.1.2",
+      "status": "approved",
+      "license": "BSD-3-Clause",
+      "license_evidence": [
+        {
+          "path": "shapely-2.1.2.dist-info/licenses/LICENSE.txt",
+          "sha256": "e8cd7d34604d2758ff589f0f34d6ed79c3f7fb14aaf5e12fb09221421391a3bf",
+          "contains": [
+            "BSD 3-Clause License"
+          ]
+        },
+        {
+          "path": "shapely-2.1.2.dist-info/licenses/LICENSE_GEOS",
+          "sha256": "91a5bb11df4d44bfddc0c68db43681705326107781599fb6c6ff821042072d64",
+          "contains": [
+            "This binary distribution of pygeos also bundles the following software:"
+          ]
+        },
+        {
+          "path": "shapely-2.1.2.dist-info/licenses/LICENSE_win32",
+          "sha256": "9b30cd1a09789884dd54e5828e31d2bf8e6879034e7cf7b6e0321444cf6dd11d",
+          "contains": [
+            "This binary distribution of pygeos also bundles the following software:"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "six",
+      "distribution": "six",
+      "version": "1.17.0",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "six-1.17.0.dist-info/LICENSE",
+          "sha256": "4375ba20e2b9c6c4e7cad2940a628fd90e95cc3d50ee92aae755715d8ba1fbd0",
+          "contains": [
+            "Copyright (c) 2010-2024 Benjamin Peterson"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "starlette",
+      "distribution": "starlette",
+      "version": "1.3.1",
+      "status": "approved",
+      "license": "BSD-3-Clause",
+      "license_evidence": [
+        {
+          "path": "starlette-1.3.1.dist-info/licenses/LICENSE.md",
+          "sha256": "dcb95677a02240243187e964f941847d19b17821cf99e5afae684fab328c19bf",
+          "contains": [
+            "Copyright \u00a9 2018, [Encode OSS Ltd](https://www.encode.io/)."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "typing-inspection",
+      "distribution": "typing-inspection",
+      "version": "0.4.2",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "typing_inspection-0.4.2.dist-info/licenses/LICENSE",
+          "sha256": "804b59b25f2c31bd278f9202a19ae49a3945aa2664387e2d0a128c7cacc61ec3",
+          "contains": [
+            "Copyright (c) Pydantic Services Inc. 2025 to present"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "typing-extensions",
+      "distribution": "typing_extensions",
+      "version": "4.16.0",
+      "status": "approved",
+      "license": "PSF-2.0",
+      "license_evidence": [
+        {
+          "path": "typing_extensions-4.16.0.dist-info/licenses/LICENSE",
+          "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+          "contains": [
+            "A. HISTORY OF THE SOFTWARE"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tzdata",
+      "distribution": "tzdata",
+      "version": "2026.3",
+      "status": "approved",
+      "license": "Apache-2.0",
+      "license_evidence": [
+        {
+          "path": "tzdata-2026.3.dist-info/licenses/LICENSE",
+          "sha256": "df58f69ea88683035d720b5375bcef0cf5aeaa98a1d098d572e0992c378deb46",
+          "contains": [
+            "Apache Software License 2.0"
+          ]
+        },
+        {
+          "path": "tzdata-2026.3.dist-info/licenses/licenses/LICENSE_APACHE",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "contains": [
+            "Apache License"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "urllib3",
+      "distribution": "urllib3",
+      "version": "2.7.0",
+      "status": "approved",
+      "license": "MIT",
+      "license_evidence": [
+        {
+          "path": "urllib3-2.7.0.dist-info/licenses/LICENSE.txt",
+          "sha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686",
+          "contains": [
+            "Copyright (c) 2008-2020 Andrey Petrov and contributors."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "uvicorn",
+      "distribution": "uvicorn",
+      "version": "0.51.0",
+      "status": "approved",
+      "license": "BSD-3-Clause",
+      "license_evidence": [
+        {
+          "path": "uvicorn-0.51.0.dist-info/licenses/LICENSE.md",
+          "sha256": "efe1acf3e62fb99c288b0ec73e5a773b7268ef4320fe757ea994214e4b63c371",
+          "contains": [
+            "Copyright \u00a9 2017-present, [Encode OSS Ltd](https://www.encode.io/)."
+          ]
+        }
+      ]
+    }
+  ]
+}

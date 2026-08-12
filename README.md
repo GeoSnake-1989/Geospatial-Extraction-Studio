@@ -229,11 +229,13 @@ A publication build is fail-closed. It will not write an installer to `release/`
 ```
 
 The current pinned build passes this native evidence gate for all 73 DLLs.
+All 38 pinned Python runtime packages must also match approved canonical license
+classifications and exact license-file hashes in `packaging/python-components.json`.
 Corresponding source and pinned build recipes for the LGPL/MPL components are
 included in the generated license bundle. Microsoft webpages are linked rather
 than redistributed. Microsoft runtime approval is accepted only on the exact
 Visual Studio 2022 release host recorded by policy, with its installed REDIST
-pointer digest verified.
+pointer digest verified and its open-source-project entitlement record present.
 
 Installed program files live under `%LOCALAPPDATA%\Programs\Geospatial Extraction Studio`. Writable datasets, the SQLite database, caches, logs, and exports live under `%LOCALAPPDATA%\Geospatial Extraction Studio\data` and remain after uninstall. See `packaging/README.md` for the release gates and signing requirement.
 On Windows, create the filtered source archive with:

@@ -84,7 +84,16 @@ shipping a monolithic or statically linked build.
 
 ### Binary-installer release gate
 
-The binary build uses `backend/requirements-installer.lock.txt`, `packaging/native-components.json`, and `packaging/collect_licenses.py` to generate an installed license bundle and machine-readable component inventory. The build fails when a wheel DLL is not mapped exactly once. Each DLL record includes its SHA-256 digest, byte size, originating wheel directory, pinned Python distribution, license classification, and review status. The build blocks publication while a matched component is not marked `approved` with evidence that validates for the exact wheel build; the engineering override is not a legal approval and cannot write to `release/`.
+The binary build uses `backend/requirements-installer.lock.txt`,
+`packaging/python-components.json`, `packaging/native-components.json`, and
+`packaging/collect_licenses.py` to generate an installed license bundle and
+machine-readable component inventory. Every Python package must match an exact
+approved version, canonical license classification, complete license-file
+inventory, and evidence hash. The build also fails when a wheel DLL is not
+mapped exactly once. Each DLL record includes its SHA-256 digest, byte size,
+originating wheel directory, pinned Python distribution, license classification,
+and review status. The engineering override is not a legal approval and cannot
+write to `release/`.
 
 The current pinned build inventories 73 DLLs across 33 component families. All
 73 have evidence-backed approval for their exact wheel scope. Exact upstream
@@ -99,7 +108,10 @@ Microsoft webpage copies are not redistributed. A project-authored audit record
 links to the controlling Microsoft terms and records the reviewed runtime hashes.
 Microsoft runtime approval is valid only on a release host where the collector
 finds the exact complete Visual Studio 2022 installation and installed REDIST
-pointer digest recorded by policy. Keep LGPL libraries as separate,
+pointer digest recorded by policy. A separate entitlement record limits the
+Community-edition basis to developing, testing, and releasing this Apache-2.0
+open-source project; it does not authorize proprietary or unrelated work. Keep
+LGPL libraries as separate,
 replaceable DLLs and distribute the retained corresponding source. A wheel,
 dependency, build-layout, or evidence-hash change invalidates the applicable
 approval. Do not convert this application to a one-file or statically linked

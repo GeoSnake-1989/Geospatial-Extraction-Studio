@@ -151,6 +151,8 @@ def test_source_release_excludes_generated_data_and_package_caches():
     assert "^\\.pnpm-store" in packager
     assert "tmp|release|build" in packager
     assert "requirements-installer.lock.txt" in packager
+    assert "python-components.json" in packager
+    assert "visual-studio-entitlement.json" in packager
     assert "SOURCE-REVISION.txt" in packager
     assert "status --porcelain --untracked-files=all" in packager
     assert "ls-files" in packager

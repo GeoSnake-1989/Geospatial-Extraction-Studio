@@ -58,6 +58,101 @@ def copy_distribution_licenses(distribution: metadata.Distribution, destination:
     return sorted(set(copied))
 
 
+def verify_python_approval(
+    entry: dict,
+    distribution: metadata.Distribution,
+) -> None:
+    component = str(entry.get('name') or '')
+    required = {
+        'name', 'distribution', 'version', 'status', 'license', 'license_evidence'
+    }
+    missing = sorted(required - entry.keys())
+    if missing:
+        raise SystemExit(
+            f'Python policy for {component or "unknown component"} lacks: '
+            + ', '.join(missing)
+        )
+    if entry['status'] != APPROVED_STATUS:
+        raise SystemExit(f'Python component is not approved for release: {component}')
+    if canonical_name(str(entry['distribution'])) != canonical_name(
+        str(distribution.metadata['Name'])
+    ):
+        raise SystemExit(f'Python distribution identity changed: {component}')
+    if str(entry['version']) != distribution.version:
+        raise SystemExit(
+            f'Python policy version changed for {component}: '
+            f'{distribution.version} != {entry["version"]}'
+        )
+    if not str(entry['license']).strip() or str(entry['license']).upper() == 'UNKNOWN':
+        raise SystemExit(f'Python component has no approved license: {component}')
+    evidence_items = entry['license_evidence']
+    if not isinstance(evidence_items, list) or not evidence_items:
+        raise SystemExit(f'Python component lacks license evidence: {component}')
+    actual_license_paths = {
+        Path(str(item)).as_posix()
+        for item in distribution.files or ()
+        if any(LICENSE_NAMES.match(part) for part in Path(str(item)).parts)
+        and Path(distribution.locate_file(item)).is_file()
+    }
+    policy_paths: set[str] = set()
+    for evidence in evidence_items:
+        if not isinstance(evidence, dict):
+            raise SystemExit(f'Malformed Python license evidence: {component}')
+        missing = sorted({'path', 'sha256', 'contains'} - evidence.keys())
+        if missing:
+            raise SystemExit(
+                f'Python license evidence for {component} lacks: {", ".join(missing)}'
+            )
+        relative = Path(str(evidence['path']))
+        if relative.is_absolute() or '..' in relative.parts:
+            raise SystemExit(f'Unsafe Python license evidence path: {component}')
+        source = Path(distribution.locate_file(str(evidence['path']))).resolve()
+        if not source.is_file():
+            raise SystemExit(f'Python license evidence is missing: {component}: {source}')
+        if sha256_file(source) != str(evidence['sha256']).lower():
+            raise SystemExit(f'Python license evidence hash changed: {component}')
+        text = source.read_text(encoding='utf-8', errors='replace')
+        absent = [str(marker) for marker in evidence['contains'] if str(marker) not in text]
+        if absent:
+            raise SystemExit(
+                f'Python license evidence markers changed for {component}: '
+                + ', '.join(absent)
+            )
+        policy_paths.add(relative.as_posix())
+    if policy_paths != actual_license_paths:
+        raise SystemExit(
+            f'Python license-file inventory changed for {component}; review is required'
+        )
+
+
+def load_python_policy(path: Path, locked: dict[str, str]) -> dict[str, dict]:
+    policy = json.loads(path.read_text(encoding='utf-8'))
+    if policy.get('schema_version') != 1:
+        raise SystemExit('python-components.json must use schema_version 1')
+    for required in ('reviewed_on', 'approval_authority', 'components'):
+        if not policy.get(required):
+            raise SystemExit(f'Python policy lacks: {required}')
+    entries = policy['components']
+    if not isinstance(entries, list):
+        raise SystemExit('Python policy components must be a list')
+    by_name: dict[str, dict] = {}
+    for entry in entries:
+        if not isinstance(entry, dict):
+            raise SystemExit('Malformed Python policy component')
+        name = canonical_name(str(entry.get('name') or ''))
+        if not name or name in by_name:
+            raise SystemExit(f'Duplicate or empty Python policy component: {name!r}')
+        by_name[name] = entry
+    if set(by_name) != set(locked):
+        missing = sorted(set(locked) - set(by_name))
+        extra = sorted(set(by_name) - set(locked))
+        raise SystemExit(
+            'Python policy does not exactly match the installer lock; '
+            f'missing={missing}, extra={extra}'
+        )
+    return by_name
+
+
 def verify_approval_evidence(
     entry: dict,
     destination: Path,
@@ -137,7 +232,7 @@ def verify_approval_evidence(
     return copied
 
 
-def verify_system_evidence(entry: dict) -> None:
+def verify_system_evidence(entry: dict, destination: Path, project_root: Path) -> None:
     approval = entry['approval']
     evidence_type = approval.get('system_evidence')
     if not evidence_type:
@@ -160,7 +255,8 @@ def verify_system_evidence(entry: dict) -> None:
     )
     installations = json.loads(result.stdout)
     required_fields = {
-        'system_product_id', 'system_installation_version', 'system_redist_sha256'
+        'system_product_id', 'system_installation_version', 'system_redist_sha256',
+        'entitlement_record',
     }
     missing = sorted(required_fields - approval.keys())
     if missing:
@@ -169,6 +265,40 @@ def verify_system_evidence(entry: dict) -> None:
         )
     expected_product = str(approval['system_product_id'])
     expected_version = str(approval['system_installation_version'])
+    entitlement_path = (project_root / str(approval['entitlement_record'])).resolve()
+    if project_root not in entitlement_path.parents or not entitlement_path.is_file():
+        raise SystemExit('Visual Studio entitlement record is missing or unsafe')
+    entitlement = json.loads(entitlement_path.read_text(encoding='utf-8'))
+    entitlement_required = {
+        'schema_version', 'attested_by', 'attested_on', 'use_basis', 'statement',
+        'product_id', 'project_license', 'project_license_path',
+        'project_license_sha256', 'community_terms_url', 'redistribution_url',
+    }
+    entitlement_missing = sorted(entitlement_required - entitlement.keys())
+    if entitlement_missing:
+        raise SystemExit(
+            'Visual Studio entitlement record lacks: ' + ', '.join(entitlement_missing)
+        )
+    if entitlement['schema_version'] != 1:
+        raise SystemExit('Visual Studio entitlement record schema is not supported')
+    if entitlement['use_basis'] != 'osi_approved_open_source_project':
+        raise SystemExit('Visual Studio Community entitlement basis is not approved')
+    if entitlement['product_id'] != expected_product:
+        raise SystemExit('Visual Studio entitlement product does not match release policy')
+    if entitlement['project_license'] != 'Apache-2.0':
+        raise SystemExit('Visual Studio entitlement project license is not Apache-2.0')
+    project_license = (project_root / str(entitlement['project_license_path'])).resolve()
+    if project_root not in project_license.parents or not project_license.is_file():
+        raise SystemExit('Visual Studio entitlement project license is missing or unsafe')
+    if sha256_file(project_license) != str(entitlement['project_license_sha256']).lower():
+        raise SystemExit('Visual Studio entitlement project license digest changed')
+    if 'Apache License' not in project_license.read_text(encoding='utf-8'):
+        raise SystemExit('Visual Studio entitlement project license is not recognized')
+    for url_field in ('community_terms_url', 'redistribution_url'):
+        if not str(entitlement[url_field]).startswith('https://'):
+            raise SystemExit(f'Visual Studio entitlement {url_field} must use HTTPS')
+    if 'solely to develop, test, and release' not in str(entitlement['statement']):
+        raise SystemExit('Visual Studio entitlement attestation is not recognized')
     eligible = [
         item for item in installations
         if item.get('productId') == expected_product
@@ -190,6 +320,7 @@ def verify_system_evidence(entry: dict) -> None:
     redist_text = redist_pointer.read_text(encoding='utf-8', errors='replace')
     if 'https://aka.ms/vs/17/redist.txt' not in redist_text:
         raise SystemExit('Visual Studio 2022 REDIST pointer is not recognized')
+    shutil.copy2(entitlement_path, destination / 'VISUAL_STUDIO_ENTITLEMENT.json')
 
 
 def verify_source_evidence(
@@ -319,6 +450,7 @@ def write_native_review_summary(path: Path, entries: list[dict], inventory: list
 def main() -> int:
     parser = argparse.ArgumentParser(description="Collect installer license evidence and audit wheel DLL coverage")
     parser.add_argument("--requirements", type=Path, required=True)
+    parser.add_argument("--python-manifest", type=Path, required=True)
     parser.add_argument("--native-manifest", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--allow-unverified-native", action="store_true")
@@ -342,15 +474,20 @@ def main() -> int:
     source_output.mkdir(parents=True, exist_ok=True)
     shutil.copy2(source_instructions, source_output / 'README.md')
 
+    locked = locked_requirements(args.requirements)
+    python_policy = load_python_policy(args.python_manifest, locked)
     components: list[dict[str, object]] = []
-    for name, required_version in locked_requirements(args.requirements).items():
+    for name, required_version in locked.items():
         distribution = metadata.distribution(name)
         if distribution.version != required_version:
             raise SystemExit(f"{name} is {distribution.version}; installer lock requires {required_version}")
+        policy_entry = python_policy[name]
+        verify_python_approval(policy_entry, distribution)
         components.append({
             "name": distribution.metadata["Name"],
             "version": distribution.version,
-            "license_expression": distribution.metadata.get("License-Expression") or distribution.metadata.get("License") or "UNKNOWN",
+            "license_expression": policy_entry["license"],
+            "review_status": policy_entry["status"],
             "homepage": distribution.metadata.get("Home-page") or distribution.metadata.get("Project-URL") or "",
             "license_files": copy_distribution_licenses(distribution, args.output / "python"),
         })
@@ -420,7 +557,7 @@ def main() -> int:
             raise SystemExit(f'Unknown review status for {component}: {status}')
         if status == APPROVED_STATUS:
             approval = entry.get('approval') or {}
-            verify_system_evidence(entry)
+            verify_system_evidence(entry, args.output, project_root)
             covered = set(map(str, approval.get('covered_wheel_directories') or []))
             unknown = sorted(covered - wheel_bundles.keys())
             if unknown:
@@ -549,6 +686,7 @@ def main() -> int:
         "native_components": native_inventory,
     }
     (args.output / "THIRD_PARTY_COMPONENTS.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    shutil.copy2(args.python_manifest, args.output / "PYTHON_COMPONENT_POLICY.json")
     shutil.copy2(args.native_manifest, args.output / "NATIVE_COMPONENT_POLICY.json")
 
     write_native_review_summary(

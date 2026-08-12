@@ -27,6 +27,12 @@ with their program in unmodified form, subject to that edition's license terms.
 The release collector therefore fails unless it finds the exact complete Visual
 Studio product/version above and the exact installed REDIST pointer digest.
 
+The release also requires `packaging/visual-studio-entitlement.json`. That
+project-authored record limits the approved Community use to developing,
+testing, and releasing this Apache-2.0 open-source project, identifies the
+release account, and pins the project-license digest. It does not authorize a
+proprietary derivative or unrelated project.
+
 This automated check establishes the installed product and release evidence; it
 does not decide whether an organization satisfies every eligibility or license
 condition. The release operator remains responsible for that determination.

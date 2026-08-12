@@ -54,6 +54,7 @@ if (-not $SkipDependencyInstall) {
 $licenseArguments = @(
     (Join-Path $projectRoot 'packaging\collect_licenses.py'),
     '--requirements', (Join-Path $projectRoot 'backend\requirements-installer.lock.txt'),
+    '--python-manifest', (Join-Path $projectRoot 'packaging\python-components.json'),
     '--native-manifest', (Join-Path $projectRoot 'packaging\native-components.json'),
     '--output', (Join-Path $installerBuildRoot 'licenses')
 )

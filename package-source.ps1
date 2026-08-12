@@ -99,6 +99,8 @@ try {
         'packaging\installer.nsi',
         'packaging\native-components.json',
         'packaging\native-evidence-registry.json',
+        'packaging\python-components.json',
+        'packaging\visual-studio-entitlement.json',
         'packaging\native-source\README.md',
         'frontend\pnpm-lock.yaml'
     )

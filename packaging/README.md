@@ -12,7 +12,7 @@ The release build performs these gates in order:
 
 1. production frontend build;
 2. exact runtime dependency verification;
-3. Python and native-DLL license inventory generation;
+3. fail-closed Python dependency license-policy verification and collection;
 4. native redistribution review gate;
 5. PyInstaller onedir build;
 6. frozen-app health/UI smoke test;
@@ -34,6 +34,13 @@ Corresponding-source archives and exact vcpkg port recipes are retained under
 `packaging/native-source/`. Microsoft webpages are linked, not copied; the
 project-authored redistribution audit records the reviewed runtime hashes.
 Publication also requires the exact complete Visual Studio 2022 installation
-and installed REDIST pointer digest recorded by release policy.
+and installed REDIST pointer digest recorded by release policy. The collector
+also validates `visual-studio-entitlement.json`, which scopes Community use to
+this Apache-2.0 open-source project.
+
+`python-components.json` is an approval manifest, not an automatically inferred
+license list. It must exactly match the installer lock. Every entry pins the
+installed license-file inventory and hashes; an unknown status, version change,
+new or removed notice file, or changed digest blocks publication pending review.
 
 Before publication, replace a blocking status with `approved` only after retaining the exact controlling notice and any required corresponding source, relinking instructions, license selection, or vendor redistribution authority. Never approve a component from its DLL filename or SPDX label alone. Sign the final installer and checksum through the release signing process; this repository does not contain a private signing key.

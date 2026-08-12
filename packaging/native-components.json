@@ -758,7 +758,8 @@
         "system_evidence": "visual_studio_2022",
         "system_product_id": "Microsoft.VisualStudio.Product.Community",
         "system_installation_version": "17.13.35931.197",
-        "system_redist_sha256": "da53b097e02b08e0fc69706102a60bc384fe756426ae4dc4a855e96f95cb2b9c"
+        "system_redist_sha256": "da53b097e02b08e0fc69706102a60bc384fe756426ae4dc4a855e96f95cb2b9c",
+        "entitlement_record": "packaging/visual-studio-entitlement.json"
       }
     },
     {

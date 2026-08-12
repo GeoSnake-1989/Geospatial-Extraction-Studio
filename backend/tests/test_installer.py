@@ -38,6 +38,55 @@ def test_installer_runtime_lock_excludes_development_server_extras():
     assert "uvicorn==0.51.0" in lock
 
 
+def test_python_release_policy_approves_exact_lock_and_license_evidence():
+    locked = {
+        line.split("==", 1)[0].replace("_", "-").lower(): line.split("==", 1)[1]
+        for line in (
+            PROJECT_ROOT / "backend" / "requirements-installer.lock.txt"
+        ).read_text(encoding="utf-8").splitlines()
+        if line and not line.startswith("#")
+    }
+    policy = json.loads(
+        (PROJECT_ROOT / "packaging" / "python-components.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert policy["schema_version"] == 1
+    entries = {entry["name"]: entry for entry in policy["components"]}
+    assert set(entries) == set(locked)
+    assert len(entries) == 38
+    for name, version in locked.items():
+        entry = entries[name]
+        assert entry["version"] == version
+        assert entry["status"] == "approved"
+        assert entry["license"] and entry["license"].upper() != "UNKNOWN"
+        distribution = metadata.distribution(entry["distribution"])
+        assert distribution.version == version
+        assert entry["license_evidence"]
+        for evidence in entry["license_evidence"]:
+            path = Path(distribution.locate_file(evidence["path"]))
+            assert path.is_file()
+            assert hashlib.sha256(path.read_bytes()).hexdigest() == evidence["sha256"]
+            text = path.read_text(encoding="utf-8", errors="replace")
+            assert all(marker in text for marker in evidence["contains"])
+
+
+def test_visual_studio_entitlement_is_scoped_to_this_open_source_project():
+    entitlement = json.loads(
+        (PROJECT_ROOT / "packaging" / "visual-studio-entitlement.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert entitlement["use_basis"] == "osi_approved_open_source_project"
+    assert entitlement["project_license"] == "Apache-2.0"
+    assert entitlement["attested_by"] == "GeoSnake1989"
+    project_license = PROJECT_ROOT / entitlement["project_license_path"]
+    assert hashlib.sha256(project_license.read_bytes()).hexdigest() == entitlement[
+        "project_license_sha256"
+    ]
+    assert "proprietary derivative" in entitlement["statement"]
+
+
 def test_native_manifest_covers_every_wheel_dll_once():
     manifest = json.loads((PROJECT_ROOT / "packaging" / "native-components.json").read_text(encoding="utf-8"))
     entries = manifest["components"]
@@ -151,9 +200,12 @@ def test_collector_emits_hashes_and_a_human_readable_review():
     assert "'sha256': sha256_file(binary_path)" in collector
     assert "'version_probe': version_probe" in collector
     assert "NATIVE_REVIEW_SUMMARY.md" in collector
+    assert "PYTHON_COMPONENT_POLICY.json" in collector
     assert "verify_approval_evidence" in collector
     assert "verify_source_evidence" in collector
     assert "verify_system_evidence" in collector
+    assert "verify_python_approval" in collector
+    assert "load_python_policy" in collector
 
 
 def test_corresponding_source_includes_rebuild_and_replacement_instructions():

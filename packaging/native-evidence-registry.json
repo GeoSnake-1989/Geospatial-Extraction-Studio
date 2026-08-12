@@ -392,7 +392,7 @@
       "repository_path": "packaging/native-evidence/microsoft/vs2022/REDISTRIBUTION_AUDIT.md",
       "source_url": "https://learn.microsoft.com/visualstudio/releases/2022/redistribution",
       "retrieved_on": "2026-08-12",
-      "sha256": "720d41e67228a70745bf31fb7dbfa5faac202062c8207566f115fa8f1c12fb31",
+      "sha256": "533a5aabdb9408cd2908735b0d9dfeda0b6b0b07d86b05350ad4a6edc4eefd88",
       "contains": [
         "This is a project-authored release record.",
         "17.13.35931.197",
