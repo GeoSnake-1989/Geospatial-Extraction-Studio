@@ -409,6 +409,58 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def verify_runtime_policy(manifest_path: Path, license_path: Path, destination: Path) -> dict:
+    manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+    if manifest.get('schema_version') != 1 or manifest.get('status') != APPROVED_STATUS:
+        raise SystemExit('Runtime component policy is not approved')
+    actual_version = '.'.join(map(str, sys.version_info[:3]))
+    required_version = str(manifest.get('python_version') or '')
+    if actual_version != required_version:
+        raise SystemExit(
+            f'Build Python is {actual_version}; runtime policy requires '
+            f'{required_version}'
+        )
+    if not license_path.is_file():
+        raise SystemExit(f'Pinned combined runtime license is missing: {license_path}')
+    if sha256_file(license_path) != str(manifest['combined_license']['sha256']):
+        raise SystemExit('Pinned combined runtime license hash changed')
+    archive_path = license_path.parent / str(manifest['archive']['file_name'])
+    if not archive_path.is_file() or sha256_file(archive_path) != str(
+        manifest['archive']['sha256']
+    ):
+        raise SystemExit('Pinned runtime archive is missing or has the wrong hash')
+    runtime_root = Path(sys.base_prefix).resolve()
+    marker = runtime_root.parent / 'VERIFIED-ARCHIVE-SHA256.txt'
+    if not marker.is_file() or marker.read_text(encoding='utf-8').strip() != str(
+        manifest['archive']['sha256']
+    ):
+        raise SystemExit('Build runtime lacks the verified pinned-archive marker')
+    verified_files: list[dict] = []
+    for entry in manifest.get('critical_files') or []:
+        relative = Path(str(entry['path']))
+        source = (runtime_root / relative).resolve()
+        if runtime_root not in source.parents or not source.is_file():
+            raise SystemExit(f'Pinned runtime file is missing or unsafe: {relative.as_posix()}')
+        digest = sha256_file(source)
+        if digest != str(entry['sha256']):
+            raise SystemExit(f'Pinned runtime file hash mismatch: {relative.as_posix()}')
+        verified_files.append({
+            'path': relative.as_posix(),
+            'sha256': digest,
+            'component': entry['component'],
+        })
+    shutil.copy2(license_path, destination / 'PYTHON_RUNTIME_LICENSES.rst')
+    shutil.copy2(manifest_path, destination / 'RUNTIME_COMPONENT_POLICY.json')
+    return {
+        'distribution': manifest['distribution'],
+        'release': manifest['release'],
+        'python_version': manifest['python_version'],
+        'archive_url': manifest['archive']['url'],
+        'archive_sha256': manifest['archive']['sha256'],
+        'verified_files': verified_files,
+    }
+
+
 def sha512_file(path: Path) -> str:
     digest = hashlib.sha512()
     with path.open('rb') as source:
@@ -493,12 +545,19 @@ def main() -> int:
     parser.add_argument("--native-manifest", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--allow-unverified-native", action="store_true")
+    parser.add_argument('--runtime-manifest', type=Path, required=True)
+    parser.add_argument('--runtime-license', type=Path, required=True)
     args = parser.parse_args()
 
     project_root = Path(__file__).resolve().parents[1]
     if args.output.exists():
         shutil.rmtree(args.output)
     args.output.mkdir(parents=True)
+    runtime_record = verify_runtime_policy(
+        args.runtime_manifest,
+        args.runtime_license,
+        args.output,
+    )
 
     python_license = Path(sys.base_prefix) / "LICENSE.txt"
     if not python_license.is_file():
@@ -728,6 +787,7 @@ def main() -> int:
         raise SystemExit("Native DLLs missing from native-components.json: " + ", ".join(unmatched))
 
     report = {
+        'release_runtime': runtime_record,
         "format": "Geospatial Extraction Studio installer component inventory 2",
         "native_manifest_schema": native_manifest["schema_version"],
         "python": sys.version,

@@ -163,6 +163,12 @@ def test_source_release_excludes_generated_data_and_package_caches():
     assert "Downloaded data and generated datasets" in readme
 
 
+    assert 'runtime-components.json' in packager
+    assert 'build-components.json' in packager
+    assert 'prepare-runtime.ps1' in packager
+    assert 'audit_frozen_binary.py' in packager
+
+
 def test_custom_tile_configuration_requires_visible_terms():
     selector = (
         PROJECT_ROOT / "frontend" / "src" / "components" / "MapSelector.tsx"

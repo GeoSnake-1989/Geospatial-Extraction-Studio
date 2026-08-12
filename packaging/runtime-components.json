@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "status": "approved",
+  "distribution": "astral-python-build-standalone",
+  "release": "20260303",
+  "upstream_commit": "7442a32b4c5d6d52e966966032b3e7830429866d",
+  "python_version": "3.12.13",
+  "target": "x86_64-pc-windows-msvc",
+  "archive": {
+    "file_name": "cpython-3.12.13+20260303-x86_64-pc-windows-msvc-install_only.tar.gz",
+    "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20260303/cpython-3.12.13%2B20260303-x86_64-pc-windows-msvc-install_only.tar.gz",
+    "sha256": "43990976c8de6b72a7525cb509eedaf869a8dd116167e708af08bca50cd8ef00"
+  },
+  "combined_license": {
+    "file_name": "python-licenses-20260303.rst",
+    "url": "https://raw.githubusercontent.com/astral-sh/python-build-standalone/7442a32b4c5d6d52e966966032b3e7830429866d/python-licenses.rst",
+    "sha256": "e43fb936c6655d7996dba480d7ebdea492d6040ec388eb8ed9d1000f72de8cab"
+  },
+  "components": [
+    {"name": "CPython", "version": "3.12.13", "license": "PSF-2.0"},
+    {"name": "libffi", "version": "3.4.6", "license": "MIT", "source_url": "https://github.com/libffi/libffi/releases/download/v3.4.6/libffi-3.4.6.tar.gz", "source_sha256": "b0dea9df23c863a7a50e825440f3ebffabd65df1497108e5d437747843895a4e"},
+    {"name": "OpenSSL", "version": "3.5.5", "license": "Apache-2.0", "source_url": "https://github.com/openssl/openssl/releases/download/openssl-3.5.5/openssl-3.5.5.tar.gz", "source_sha256": "b28c91532a8b65a1f983b4c28b7488174e4a01008e29ce8e69bd789f28bc2a89"},
+    {"name": "SQLite", "version": "3.50.4", "license": "blessing", "source_url": "https://www.sqlite.org/2025/sqlite-autoconf-3500400.tar.gz", "source_sha256": "a3db587a1b92ee5ddac2f66b3edb41b26f9c867275782d46c3a088977d6a5b18"},
+    {"name": "Microsoft Visual C++ Runtime", "version": "14.44.35211.0", "license": "Microsoft-Visual-Cpp-Runtime", "evidence": "packaging/visual-studio-entitlement.json"}
+  ],
+  "critical_files": [
+    {"path": "LICENSE.txt", "sha256": "886a0ead2d89030ee62dbff52b04e47ab91998341295bb9c56fb952b4e081c7a", "component": "CPython"},
+    {"path": "python3.dll", "sha256": "7b8cff9cdb3de31edce06fe0ba992958f6e3ab5004befee756015ed2e0221c20", "component": "CPython"},
+    {"path": "python312.dll", "sha256": "d36d8e9662b62a9f2bea967fab8fdf23d0b8e8bd993d886d25b2f51819504d1c", "component": "CPython"},
+    {"path": "vcruntime140.dll", "sha256": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066", "component": "Microsoft Visual C++ Runtime"},
+    {"path": "vcruntime140_1.dll", "sha256": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f", "component": "Microsoft Visual C++ Runtime"},
+    {"path": "DLLs/libcrypto-3-x64.dll", "sha256": "21a960c9c2853eb99f96dbacf21a9b115d3fd5cfd9f9c6b3bf98807ecfd56366", "component": "OpenSSL"},
+    {"path": "DLLs/libssl-3-x64.dll", "sha256": "b6440f0faf9137432f33b36f73670ca284b92f15fb95433eba200f864b649ffe", "component": "OpenSSL"},
+    {"path": "DLLs/libffi-8.dll", "sha256": "0148610336e69737329fc917354b77838052716c03e3aa4442c69e5e8208d9df", "component": "libffi"},
+    {"path": "DLLs/sqlite3.dll", "sha256": "70108553d32ccb580b00c087ec9b2d088e1e7db5f2351916596ed312c7c1d972", "component": "SQLite"}
+  ]
+}

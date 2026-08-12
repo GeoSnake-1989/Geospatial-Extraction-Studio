@@ -1,3 +1,8 @@
-# Build-time only. PyInstaller's exception permits distributing bundles under
-# the application's license, subject to every bundled dependency's license.
+# Build-time only. Keep the entire PyInstaller toolchain pinned because its
+# bootloader and runtime hooks contribute bytes to the frozen application.
+altgraph==0.17.5
+pefile==2024.8.26
 pyinstaller==6.22.0
+pyinstaller-hooks-contrib==2026.6
+pywin32-ctypes==0.2.3
+setuptools==84.0.0

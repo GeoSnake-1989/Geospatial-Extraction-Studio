@@ -101,7 +101,25 @@ originating wheel directory, pinned Python distribution, license classification,
 and review status. The engineering override is not a legal approval and cannot
 write to `release/`.
 
-The current pinned build inventories 73 DLLs across 33 component families. All
+The CPython runtime is not taken from an ambient developer installation. The
+publication build uses the immutable Astral `python-build-standalone` 20260303
+archive for CPython 3.12.13 and verifies its complete archive digest. The
+installed legal bundle includes the exact combined runtime notices from that
+release. Those notices cover CPython and incorporated libraries, including
+libffi 3.4.6 (MIT), OpenSSL 3.5.5 (Apache-2.0), SQLite 3.50.4 (public-domain
+dedication), and other standard-library components. The exact controlling
+versions, upstream source URLs, source hashes, critical binary hashes, and
+Visual C++ runtime evidence are recorded in `packaging/runtime-components.json`.
+
+PyInstaller 6.22.0 contributes its bootloader to the generated application and
+is licensed under GPL-2.0-or-later with the PyInstaller bootloader exception;
+the exception permits distribution of the combined executable under this
+application's license. PyInstaller runtime hooks are Apache-2.0, and the
+contributed hooks package is Apache-2.0 or GPL-2.0-or-later. Their exact license
+files are hash-pinned in `packaging/build-components.json` and copied into the
+installed legal bundle.
+
+The current pinned wheel build inventories 73 DLLs across 33 component families. All
 73 have evidence-backed approval for their exact wheel scope. Exact upstream
 open-source notices are hash-pinned in `packaging/native-evidence`; GEOS, GNU libiconv,
 FreeXL, and SpatiaLite corresponding-source archives and pinned build recipes

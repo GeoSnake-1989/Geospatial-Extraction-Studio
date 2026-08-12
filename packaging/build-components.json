@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "components": [
+    {
+      "distribution": "pyinstaller",
+      "version": "6.22.0",
+      "license": "GPL-2.0-or-later WITH Bootloader-exception-2020",
+      "license_path": "pyinstaller-6.22.0.dist-info/licenses/COPYING.txt",
+      "license_sha256": "dcf75fdb959db1e3b41c0f8505069d2ece781b5ec6b3d0a4d30975cfc6580245"
+    },
+    {
+      "distribution": "pyinstaller-hooks-contrib",
+      "version": "2026.6",
+      "license": "Apache-2.0 OR GPL-2.0-or-later",
+      "license_path": "pyinstaller_hooks_contrib-2026.6.dist-info/licenses/LICENSE",
+      "license_sha256": "91d0baaff00773038e72c0a1fc9d5d2d38706b7a2b9c04f34296608f931b9cd0"
+    }
+  ]
+}

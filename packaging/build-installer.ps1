@@ -1,5 +1,4 @@
 param(
-    [string]$Python = (Join-Path $PSScriptRoot '..\backend\.venv\Scripts\python.exe'),
     [switch]$SkipDependencyInstall,
     [switch]$EngineeringBuild,
     [switch]$SkipNsis
@@ -27,6 +26,12 @@ function Remove-GESBuildDirectory {
     }
 }
 
+$runtimeOutput = & (Join-Path $PSScriptRoot 'prepare-runtime.ps1') -BuildRoot $buildRoot
+$Python = [string]($runtimeOutput | Select-Object -Last 1)
+$runtimeManifestPath = Join-Path $projectRoot 'packaging\runtime-components.json'
+$runtimeManifest = Get-Content -Raw -LiteralPath $runtimeManifestPath | ConvertFrom-Json
+$runtimeLicensePath = Join-Path (Join-Path $buildRoot 'runtime-cache') $runtimeManifest.combined_license.file_name
+$runtimeArchivePath = Join-Path (Join-Path $buildRoot 'runtime-cache') $runtimeManifest.archive.file_name
 if (-not (Test-Path -LiteralPath $Python -PathType Leaf)) {
     throw "Python executable not found: $Python"
 }
@@ -56,6 +61,8 @@ $licenseArguments = @(
     '--requirements', (Join-Path $projectRoot 'backend\requirements-installer.lock.txt'),
     '--python-manifest', (Join-Path $projectRoot 'packaging\python-components.json'),
     '--native-manifest', (Join-Path $projectRoot 'packaging\native-components.json'),
+    '--runtime-manifest', $runtimeManifestPath,
+    '--runtime-license', $runtimeLicensePath,
     '--output', (Join-Path $installerBuildRoot 'licenses')
 )
 if ($EngineeringBuild) { $licenseArguments += '--allow-unverified-native' }
@@ -70,6 +77,18 @@ try {
 } finally {
     $env:GES_BUILD_CONSOLE = $previousConsoleBuild
 }
+
+$licenseRoot = Join-Path $installerBuildRoot 'licenses'
+& $Python (Join-Path $projectRoot 'packaging\audit_frozen_binary.py') `
+    '--application' $binaryApp `
+    '--license-bundle' $licenseRoot `
+    '--installed-license-bundle' (Join-Path $binaryApp '_internal\licenses') `
+    '--runtime-manifest' $runtimeManifestPath `
+    '--runtime-license' $runtimeLicensePath `
+    '--runtime-archive' $runtimeArchivePath `
+    '--build-manifest' (Join-Path $projectRoot 'packaging\build-components.json') `
+    '--native-report' (Join-Path $licenseRoot 'THIRD_PARTY_COMPONENTS.json')
+if ($LASTEXITCODE -ne 0) { throw 'Final frozen-binary copyright/license audit failed.' }
 
 $smokePort = $null
 foreach ($candidate in 18010..18030) {

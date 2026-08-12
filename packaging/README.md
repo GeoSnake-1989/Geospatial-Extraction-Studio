@@ -10,17 +10,37 @@ Run from the repository root:
 
 The release build performs these gates in order:
 
-1. production frontend build;
-2. exact runtime dependency verification;
-3. fail-closed Python dependency license-policy verification and collection;
-4. native redistribution review gate;
-5. PyInstaller onedir build;
-6. frozen-app health/UI smoke test;
-7. NSIS installer and SHA-256 checksum generation.
+1. download/hash verification and fresh extraction of the approved CPython runtime;
+2. production frontend build;
+3. exact runtime dependency verification;
+4. fail-closed Python dependency license-policy verification and collection;
+5. native redistribution review gate;
+6. PyInstaller onedir build;
+7. fail-closed inventory of every final executable, DLL, and Python extension;
+8. frozen-app health/UI smoke test;
+9. NSIS installer and SHA-256 checksum generation.
 
 A normal build refuses to create `release/Geospatial-Extraction-Studio-Setup-0.4.0.exe` while any matched native component has a status other than `approved` in `native-components.json`. `-EngineeringBuild` permits technical testing but writes only under `build/installer/`; it must never be published. `-SkipNsis` stops after the smoke-tested onedir build.
 
 Application binaries are installed under `%LOCALAPPDATA%\Programs\Geospatial Extraction Studio`. User downloads, processed rasters, caches, logs, exports, and the SQLite database remain under `%LOCALAPPDATA%\Geospatial Extraction Studio\data` and are deliberately preserved by uninstall.
+
+`runtime-components.json` pins the immutable Astral
+`python-build-standalone` release archive, combined runtime license document,
+CPython version, incorporated OpenSSL/libffi/SQLite versions and sources, and
+the hashes of every runtime DLL expected in the finished application.
+`prepare-runtime.ps1` freshly extracts that verified archive for each build;
+arbitrary local Python installations are not accepted. The PyInstaller
+toolchain is fully pinned in `backend/requirements-build.txt`, and
+`build-components.json` hash-pins the licenses for the bootloader and runtime
+hooks that contribute to the executable.
+
+After PyInstaller, `audit_frozen_binary.py` scans the completed onedir tree.
+Every `.exe`, `.dll`, and `.pyd` must resolve by exact hash to the verified
+runtime, an installed approved Python distribution, or the detailed wheel
+native-library inventory. It emits `FINAL_BINARY_INVENTORY.json` and copies it,
+the runtime policy, combined runtime notices, and build-tool licenses into the
+installed legal bundle before smoke testing. There is no engineering override
+for an unrecognized final native file.
 
 An approval is valid only for the wheel directories listed in its approval record. The collector verifies the pinned distribution version, hashes and required markers in every license-evidence file, records a SHA-256 digest for every DLL, copies approved native evidence and required corresponding source into the installed license bundle, and generates `NATIVE_REVIEW_SUMMARY.md`. A dependency update invalidates the approval until its evidence is reviewed again.
 

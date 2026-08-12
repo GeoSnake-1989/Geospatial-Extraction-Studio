@@ -229,6 +229,17 @@ A publication build is fail-closed. It will not write an installer to `release/`
 ```
 
 The current pinned build passes this native evidence gate for all 73 DLLs.
+Publication no longer uses whichever Python happens to be installed. It
+downloads the immutable Astral `python-build-standalone` 20260303 archive for
+CPython 3.12.13, verifies the archive and combined-license SHA-256 values in
+`packaging/runtime-components.json`, freshly extracts it, and builds from a
+virtual environment tied to that exact runtime. After PyInstaller completes,
+`packaging/audit_frozen_binary.py` inventories every `.exe`, `.dll`, and `.pyd`
+in the finished application. An unrecognized file, a missing pinned runtime
+DLL, or a changed binary hash blocks smoke testing and installer publication.
+The installed legal bundle includes `FINAL_BINARY_INVENTORY.json`, the runtime
+policy, the complete runtime notices, and the exact PyInstaller bootloader and
+runtime-hook licenses.
 All 38 pinned Python runtime packages must also match approved canonical license
 classifications and exact license-file hashes in `packaging/python-components.json`.
 Certifi's exact MPL-2.0 source distribution is retained, hash-verified, and

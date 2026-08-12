@@ -70,6 +70,8 @@ For every external release, retain:
   `*.dist-info/licenses/` files if dependency binaries are distributed;
 - the reviewed Python component policy, required Python corresponding source,
   source-availability instructions, and Visual Studio entitlement record;
+- the approved immutable CPython runtime manifest, combined runtime notices,
+  PyInstaller build-component policy, and final frozen native-file inventory;
 - the configured tile provider's attribution and usage terms; and
 - records showing the origin and review of material newly added to the release;
   and

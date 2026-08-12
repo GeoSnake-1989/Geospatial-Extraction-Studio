@@ -222,6 +222,96 @@ def test_collector_emits_hashes_and_a_human_readable_review():
     assert "PYTHON_SOURCE_REQUIRED_MARKERS" in collector
 
 
+def test_release_runtime_is_an_immutable_approved_artifact():
+    manifest = json.loads(
+        (PROJECT_ROOT / 'packaging' / 'runtime-components.json').read_text(
+            encoding='utf-8'
+        )
+    )
+    assert manifest['schema_version'] == 1
+    assert manifest['status'] == 'approved'
+    assert manifest['distribution'] == 'astral-python-build-standalone'
+    assert manifest['release'] == '20260303'
+    assert manifest['python_version'] == '3.12.13'
+    assert manifest['archive']['url'].startswith('https://github.com/astral-sh/')
+    assert len(manifest['archive']['sha256']) == 64
+    assert manifest['combined_license']['url'].startswith(
+        'https://raw.githubusercontent.com/astral-sh/'
+    )
+    assert len(manifest['combined_license']['sha256']) == 64
+    components = {entry['name']: entry for entry in manifest['components']}
+    assert {'CPython', 'libffi', 'OpenSSL', 'SQLite'} <= components.keys()
+    critical = {entry['path']: entry for entry in manifest['critical_files']}
+    for path in (
+        'python3.dll',
+        'python312.dll',
+        'vcruntime140.dll',
+        'vcruntime140_1.dll',
+        'DLLs/libcrypto-3-x64.dll',
+        'DLLs/libssl-3-x64.dll',
+        'DLLs/libffi-8.dll',
+        'DLLs/sqlite3.dll',
+    ):
+        assert len(critical[path]['sha256']) == 64
+
+
+def test_publication_build_freshly_extracts_and_audits_the_pinned_runtime():
+    preparer = (PROJECT_ROOT / 'packaging' / 'prepare-runtime.ps1').read_text(
+        encoding='utf-8'
+    )
+    builder = (PROJECT_ROOT / 'packaging' / 'build-installer.ps1').read_text(
+        encoding='utf-8'
+    )
+    auditor = (PROJECT_ROOT / 'packaging' / 'audit_frozen_binary.py').read_text(
+        encoding='utf-8'
+    )
+    assert 'Invoke-WebRequest -Uri $manifest.archive.url' in preparer
+    assert 'Pinned runtime archive hash mismatch' in preparer
+    assert 'Remove-Item -LiteralPath (Assert-BuildChild $runtimeRoot)' in preparer
+    assert '& tar -xf $archivePath' in preparer
+    assert 'prepare-runtime.ps1' in builder
+    assert '--runtime-manifest' in builder
+    assert '--runtime-archive' in builder
+    assert 'audit_frozen_binary.py' in builder
+    assert builder.index('PyInstaller --noconfirm') < builder.index('audit_frozen_binary.py')
+    assert builder.index('audit_frozen_binary.py') < builder.index('$smokePort = $null')
+    assert 'NATIVE_SUFFIXES' in auditor
+    assert 'Build runtime lacks the verified pinned-archive marker' in auditor
+    assert 'Pinned runtime archive is missing or has the wrong hash' in auditor
+    assert 'Unrecognized frozen native files' in auditor
+    assert 'Frozen application is missing pinned runtime files' in auditor
+    assert 'FINAL_BINARY_INVENTORY.json' in auditor
+
+
+def test_pyinstaller_toolchain_and_embedded_licenses_are_exactly_pinned():
+    requirements = {
+        line.strip()
+        for line in (PROJECT_ROOT / 'backend' / 'requirements-build.txt').read_text(
+            encoding='utf-8'
+        ).splitlines()
+        if line.strip() and not line.startswith('#')
+    }
+    assert requirements == {
+        'altgraph==0.17.5',
+        'pefile==2024.8.26',
+        'pyinstaller==6.22.0',
+        'pyinstaller-hooks-contrib==2026.6',
+        'pywin32-ctypes==0.2.3',
+        'setuptools==84.0.0',
+    }
+    manifest = json.loads(
+        (PROJECT_ROOT / 'packaging' / 'build-components.json').read_text(
+            encoding='utf-8'
+        )
+    )
+    assert manifest['schema_version'] == 1
+    assert {entry['distribution'] for entry in manifest['components']} == {
+        'pyinstaller',
+        'pyinstaller-hooks-contrib',
+    }
+    assert all(len(entry['license_sha256']) == 64 for entry in manifest['components'])
+
+
 def test_corresponding_source_includes_rebuild_and_replacement_instructions():
     instructions = (
         PROJECT_ROOT / "packaging" / "native-source" / "README.md"
