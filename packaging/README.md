@@ -42,5 +42,8 @@ this Apache-2.0 open-source project.
 license list. It must exactly match the installer lock. Every entry pins the
 installed license-file inventory and hashes; an unknown status, version change,
 new or removed notice file, or changed digest blocks publication pending review.
+MPL/GPL-family license classifications additionally require verified source
+evidence. Exact retained Python source and recipient instructions live under
+`packaging/python-source/` and are copied into the installed legal bundle.
 
 Before publication, replace a blocking status with `approved` only after retaining the exact controlling notice and any required corresponding source, relinking instructions, license selection, or vendor redistribution authority. Never approve a component from its DLL filename or SPDX label alone. Sign the final installer and checksum through the release signing process; this repository does not contain a private signing key.

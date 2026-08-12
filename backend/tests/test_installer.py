@@ -69,6 +69,18 @@ def test_python_release_policy_approves_exact_lock_and_license_evidence():
             assert hashlib.sha256(path.read_bytes()).hexdigest() == evidence["sha256"]
             text = path.read_text(encoding="utf-8", errors="replace")
             assert all(marker in text for marker in evidence["contains"])
+        source_required = any(
+            marker in entry["license"]
+            for marker in ("MPL-", "LGPL-", "GPL-", "AGPL-", "EPL-", "CDDL-")
+        )
+        source_evidence = entry.get("source_evidence", [])
+        if source_required:
+            assert source_evidence
+        for evidence in source_evidence:
+            assert evidence["source_url"].startswith("https://")
+            path = PROJECT_ROOT / evidence["repository_path"]
+            assert path.is_file()
+            assert hashlib.sha256(path.read_bytes()).hexdigest() == evidence["sha256"]
 
 
 def test_visual_studio_entitlement_is_scoped_to_this_open_source_project():
@@ -206,6 +218,8 @@ def test_collector_emits_hashes_and_a_human_readable_review():
     assert "verify_system_evidence" in collector
     assert "verify_python_approval" in collector
     assert "load_python_policy" in collector
+    assert "verify_python_source_evidence" in collector
+    assert "PYTHON_SOURCE_REQUIRED_MARKERS" in collector
 
 
 def test_corresponding_source_includes_rebuild_and_replacement_instructions():
@@ -220,6 +234,19 @@ def test_corresponding_source_includes_rebuild_and_replacement_instructions():
         "libiconv",
     ):
         assert requirement.lower() in instructions.lower()
+
+
+def test_certifi_source_availability_is_explicit_and_hash_pinned():
+    instructions = (
+        PROJECT_ROOT / "packaging" / "python-source" / "README.md"
+    ).read_text(encoding="utf-8")
+    for requirement in (
+        "Certifi 2026.6.17",
+        "Source Code Form",
+        "MPL-2.0",
+        "024c88eeec92ca068db80f02b8b07c9cef7b9fe261d1d535abfd5abd6f6af432",
+    ):
+        assert requirement in instructions
 
 
 def test_native_version_audit_has_queries_for_core_permissive_components():

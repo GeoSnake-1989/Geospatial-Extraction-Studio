@@ -18,6 +18,7 @@ from inspect_native_versions import query_version
 LICENSE_NAMES = re.compile(r"^(license|licence|copying|notice|copyright|authors)([._-].*)?$", re.I)
 APPROVED_STATUS = 'approved'
 REVIEW_STATUSES = {APPROVED_STATUS, 'notice_required', 'review_required'}
+PYTHON_SOURCE_REQUIRED_MARKERS = ('MPL-', 'LGPL-', 'GPL-', 'AGPL-', 'EPL-', 'CDDL-')
 
 
 def canonical_name(value: str) -> str:
@@ -123,6 +124,44 @@ def verify_python_approval(
         raise SystemExit(
             f'Python license-file inventory changed for {component}; review is required'
         )
+
+
+def verify_python_source_evidence(
+    entry: dict,
+    destination: Path,
+    project_root: Path,
+) -> list[str]:
+    component = str(entry['name'])
+    license_expression = str(entry['license'])
+    source_required = any(
+        marker in license_expression for marker in PYTHON_SOURCE_REQUIRED_MARKERS
+    )
+    evidence_items = entry.get('source_evidence') or []
+    if source_required and not evidence_items:
+        raise SystemExit(
+            f'Python component requires corresponding source but none is retained: {component}'
+        )
+    copied: list[str] = []
+    for evidence in evidence_items:
+        if not isinstance(evidence, dict):
+            raise SystemExit(f'Malformed Python source evidence: {component}')
+        missing = sorted({'repository_path', 'source_url', 'sha256'} - evidence.keys())
+        if missing:
+            raise SystemExit(
+                f'Python source evidence for {component} lacks: {", ".join(missing)}'
+            )
+        if not str(evidence['source_url']).startswith('https://'):
+            raise SystemExit(f'Python source URL must use HTTPS: {component}')
+        source = (project_root / str(evidence['repository_path'])).resolve()
+        if project_root not in source.parents or not source.is_file():
+            raise SystemExit(f'Python source evidence is missing or unsafe: {source}')
+        if sha256_file(source) != str(evidence['sha256']).lower():
+            raise SystemExit(f'Python source evidence hash changed: {component}')
+        target = destination / safe_component_directory(component) / source.name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
+        copied.append(str(target.relative_to(destination.parent)).replace('\\', '/'))
+    return copied
 
 
 def load_python_policy(path: Path, locked: dict[str, str]) -> dict[str, dict]:
@@ -473,6 +512,12 @@ def main() -> int:
     source_output = args.output / 'native-source'
     source_output.mkdir(parents=True, exist_ok=True)
     shutil.copy2(source_instructions, source_output / 'README.md')
+    python_source_instructions = project_root / 'packaging' / 'python-source' / 'README.md'
+    if not python_source_instructions.is_file():
+        raise SystemExit('Python corresponding-source instructions are missing')
+    python_source_output = args.output / 'python-source'
+    python_source_output.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(python_source_instructions, python_source_output / 'README.md')
 
     locked = locked_requirements(args.requirements)
     python_policy = load_python_policy(args.python_manifest, locked)
@@ -483,6 +528,9 @@ def main() -> int:
             raise SystemExit(f"{name} is {distribution.version}; installer lock requires {required_version}")
         policy_entry = python_policy[name]
         verify_python_approval(policy_entry, distribution)
+        corresponding_source = verify_python_source_evidence(
+            policy_entry, python_source_output, project_root
+        )
         components.append({
             "name": distribution.metadata["Name"],
             "version": distribution.version,
@@ -490,6 +538,7 @@ def main() -> int:
             "review_status": policy_entry["status"],
             "homepage": distribution.metadata.get("Home-page") or distribution.metadata.get("Project-URL") or "",
             "license_files": copy_distribution_licenses(distribution, args.output / "python"),
+            "corresponding_source": corresponding_source,
         })
 
     native_manifest = json.loads(args.native_manifest.read_text(encoding='utf-8'))

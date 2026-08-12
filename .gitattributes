@@ -12,6 +12,8 @@ packaging/native-evidence/** -text whitespace=-trailing-space,-blank-at-eof
 # evidence; Git must not rewrite their bytes because their digests are verified.
 packaging/native-source/** -text
 packaging/native-source/README.md text eol=lf
+packaging/python-source/** -text
+packaging/python-source/README.md text eol=lf
 
 # Keep local environments, generated output, and excluded research out of
 # source archives even if a file is accidentally tracked in the future.

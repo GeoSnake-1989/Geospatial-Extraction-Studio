@@ -231,6 +231,8 @@ A publication build is fail-closed. It will not write an installer to `release/`
 The current pinned build passes this native evidence gate for all 73 DLLs.
 All 38 pinned Python runtime packages must also match approved canonical license
 classifications and exact license-file hashes in `packaging/python-components.json`.
+Certifi's exact MPL-2.0 source distribution is retained, hash-verified, and
+included with recipient-facing source-availability instructions.
 Corresponding source and pinned build recipes for the LGPL/MPL components are
 included in the generated license bundle. Microsoft webpages are linked rather
 than redistributed. Microsoft runtime approval is accepted only on the exact

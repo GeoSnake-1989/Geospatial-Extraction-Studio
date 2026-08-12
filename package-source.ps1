@@ -100,6 +100,7 @@ try {
         'packaging\native-components.json',
         'packaging\native-evidence-registry.json',
         'packaging\python-components.json',
+        'packaging\python-source\README.md',
         'packaging\visual-studio-entitlement.json',
         'packaging\native-source\README.md',
         'frontend\pnpm-lock.yaml'
@@ -120,6 +121,19 @@ try {
     foreach ($repositoryPath in $evidencePaths) {
         if (-not (Test-Path -LiteralPath (Join-Path $stagingProject $repositoryPath) -PathType Leaf)) {
             throw "Native evidence referenced by the release is missing: $repositoryPath"
+        }
+    }
+
+    $pythonPolicy = Get-Content -LiteralPath (
+        Join-Path $stagingProject 'packaging\python-components.json'
+    ) -Raw | ConvertFrom-Json
+    foreach ($component in $pythonPolicy.components) {
+        foreach ($evidence in @($component.source_evidence)) {
+            if ($null -eq $evidence) { continue }
+            $repositoryPath = $evidence.repository_path
+            if (-not (Test-Path -LiteralPath (Join-Path $stagingProject $repositoryPath) -PathType Leaf)) {
+                throw "Python source evidence referenced by the release is missing: $repositoryPath"
+            }
         }
     }
 

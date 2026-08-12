@@ -74,6 +74,12 @@ package and native-library license files. In particular, retain Shapely's
 notice, and the license directories supplied with Rasterio, GDAL, PROJ, and
 Pyogrio. Do not flatten or remove `*.dist-info/licenses/` directories.
 
+Certifi's exact 2026.6.17 Source Code Form is retained at
+`packaging/python-source/certifi/certifi-2026.6.17.tar.gz`, hash-pinned in
+`packaging/python-components.json`, and copied into the installed legal bundle.
+Recipients are informed how to obtain, inspect, modify, and rebuild that
+MPL-2.0 source in `python-source/README.md`.
+
 GEOS is dynamically loaded from the Shapely wheel in the current Windows
 environment. A distributor must comply with LGPL-2.1 requirements applicable
 to that packaging method, including providing the license and required library
