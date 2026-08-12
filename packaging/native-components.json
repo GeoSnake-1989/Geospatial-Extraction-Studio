@@ -1,0 +1,1146 @@
+{
+  "schema_version": 2,
+  "policy": "Every DLL copied from a wheel must match one entry. every status other than approved blocks release packaging unless explicitly overridden for engineering-only builds.",
+  "default_blocking_reasons": {
+    "notice_required": "The exact upstream copyright notice and controlling native-library license text have not yet been retained and hash-pinned for this wheel build.",
+    "review_required": "Corresponding source, relinking rights, license selection, binary identity, or vendor redistribution authority still requires retained evidence."
+  },
+  "wheel_bundles": {
+    "numpy.libs": {
+      "distribution": "numpy",
+      "version": "2.5.1",
+      "build_evidence": {
+        "path": "numpy-2.5.1.dist-info/DELVEWHEEL",
+        "sha256": "9bf3b195dcc33fb97f2e4f55de7bf6ada810769d2a65e259496e89ea388ea3b1",
+        "contains": [
+          "numpy-2.5.1-cp312-cp312-win_amd64.whl",
+          ".openblas/lib"
+        ]
+      }
+    },
+    "pandas.libs": {
+      "distribution": "pandas",
+      "version": "3.0.3",
+      "build_evidence": {
+        "path": "pandas-3.0.3.dist-info/DELVEWHEEL",
+        "sha256": "953465372ab7ad1e1410b106764fb59778666d4d94266774f7792a24d2fb2647",
+        "contains": [
+          "pandas-3.0.3-cp312-cp312-win_amd64.whl",
+          "delvewheel"
+        ]
+      }
+    },
+    "pyogrio.libs": {
+      "distribution": "pyogrio",
+      "version": "0.13.0",
+      "build_evidence": {
+        "path": "pyogrio-0.13.0.dist-info/DELVEWHEEL",
+        "sha256": "b475335b5b3771bdf266b5b6dfeb13998e25fcb66260bde1faf66743eeb79315",
+        "contains": [
+          "pyogrio-0.13.0-cp311-abi3-win_amd64.whl",
+          "x64-windows-dynamic-release"
+        ]
+      },
+      "upstream_build": {
+        "repository": "https://github.com/geopandas/pyogrio",
+        "release_tag": "v0.13.0",
+        "release_commit": "d5ce9ca03d15e4477b91fa4aee3732d256692f32",
+        "vcpkg_baseline": "89dac9685f8d0ebd0a07d8b93ed51215c3a2fb2c"
+      }
+    },
+    "pyproj.libs": {
+      "distribution": "pyproj",
+      "version": "3.7.2",
+      "build_evidence": {
+        "path": "pyproj-3.7.2.dist-info/DELVEWHEEL",
+        "sha256": "c68e35f4f3252728448a6b4e6031be50de6afcfa0f287d89328e9f5505c7d971",
+        "contains": [
+          "pyproj-3.7.2-cp312-cp312-win_amd64.whl",
+          "C:/vcpkg/installed/x64-windows/bin"
+        ]
+      },
+      "upstream_build": {
+        "repository": "https://github.com/pyproj4/pyproj",
+        "release_tag": "3.7.2",
+        "release_commit": "f16037d2c45c3274ef28b828998267c3390393c8",
+        "vcpkg_baseline": "4ec74919dbf24931b29347b000c74374e8bbde35"
+      }
+    },
+    "rasterio.libs": {
+      "distribution": "rasterio",
+      "version": "1.5.0",
+      "build_evidence": {
+        "path": "rasterio-1.5.0.dist-info/DELVEWHEEL",
+        "sha256": "6f88ddf9b937af5ac7430a6c37941ab944630eb1d31c61c0314e91be3a1720bd",
+        "contains": [
+          "rasterio-1.5.0-cp312-cp312-win_amd64.whl",
+          "C:/vcpkg/installed/x64-windows/bin"
+        ]
+      },
+      "upstream_build": {
+        "repository": "https://github.com/rasterio/rasterio",
+        "release_tag": "1.5.0",
+        "release_commit": "8286da37f6664f28cdabba4d0ac5fef64e4a77c1",
+        "vcpkg_baseline": "e535aaceed8ce77d085ba4895cb6d3eae130722a"
+      }
+    },
+    "shapely.libs": {
+      "distribution": "shapely",
+      "version": "2.1.2",
+      "build_evidence": {
+        "path": "shapely-2.1.2.dist-info/DELVEWHEEL",
+        "sha256": "ae640bacb70848f45778434dbebad146e92c8598fd49141e790dc010c72944af",
+        "contains": [
+          "shapely-2.1.2-cp312-cp312-win_amd64.whl",
+          "geos-3.13.1"
+        ]
+      },
+      "upstream_build": {
+        "repository": "https://github.com/shapely/shapely",
+        "release_tag": "2.1.2",
+        "geos_version": "3.13.1"
+      }
+    }
+  },
+  "components": [
+    {
+      "component": "FreeXL",
+      "patterns": [
+        "freexl-*.dll"
+      ],
+      "license": "MPL-1.1",
+      "source": "https://www.gaia-gis.it/fossil/freexl/index",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify FreeXL; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "freexl-2.0.0"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution.",
+          "Distribute the retained corresponding source and exact vcpkg recipe snapshots with the installer."
+        ],
+        "source_offer_required": true,
+        "source_evidence_ids": [
+          "freexl-source",
+          "rasterio-e535aaceed8ce77d085ba4895cb6d3eae130722a-freexl"
+        ]
+      }
+    },
+    {
+      "component": "GDAL",
+      "patterns": [
+        "gdal-*.dll"
+      ],
+      "license": "MIT-style AND bundled source-file licenses",
+      "source": "https://github.com/OSGeo/gdal",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-11",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "Both pinned GDAL-bearing wheels contain the same complete GDAL/OGR copyright inventory, including the general license and bundled source-file notices.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence": [
+          {
+            "distribution": "pyogrio",
+            "path": "pyogrio/gdal_data/copyright",
+            "sha256": "1dae3468e81d00da56e2936f74d33b8b3ad09d726437f19ce209a5dabea41f77",
+            "contains": [
+              "GDAL/OGR Licensing",
+              "GDAL/OGR General",
+              "Permission is hereby granted"
+            ]
+          },
+          {
+            "distribution": "rasterio",
+            "path": "rasterio/gdal_data/copyright",
+            "sha256": "1dae3468e81d00da56e2936f74d33b8b3ad09d726437f19ce209a5dabea41f77",
+            "contains": [
+              "GDAL/OGR Licensing",
+              "GDAL/OGR General",
+              "Permission is hereby granted"
+            ]
+          }
+        ],
+        "obligations": [
+          "Retain both wheel-bundled GDAL/OGR copyright inventories in the binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "GEOS",
+      "patterns": [
+        "geos-*.dll",
+        "geos_c-*.dll"
+      ],
+      "license": "LGPL-2.1-only",
+      "source": "https://github.com/libgeos/geos",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify GEOS; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "rasterio.libs",
+          "shapely.libs"
+        ],
+        "license_evidence_ids": [
+          "geos-3.13.1",
+          "geos-3.14.1"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution.",
+          "Distribute the retained corresponding source and exact vcpkg recipe snapshots with the installer."
+        ],
+        "source_offer_required": true,
+        "source_evidence_ids": [
+          "geos-3.13.1-source",
+          "geos-3.14.1-source",
+          "pyogrio-89dac9685f8d0ebd0a07d8b93ed51215c3a2fb2c-geos",
+          "rasterio-e535aaceed8ce77d085ba4895cb6d3eae130722a-geos"
+        ]
+      }
+    },
+    {
+      "component": "libgeotiff",
+      "patterns": [
+        "geotiff-*.dll"
+      ],
+      "license": "MIT-style",
+      "source": "https://github.com/OSGeo/libgeotiff",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify libgeotiff; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "libgeotiff-1.7.4"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "giflib",
+      "patterns": [
+        "gif-*.dll"
+      ],
+      "license": "MIT",
+      "source": "https://giflib.sourceforge.net/",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify giflib; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "giflib-5.2.2"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "HDF5",
+      "patterns": [
+        "hdf5-*.dll",
+        "hdf5_hl-*.dll"
+      ],
+      "license": "HDF5",
+      "source": "https://github.com/HDFGroup/hdf5",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify HDF5; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "hdf5-1.14.6"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "GNU libiconv",
+      "patterns": [
+        "iconv-*.dll"
+      ],
+      "license": "LGPL-2.1-or-later",
+      "source": "https://www.gnu.org/software/libiconv/",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify GNU libiconv; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "libiconv-lgpl-1.18",
+          "libiconv-gpl-1.18"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution.",
+          "Distribute the retained corresponding source and exact vcpkg recipe snapshots with the installer."
+        ],
+        "source_offer_required": true,
+        "source_evidence_ids": [
+          "libiconv-source",
+          "pyogrio-89dac9685f8d0ebd0a07d8b93ed51215c3a2fb2c-libiconv",
+          "rasterio-e535aaceed8ce77d085ba4895cb6d3eae130722a-libiconv"
+        ]
+      }
+    },
+    {
+      "component": "libjpeg-turbo",
+      "patterns": [
+        "jpeg62-*.dll"
+      ],
+      "license": "BSD-3-Clause AND IJG AND Zlib",
+      "source": "https://github.com/libjpeg-turbo/libjpeg-turbo",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify libjpeg-turbo; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "pyproj.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "libjpeg-3.1.0",
+          "libjpeg-3.1.3",
+          "libjpeg-3.1.4.1"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "json-c",
+      "patterns": [
+        "json-c-*.dll"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/json-c/json-c",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify json-c; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "json-c-0.18"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "Lerc",
+      "patterns": [
+        "Lerc-*.dll"
+      ],
+      "license": "Apache-2.0",
+      "source": "https://github.com/Esri/lerc",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify Lerc; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "lerc-4.0.4",
+          "lerc-4.1.1"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "OpenSSL",
+      "patterns": [
+        "libcrypto-*.dll",
+        "libssl-*.dll"
+      ],
+      "license": "Apache-2.0",
+      "source": "https://github.com/openssl/openssl",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify OpenSSL; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "openssl-3.6.0",
+          "openssl-3.6.2"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "curl",
+      "patterns": [
+        "libcurl-*.dll"
+      ],
+      "license": "curl",
+      "source": "https://github.com/curl/curl",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-11",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "curl_version results match the exact versions in all three pinned wheel vcpkg baselines; the corresponding official tag notices are retained and hash-pinned.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "pyproj.libs",
+          "rasterio.libs"
+        ],
+        "version_assertions": {
+          "pyogrio.libs": "libcurl/8.20.0 Schannel zlib/1.3.2",
+          "pyproj.libs": "libcurl/8.12.1-DEV Schannel zlib/1.3.1",
+          "rasterio.libs": "libcurl/8.17.0-DEV Schannel zlib/1.3.1"
+        },
+        "license_evidence": [
+          {
+            "repository_path": "packaging/native-evidence/curl/8.12.1/COPYING",
+            "source_url": "https://github.com/curl/curl/blob/curl-8_12_1/COPYING",
+            "source_commit": "57495c64871d18905a0941db9196ef90bafe9a29",
+            "sha256": "e18f1989333b70044b2adfb7dc2f905d0119dbdcac3bc9f4bc9d540e3a29de5b",
+            "contains": [
+              "Copyright (c) 1996 - 2025, Daniel Stenberg",
+              "Permission to use, copy, modify, and distribute"
+            ]
+          },
+          {
+            "repository_path": "packaging/native-evidence/curl/8.17.0/COPYING",
+            "source_url": "https://github.com/curl/curl/blob/curl-8_17_0/COPYING",
+            "source_commit": "400fffa90f30c7a2dc762fa33009d24851bd2016",
+            "sha256": "e18f1989333b70044b2adfb7dc2f905d0119dbdcac3bc9f4bc9d540e3a29de5b",
+            "contains": [
+              "Copyright (c) 1996 - 2025, Daniel Stenberg",
+              "Permission to use, copy, modify, and distribute"
+            ]
+          },
+          {
+            "repository_path": "packaging/native-evidence/curl/8.20.0/COPYING",
+            "source_url": "https://github.com/curl/curl/blob/curl-8_20_0/COPYING",
+            "source_commit": "a05f34973e6c4bb629d018f7cb51487be1c904d8",
+            "sha256": "82f2f4427d6545ee5aaac4f0b80428da6cc8ba41c2cf5da3a03680ec327b9681",
+            "contains": [
+              "Copyright (c) 1996 - 2026, Daniel Stenberg",
+              "Permission to use, copy, modify, and distribute"
+            ]
+          }
+        ],
+        "obligations": [
+          "Retain the curl copyright and permission notice in the binary distribution.",
+          "Do not use a copyright holder's name to promote this application without authorization."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "Expat",
+      "patterns": [
+        "libexpat-*.dll"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/libexpat/libexpat",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-11",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "XML_ExpatVersion results match the exact Expat versions in the pinned Rasterio and Pyogrio vcpkg baselines; both official tag notices are retained and hash-pinned.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "rasterio.libs"
+        ],
+        "version_assertions": {
+          "pyogrio.libs": "expat_2.8.1",
+          "rasterio.libs": "expat_2.7.3"
+        },
+        "license_evidence": [
+          {
+            "repository_path": "packaging/native-evidence/expat/2.7.3/COPYING",
+            "source_url": "https://github.com/libexpat/libexpat/blob/R_2_7_3/expat/COPYING",
+            "source_commit": "4575e52f83e0d6d7bd24939eab8952bbc7bc358f",
+            "sha256": "de32d08f840d8ac43526c0174007f58319f4b3628805d9ac3e9adc28b26afb04",
+            "contains": [
+              "Thai Open Source Software Center",
+              "2001-2025 Expat maintainers",
+              "Permission is hereby granted"
+            ]
+          },
+          {
+            "repository_path": "packaging/native-evidence/expat/2.8.1/COPYING",
+            "source_url": "https://github.com/libexpat/libexpat/blob/R_2_8_1/expat/COPYING",
+            "source_commit": "c7ffbf3879f6aef7a7b020ef84ddb4ee00222b19",
+            "sha256": "de32d08f840d8ac43526c0174007f58319f4b3628805d9ac3e9adc28b26afb04",
+            "contains": [
+              "Thai Open Source Software Center",
+              "2001-2025 Expat maintainers",
+              "Permission is hereby granted"
+            ]
+          }
+        ],
+        "obligations": [
+          "Retain the Expat copyright and permission notice in the binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "XZ Utils",
+      "patterns": [
+        "liblzma-*.dll"
+      ],
+      "license": "0BSD",
+      "source": "https://github.com/tukaani-project/xz",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "Each bundled DLL is liblzma only. XZ Utils' versioned COPYING records expressly place liblzma under 0BSD; the exact summaries and 0BSD texts are hash-pinned.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "pyproj.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "xz-summary-5.6.3",
+          "xz-0bsd-5.6.3",
+          "xz-summary-5.8.1",
+          "xz-0bsd-5.8.1",
+          "xz-summary-5.8.3",
+          "xz-0bsd-5.8.3"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "libpng",
+      "patterns": [
+        "libpng*.dll"
+      ],
+      "license": "libpng-2.0",
+      "source": "https://github.com/pnggroup/libpng",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify libpng; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "libpng-1.6.53",
+          "libpng-1.6.58"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "PostgreSQL libpq",
+      "patterns": [
+        "libpq-*.dll"
+      ],
+      "license": "PostgreSQL",
+      "source": "https://www.postgresql.org/ftp/source/",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify PostgreSQL libpq; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "postgresql-16.9"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "OpenBLAS",
+      "patterns": [
+        "libscipy_openblas*.dll"
+      ],
+      "license": "BSD-3-Clause AND BSD-3-Clause-Open-MPI AND GPL-3.0-or-later WITH GCC-exception-3.1",
+      "source": "https://github.com/OpenMathLib/OpenBLAS",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-11",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned NumPy 2.5.1 wheel expressly identifies this DLL pattern and includes the complete OpenBLAS, LAPACK, GPLv3, and GCC Runtime Library Exception notices.",
+        "covered_wheel_directories": [
+          "numpy.libs"
+        ],
+        "license_evidence": [
+          {
+            "distribution": "numpy",
+            "path": "numpy-2.5.1.dist-info/licenses/LICENSE.txt",
+            "sha256": "a804dff0ead9fadc5293456410bcbfc32bf024be9c4513459663fb7b442d2341",
+            "contains": [
+              "Name: OpenBLAS",
+              "Files: numpy.libs\\libscipy_openblas*.dll",
+              "Name: LAPACK",
+              "License: GPL-3.0-or-later WITH GCC-exception-3.1"
+            ]
+          }
+        ],
+        "obligations": [
+          "Retain the complete NumPy bundled-component license file.",
+          "Do not use OpenBLAS or contributor names to endorse this application."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "libwebp",
+      "patterns": [
+        "libwebp-*.dll",
+        "libsharpyuv-*.dll"
+      ],
+      "license": "BSD-3-Clause",
+      "source": "https://chromium.googlesource.com/webm/libwebp",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify libwebp; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "libwebp-license-1.6.0",
+          "libwebp-patents-1.6.0"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "libxml2",
+      "patterns": [
+        "libxml2-*.dll"
+      ],
+      "license": "MIT",
+      "source": "https://gitlab.gnome.org/GNOME/libxml2",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify libxml2; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "libxml2-2.15.1",
+          "libxml2-2.15.3"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "minizip",
+      "patterns": [
+        "minizip-*.dll"
+      ],
+      "license": "Zlib",
+      "source": "https://github.com/madler/zlib",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify minizip; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "minizip-1.3.1"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "Microsoft Visual C++ Runtime",
+      "patterns": [
+        "msvcp140-*.dll",
+        "vcruntime140*.dll"
+      ],
+      "license": "Microsoft-Visual-Cpp-Runtime",
+      "source": "https://learn.microsoft.com/cpp/windows/latest-supported-vc-redist",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The release host must have a complete licensed Visual Studio 2022 installation. The official redistribution list permits unmodified files under VC\\Redist, and the collector verifies the installed product and REDIST pointer.",
+        "covered_wheel_directories": [
+          "numpy.libs",
+          "pandas.libs",
+          "pyogrio.libs",
+          "pyproj.libs",
+          "rasterio.libs",
+          "shapely.libs"
+        ],
+        "license_evidence_ids": [
+          "microsoft-runtime-audit"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false,
+        "system_evidence": "visual_studio_2022",
+        "system_product_id": "Microsoft.VisualStudio.Product.Community",
+        "system_installation_version": "17.13.35931.197",
+        "system_redist_sha256": "da53b097e02b08e0fc69706102a60bc384fe756426ae4dc4a855e96f95cb2b9c"
+      }
+    },
+    {
+      "component": "netCDF-C",
+      "patterns": [
+        "netcdf-*.dll"
+      ],
+      "license": "BSD-3-Clause",
+      "source": "https://github.com/Unidata/netcdf-c",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify netCDF-C; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "netcdf-4.9.3",
+          "netcdf-ncpoco-4.9.3",
+          "netcdf-ncpoco-source-4.9.3"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "OpenJPEG",
+      "patterns": [
+        "openjp2-*.dll"
+      ],
+      "license": "BSD-2-Clause",
+      "source": "https://github.com/uclouvain/openjpeg",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify OpenJPEG; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "openjpeg-2.5.4"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "PCRE2",
+      "patterns": [
+        "pcre2-*.dll"
+      ],
+      "license": "BSD-3-Clause",
+      "source": "https://github.com/PCRE2Project/pcre2",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify PCRE2; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "pcre2-10.47"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "PROJ",
+      "patterns": [
+        "proj_*.dll"
+      ],
+      "license": "MIT",
+      "source": "https://github.com/OSGeo/PROJ",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-11",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "Each pinned PROJ-bearing wheel includes a complete PROJ copyright/license file that is hash-pinned and copied into the native evidence bundle.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "pyproj.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence": [
+          {
+            "distribution": "pyogrio",
+            "path": "pyogrio/proj_data/copyright",
+            "sha256": "6a8f30793e877d32e3f88b972f0970a051a3b5a26cd057d3993cb51e21c43319",
+            "contains": [
+              "contents of the PROJ package",
+              "MIT style license",
+              "Permission is hereby granted"
+            ]
+          },
+          {
+            "distribution": "pyproj",
+            "path": "pyproj-3.7.2.dist-info/licenses/LICENSE_proj",
+            "sha256": "ec8ad0defdbcfac5083e510c000c05a5b63144c685e0a879b7c081b5e44e24c7",
+            "contains": [
+              "contents of the PROJ.4 package",
+              "Copyright (c) 2000, Frank Warmerdam",
+              "Permission is hereby granted"
+            ]
+          },
+          {
+            "distribution": "rasterio",
+            "path": "rasterio/proj_data/copyright",
+            "sha256": "6a8f30793e877d32e3f88b972f0970a051a3b5a26cd057d3993cb51e21c43319",
+            "contains": [
+              "contents of the PROJ package",
+              "MIT style license",
+              "Permission is hereby granted"
+            ]
+          }
+        ],
+        "obligations": [
+          "Retain every wheel-specific PROJ copyright/license file in the binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "Qhull",
+      "patterns": [
+        "qhull_r-*.dll"
+      ],
+      "license": "Qhull",
+      "source": "https://github.com/qhull/qhull",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify Qhull; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "qhull-8.0.2"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "SpatiaLite",
+      "patterns": [
+        "spatialite-*.dll"
+      ],
+      "license": "MPL-1.1",
+      "source": "https://www.gaia-gis.it/fossil/libspatialite/index",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "Both pinned GDAL builds request libspatialite with default features disabled. The retained recipes exclude GCP and RTTOPO, permitting the MPL-1.1 path; exact source and recipes accompany the installer.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "libspatialite-mpl-5.1.0",
+          "libspatialite-gpl-5.1.0"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution.",
+          "Distribute the retained corresponding source and exact vcpkg recipe snapshots with the installer."
+        ],
+        "source_offer_required": true,
+        "source_evidence_ids": [
+          "libspatialite-source",
+          "pyogrio-89dac9685f8d0ebd0a07d8b93ed51215c3a2fb2c-libspatialite",
+          "rasterio-e535aaceed8ce77d085ba4895cb6d3eae130722a-libspatialite"
+        ]
+      }
+    },
+    {
+      "component": "SQLite",
+      "patterns": [
+        "sqlite3-*.dll"
+      ],
+      "license": "blessing",
+      "source": "https://sqlite.org/copyright.html",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify SQLite; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "pyproj.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "sqlite"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "libaec SZIP compatibility library",
+      "patterns": [
+        "szip-*.dll"
+      ],
+      "license": "BSD-2-Clause",
+      "source": "https://github.com/HDFGroup/libaec",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "Rasterio's pinned vcpkg recipe maps the szip DLL to libaec 1.1.3. The exact libaec license and recipe snapshot are retained.",
+        "covered_wheel_directories": [
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "libaec-1.1.3"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution.",
+          "Distribute the retained corresponding source and exact vcpkg recipe snapshots with the installer."
+        ],
+        "source_offer_required": true,
+        "source_evidence_ids": [
+          "rasterio-e535aaceed8ce77d085ba4895cb6d3eae130722a-libaec"
+        ]
+      }
+    },
+    {
+      "component": "libtiff",
+      "patterns": [
+        "tiff-*.dll"
+      ],
+      "license": "libtiff",
+      "source": "https://gitlab.com/libtiff/libtiff",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify libtiff; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "pyproj.libs",
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "libtiff-4.7.0",
+          "libtiff-4.7.1"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "tinyxml2",
+      "patterns": [
+        "tinyxml2-*.dll"
+      ],
+      "license": "Zlib",
+      "source": "https://github.com/leethomason/tinyxml2",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-12",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The pinned wheel build records identify tinyxml2; exact controlling notices are hash-pinned and bundled for every covered wheel build.",
+        "covered_wheel_directories": [
+          "rasterio.libs"
+        ],
+        "license_evidence_ids": [
+          "tinyxml2-11.0.0"
+        ],
+        "obligations": [
+          "Retain the verified component notices in every binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "zlib",
+      "patterns": [
+        "z-*.dll",
+        "zlib1-*.dll"
+      ],
+      "license": "Zlib",
+      "source": "https://github.com/madler/zlib",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-11",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "Runtime zlibVersion results match the exact zlib versions in the three pinned official wheel vcpkg baselines; the corresponding official tag license texts are retained and hash-pinned.",
+        "covered_wheel_directories": [
+          "pyogrio.libs",
+          "pyproj.libs",
+          "rasterio.libs"
+        ],
+        "version_assertions": {
+          "pyogrio.libs": "1.3.2",
+          "pyproj.libs": "1.3.1",
+          "rasterio.libs": "1.3.1"
+        },
+        "license_evidence": [
+          {
+            "repository_path": "packaging/native-evidence/zlib/1.3.1/LICENSE",
+            "source_url": "https://github.com/madler/zlib/blob/v1.3.1/LICENSE",
+            "source_commit": "51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf",
+            "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+            "contains": [
+              "1995-2022 Jean-loup Gailly and Mark Adler",
+              "Permission is granted to anyone"
+            ]
+          },
+          {
+            "repository_path": "packaging/native-evidence/zlib/1.3.2/LICENSE",
+            "source_url": "https://github.com/madler/zlib/blob/v1.3.2/LICENSE",
+            "source_commit": "da607da739fa6047df13e66a2af6b8bec7c2a498",
+            "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+            "contains": [
+              "1995-2026 Jean-loup Gailly and Mark Adler",
+              "Permission is granted to anyone"
+            ]
+          }
+        ],
+        "obligations": [
+          "Retain both version-specific zlib notices in the binary distribution."
+        ],
+        "source_offer_required": false
+      }
+    },
+    {
+      "component": "Zstandard",
+      "patterns": [
+        "zstd-*.dll"
+      ],
+      "license": "BSD-3-Clause",
+      "source": "https://github.com/facebook/zstd",
+      "status": "approved",
+      "approval": {
+        "approved_on": "2026-08-11",
+        "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
+        "basis": "The DLL reports Zstandard 1.5.7, matching Rasterio's pinned vcpkg baseline. Distribution uses the upstream BSD option, whose exact tag license is retained and hash-pinned.",
+        "covered_wheel_directories": [
+          "rasterio.libs"
+        ],
+        "version_assertions": {
+          "rasterio.libs": "1.5.7"
+        },
+        "license_evidence": [
+          {
+            "repository_path": "packaging/native-evidence/zstd/1.5.7/LICENSE",
+            "source_url": "https://github.com/facebook/zstd/blob/v1.5.7/LICENSE",
+            "source_commit": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+            "sha256": "39722c154521f79c03096702a3780971f81a04bca92d9088a00945d70d89f29d",
+            "contains": [
+              "For Zstandard software",
+              "Meta Platforms",
+              "Redistributions in binary form"
+            ]
+          }
+        ],
+        "obligations": [
+          "Retain the BSD copyright, conditions, and disclaimer in the binary distribution.",
+          "Do not use Facebook, Meta, or contributor names to endorse this application."
+        ],
+        "source_offer_required": false
+      }
+    }
+  ],
+  "evidence_registry": "packaging/native-evidence-registry.json"
+}

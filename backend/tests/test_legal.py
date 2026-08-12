@@ -1,0 +1,177 @@
+import re
+from importlib import metadata
+from pathlib import Path
+
+from app import main
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DEVELOPMENT_ONLY = {"pytest"}
+NOTICE_NAMES = {
+    "fastapi": "FastAPI",
+    "uvicorn": "Uvicorn",
+    "httpx": "HTTPX",
+    "requests": "Requests",
+    "numpy": "NumPy",
+    "rasterio": "Rasterio",
+    "pydantic": "Pydantic",
+    "python-multipart": "python-multipart",
+    "osmnx": "OSMnx",
+    "geopandas": "GeoPandas",
+    "pyogrio": "Pyogrio",
+}
+
+
+def requirement_name(line: str) -> str:
+    return re.split(r"[<>=!~\[]", line, maxsplit=1)[0].strip().lower()
+
+
+def canonical_name(name: str) -> str:
+    return re.sub(r"[-_.]+", "-", name).lower()
+
+
+def locked_requirements() -> dict[str, str]:
+    lockfile = PROJECT_ROOT / "backend" / "requirements.lock.txt"
+    entries: dict[str, str] = {}
+    for line in lockfile.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        name, separator, version = line.partition("==")
+        assert separator and version, f"Unpinned lockfile entry: {line}"
+        entries[canonical_name(name)] = version
+    return entries
+
+
+def test_all_direct_runtime_dependencies_are_in_third_party_notices():
+    requirements = (PROJECT_ROOT / "backend" / "requirements.txt").read_text(encoding="utf-8")
+    notices = (PROJECT_ROOT / "THIRD_PARTY_NOTICES.md").read_text(encoding="utf-8").lower()
+
+    runtime_dependencies = {
+        requirement_name(line)
+        for line in requirements.splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    } - DEVELOPMENT_ONLY
+
+    missing = sorted(name for name in runtime_dependencies if name not in notices)
+    assert not missing, f"Runtime dependencies missing from THIRD_PARTY_NOTICES.md: {missing}"
+
+
+def test_direct_runtime_dependencies_are_pinned_and_notice_versions_match():
+    requirements = (PROJECT_ROOT / "backend" / "requirements.txt").read_text(encoding="utf-8")
+    notices = (PROJECT_ROOT / "THIRD_PARTY_NOTICES.md").read_text(encoding="utf-8")
+    runtime_dependencies = {
+        canonical_name(requirement_name(line))
+        for line in requirements.splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    } - DEVELOPMENT_ONLY
+    locked = locked_requirements()
+
+    missing = sorted(runtime_dependencies - locked.keys())
+    assert not missing, f"Direct runtime dependencies missing from lockfile: {missing}"
+
+    for package_name in sorted(runtime_dependencies):
+        locked_version = locked[package_name]
+        assert metadata.version(package_name) == locked_version
+        display_name = NOTICE_NAMES[package_name]
+        assert f"| {display_name} | {locked_version} |" in notices
+
+
+def test_lockfile_matches_the_complete_active_environment():
+    for package_name, locked_version in locked_requirements().items():
+        assert metadata.version(package_name) == locked_version
+
+
+def test_release_version_records_match():
+    frontend_manifest = (PROJECT_ROOT / "frontend" / "package.json").read_text(encoding="utf-8")
+    version_match = re.search(r'"version"\s*:\s*"([^"]+)"', frontend_manifest)
+    assert version_match, "Frontend package version is missing"
+    release_version = version_match.group(1)
+
+    lockfile_header = (PROJECT_ROOT / "backend" / "requirements.lock.txt").read_text(
+        encoding="utf-8"
+    ).splitlines()[0]
+    packager = (PROJECT_ROOT / "package-source.ps1").read_text(encoding="utf-8")
+
+    assert main.app.version == release_version
+    assert f"{release_version} release." in lockfile_header
+    assert f"source-{release_version}.zip" in packager
+
+
+def test_excluded_research_pdfs_are_not_present():
+    assert not list(PROJECT_ROOT.glob("*.pdf"))
+
+
+def test_public_release_governance_documents_are_present():
+    contributing = (PROJECT_ROOT / "CONTRIBUTING.md").read_text(encoding="utf-8")
+    asset_licenses = (PROJECT_ROOT / "ASSET_LICENSES.md").read_text(encoding="utf-8")
+
+    assert "Developer Certificate of Origin" in contributing
+    assert "Apache License 2.0" in asset_licenses
+    assert "confirmed this authorization on August 7, 2026" in asset_licenses
+
+
+def test_legal_documents_are_available_to_the_api():
+    expected = {
+        "license": "LICENSE",
+        "notice": "NOTICE",
+        "third-party-notices": "THIRD_PARTY_NOTICES.md",
+        "content-provenance": "CONTENT_PROVENANCE.md",
+        "asset-licenses": "ASSET_LICENSES.md",
+    }
+
+    for slug, filename in expected.items():
+        response = main.legal_document(slug)
+        assert Path(response.path).resolve() == (PROJECT_ROOT / filename).resolve()
+        assert Path(response.path).stat().st_size > 0
+
+
+def test_ai_logo_notice_does_not_overstate_copyright_ownership():
+    asset_licenses = (PROJECT_ROOT / "ASSET_LICENSES.md").read_text(encoding="utf-8")
+
+    assert "project-owned branding assets" not in asset_licenses
+    assert "No exclusive copyright is claimed in" in asset_licenses
+    assert "Apache License 2.0 does not grant permission" in asset_licenses
+
+
+def test_source_release_excludes_generated_data_and_package_caches():
+    gitignore = (PROJECT_ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
+    packager = (PROJECT_ROOT / "package-source.ps1").read_text(encoding="utf-8")
+
+    for expected in {
+        "/.pnpm-store/",
+        "/build/",
+        "data/app.db",
+        "data/original/*",
+        "data/processed/*",
+        "data/cache/*",
+        "data/logs/*",
+        "data/exports/*",
+    }:
+        assert expected in gitignore
+    assert "^\\.pnpm-store" in packager
+    assert "tmp|release|build" in packager
+    assert "requirements-installer.lock.txt" in packager
+    assert "SOURCE-REVISION.txt" in packager
+    assert "status --porcelain --untracked-files=all" in packager
+    assert "ls-files" in packager
+
+    readme = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")
+    assert "Downloaded data and generated datasets" in readme
+
+
+def test_custom_tile_configuration_requires_visible_terms():
+    selector = (
+        PROJECT_ROOT / "frontend" / "src" / "components" / "MapSelector.tsx"
+    ).read_text(encoding="utf-8")
+    example = (PROJECT_ROOT / "frontend" / ".env.example").read_text(encoding="utf-8")
+
+    assert "VITE_OSM_TILE_LICENSE_URL" in selector
+    assert "Incomplete custom tile configuration" in selector
+    assert "Tile provider terms" in selector
+    assert "checkedHttpUrl" in selector
+    for setting in (
+        "VITE_OSM_TILE_URL=",
+        "VITE_OSM_TILE_ATTRIBUTION=",
+        "VITE_OSM_TILE_LICENSE_URL=",
+    ):
+        assert setting in example

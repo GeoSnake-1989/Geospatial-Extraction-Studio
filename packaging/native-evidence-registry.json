@@ -1,0 +1,475 @@
+{
+  "schema_version": 1,
+  "licenses": {
+    "freexl-2.0.0": {
+      "repository_path": "packaging/native-evidence/freexl/2.0.0/COPYING",
+      "source_url": "https://www.gaia-gis.it/gaia-sins/freexl-sources/freexl-2.0.0.tar.gz",
+      "retrieved_on": "2026-08-12",
+      "sha256": "122e48ceeb04ac94ee94acd4e6841059096e14d89f258243ff50165b41d5e369",
+      "contains": [
+        "MOZILLA PUBLIC LICENSE"
+      ]
+    },
+    "geos-3.13.1": {
+      "repository_path": "packaging/native-evidence/geos/3.13.1/COPYING",
+      "source_url": "https://download.osgeo.org/geos/geos-3.13.1.tar.bz2",
+      "retrieved_on": "2026-08-12",
+      "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+      "contains": [
+        "GNU LESSER GENERAL PUBLIC LICENSE"
+      ]
+    },
+    "geos-3.14.1": {
+      "repository_path": "packaging/native-evidence/geos/3.14.1/COPYING",
+      "source_url": "https://download.osgeo.org/geos/geos-3.14.1.tar.bz2",
+      "retrieved_on": "2026-08-12",
+      "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+      "contains": [
+        "GNU LESSER GENERAL PUBLIC LICENSE"
+      ]
+    },
+    "giflib-5.2.2": {
+      "repository_path": "packaging/native-evidence/giflib/5.2.2/COPYING",
+      "source_url": "https://deb.debian.org/debian/pool/main/g/giflib/giflib_5.2.2.orig.tar.gz",
+      "retrieved_on": "2026-08-12",
+      "sha256": "0c9b7990ecdca88b676db232c226548ac408b279f550d424d996f0d83591dd8e",
+      "contains": [
+        "The GIFLIB distribution is Copyright (c) 1997  Eric S. Raymond"
+      ]
+    },
+    "hdf5-1.14.6": {
+      "repository_path": "packaging/native-evidence/hdf5/1.14.6/COPYING",
+      "source_url": "https://github.com/HDFGroup/hdf5/blob/hdf5_1.14.6/COPYING",
+      "retrieved_on": "2026-08-12",
+      "sha256": "587b532c4c27b64ecff3192d6189e149231934a00c753a401d4559231af7f7a7",
+      "contains": [
+        "Copyright Notice and License Terms for"
+      ]
+    },
+    "json-c-0.18": {
+      "repository_path": "packaging/native-evidence/json-c/0.18-20240915/COPYING",
+      "source_url": "https://github.com/json-c/json-c/blob/json-c-0.18-20240915/COPYING",
+      "retrieved_on": "2026-08-12",
+      "sha256": "74c1e6ca5eba76b54d0ad00d4815c8315c1b3bc45ff99de61d103dc92486284c",
+      "contains": [
+        "Copyright (c) 2009-2012 Eric Haszlakiewicz"
+      ]
+    },
+    "lerc-4.0.4": {
+      "repository_path": "packaging/native-evidence/lerc/4.0.4/LICENSE",
+      "source_url": "https://github.com/Esri/lerc/blob/js_v4.0.4/LICENSE",
+      "retrieved_on": "2026-08-12",
+      "sha256": "77a8b761727c75e2167b15bfdf61b2c0bcf8792271228bebe80779106ad00671",
+      "contains": [
+        "Apache License - 2.0"
+      ]
+    },
+    "lerc-4.1.1": {
+      "repository_path": "packaging/native-evidence/lerc/4.1.1/LICENSE",
+      "source_url": "https://github.com/Esri/lerc/blob/js_v4.1.1/LICENSE",
+      "retrieved_on": "2026-08-12",
+      "sha256": "77a8b761727c75e2167b15bfdf61b2c0bcf8792271228bebe80779106ad00671",
+      "contains": [
+        "Apache License - 2.0"
+      ]
+    },
+    "libaec-1.1.3": {
+      "repository_path": "packaging/native-evidence/libaec/1.1.3/LICENSE.txt",
+      "source_url": "https://github.com/MathisRosenhauer/libaec/blob/v1.1.3/LICENSE.txt",
+      "retrieved_on": "2026-08-12",
+      "sha256": "e831d176bf03288ca15c0a07298b250d9b6e9695750add499cc545513f06aec0",
+      "contains": [
+        "Copyright 2024 Mathis Rosenhauer, Moritz Hanke, Joerg Behrens, Luis Kornblueh"
+      ]
+    },
+    "libgeotiff-1.7.4": {
+      "repository_path": "packaging/native-evidence/libgeotiff/1.7.4/LICENSE",
+      "source_url": "https://github.com/OSGeo/libgeotiff/blob/1.7.4/libgeotiff/LICENSE",
+      "retrieved_on": "2026-08-12",
+      "sha256": "a822a731a7ac4ba7d8f18fa0dc29db2e68a5dcfc315b46e4a4c8956720d55d93",
+      "contains": [
+        "libgeotiff Licensing"
+      ]
+    },
+    "libiconv-lgpl-1.18": {
+      "repository_path": "packaging/native-evidence/libiconv/1.18/COPYING.LIB",
+      "source_url": "https://ftp.gnu.org/gnu/libiconv/libiconv-1.18.tar.gz",
+      "retrieved_on": "2026-08-12",
+      "sha256": "20e50fe7aae3e56378ebf0417d9de904f55a0e61e4df315333e632a4d3555d95",
+      "contains": [
+        "GNU LESSER GENERAL PUBLIC LICENSE"
+      ]
+    },
+    "libiconv-gpl-1.18": {
+      "repository_path": "packaging/native-evidence/libiconv/1.18/COPYING",
+      "source_url": "https://ftp.gnu.org/gnu/libiconv/libiconv-1.18.tar.gz",
+      "retrieved_on": "2026-08-12",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "contains": [
+        "GNU GENERAL PUBLIC LICENSE"
+      ]
+    },
+    "libjpeg-3.1.0": {
+      "repository_path": "packaging/native-evidence/libjpeg-turbo/3.1.0/LICENSE.md",
+      "source_url": "https://github.com/libjpeg-turbo/libjpeg-turbo/blob/3.1.0/LICENSE.md",
+      "retrieved_on": "2026-08-12",
+      "sha256": "96f5b328adbb78eeaaec6980d73fd558cb1e4d62560ed615646bc3cf5e532430",
+      "contains": [
+        "libjpeg-turbo Licenses"
+      ]
+    },
+    "libjpeg-3.1.3": {
+      "repository_path": "packaging/native-evidence/libjpeg-turbo/3.1.3/LICENSE.md",
+      "source_url": "https://github.com/libjpeg-turbo/libjpeg-turbo/blob/3.1.3/LICENSE.md",
+      "retrieved_on": "2026-08-12",
+      "sha256": "2189dc45a8fe96204069f8124caa53a148dfdc193f50f584c6ca7849a6072872",
+      "contains": [
+        "libjpeg-turbo Licenses"
+      ]
+    },
+    "libjpeg-3.1.4.1": {
+      "repository_path": "packaging/native-evidence/libjpeg-turbo/3.1.4.1/LICENSE.md",
+      "source_url": "https://github.com/libjpeg-turbo/libjpeg-turbo/blob/3.1.4.1/LICENSE.md",
+      "retrieved_on": "2026-08-12",
+      "sha256": "e10114e6e40f3d0311c401ca25245ac5ef459a43c20f976fd63f03e816f5741f",
+      "contains": [
+        "libjpeg-turbo Licenses"
+      ]
+    },
+    "libpng-1.6.53": {
+      "repository_path": "packaging/native-evidence/libpng/1.6.53/LICENSE",
+      "source_url": "https://github.com/pnggroup/libpng/blob/v1.6.53/LICENSE",
+      "retrieved_on": "2026-08-12",
+      "sha256": "16d9daaafbf63a31a5bdc91d4600972548fef5aaa1244202393288dbd079c49a",
+      "contains": [
+        "COPYRIGHT NOTICE, DISCLAIMER, and LICENSE"
+      ]
+    },
+    "libpng-1.6.58": {
+      "repository_path": "packaging/native-evidence/libpng/1.6.58/LICENSE",
+      "source_url": "https://github.com/pnggroup/libpng/blob/v1.6.58/LICENSE",
+      "retrieved_on": "2026-08-12",
+      "sha256": "bdb0a645ea18c60507d0368379b1ac5474b92255fcc2d115e07486a7672ba526",
+      "contains": [
+        "COPYRIGHT NOTICE, DISCLAIMER, and LICENSE"
+      ]
+    },
+    "libspatialite-mpl-5.1.0": {
+      "repository_path": "packaging/native-evidence/libspatialite/5.1.0/COPYING",
+      "source_url": "https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-5.1.0.tar.gz",
+      "retrieved_on": "2026-08-12",
+      "sha256": "b81965482914858383484d7e63b5de1d0c4647fa7f527e78d4499e4a7b76aab5",
+      "contains": [
+        "MOZILLA PUBLIC LICENSE"
+      ]
+    },
+    "libspatialite-gpl-5.1.0": {
+      "repository_path": "packaging/native-evidence/libspatialite/5.1.0/control-points-COPYING",
+      "source_url": "https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-5.1.0.tar.gz",
+      "retrieved_on": "2026-08-12",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "contains": [
+        "GNU GENERAL PUBLIC LICENSE"
+      ]
+    },
+    "libtiff-4.7.0": {
+      "repository_path": "packaging/native-evidence/libtiff/4.7.0/LICENSE.md",
+      "source_url": "https://gitlab.com/libtiff/libtiff/-/blob/v4.7.0/LICENSE.md",
+      "retrieved_on": "2026-08-12",
+      "sha256": "0780558a8bfba0af1160ec1ff11ade4f41c0d7deafd6ecfc796b492a788e380d",
+      "contains": [
+        "# LibTIFF license"
+      ]
+    },
+    "libtiff-4.7.1": {
+      "repository_path": "packaging/native-evidence/libtiff/4.7.1/LICENSE.md",
+      "source_url": "https://gitlab.com/libtiff/libtiff/-/blob/v4.7.1/LICENSE.md",
+      "retrieved_on": "2026-08-12",
+      "sha256": "0e27c2382d7b8147972bbb746e04059a1152c8d0fda9d03ef1399d1a433c4ade",
+      "contains": [
+        "# LibTIFF license"
+      ]
+    },
+    "libwebp-license-1.6.0": {
+      "repository_path": "packaging/native-evidence/libwebp/1.6.0/COPYING",
+      "source_url": "https://github.com/webmproject/libwebp/blob/v1.6.0/COPYING",
+      "retrieved_on": "2026-08-12",
+      "sha256": "5aec868f669e384a22372a4e8a1a6cd7d44c64cd451f960ca69cc170d1e13acf",
+      "contains": [
+        "Copyright (c) 2010, Google Inc. All rights reserved."
+      ]
+    },
+    "libwebp-patents-1.6.0": {
+      "repository_path": "packaging/native-evidence/libwebp/1.6.0/PATENTS",
+      "source_url": "https://github.com/webmproject/libwebp/blob/v1.6.0/PATENTS",
+      "retrieved_on": "2026-08-12",
+      "sha256": "cc3273e0694ea5896145e0677699b53471b03ea43021ddc50e7923fbb9f5023c",
+      "contains": [
+        "Additional IP Rights Grant (Patents)"
+      ]
+    },
+    "libxml2-2.15.1": {
+      "repository_path": "packaging/native-evidence/libxml2/2.15.1/Copyright",
+      "source_url": "https://gitlab.gnome.org/GNOME/libxml2/-/blob/v2.15.1/Copyright",
+      "retrieved_on": "2026-08-12",
+      "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+      "contains": [
+        "Except where otherwise noted in the source code (e.g. the files dict.c and"
+      ]
+    },
+    "libxml2-2.15.3": {
+      "repository_path": "packaging/native-evidence/libxml2/2.15.3/Copyright",
+      "source_url": "https://gitlab.gnome.org/GNOME/libxml2/-/blob/v2.15.3/Copyright",
+      "retrieved_on": "2026-08-12",
+      "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+      "contains": [
+        "Except where otherwise noted in the source code (e.g. the files dict.c and"
+      ]
+    },
+    "minizip-1.3.1": {
+      "repository_path": "packaging/native-evidence/minizip/1.3.1/MiniZip64_info.txt",
+      "source_url": "https://github.com/madler/zlib/blob/v1.3.1/contrib/minizip/MiniZip64_info.txt",
+      "retrieved_on": "2026-08-12",
+      "sha256": "122719c32ef1763a5f6ba9c8cdefc1d78a76f7156b09e7b6f69b73f968e0dac3",
+      "contains": [
+        "MiniZip - Copyright (c) 1998-2010 - by Gilles Vollant - version 1.1 64 bits from Mathias Svensson"
+      ]
+    },
+    "netcdf-4.9.3": {
+      "repository_path": "packaging/native-evidence/netcdf-c/4.9.3/COPYRIGHT",
+      "source_url": "https://github.com/Unidata/netcdf-c/blob/v4.9.3/COPYRIGHT",
+      "retrieved_on": "2026-08-12",
+      "sha256": "58b3a925e82191209929dbf47891f9d661e09d8f8ee753ca90bd3f6a1262ecb7",
+      "contains": [
+        "Copyright 2018 Unidata"
+      ]
+    },
+    "netcdf-ncpoco-4.9.3": {
+      "repository_path": "packaging/native-evidence/netcdf-c/4.9.3/libncpoco-COPYRIGHT",
+      "source_url": "https://github.com/Unidata/netcdf-c/blob/v4.9.3/libncpoco/COPYRIGHT",
+      "retrieved_on": "2026-08-12",
+      "sha256": "bcdf032e01511bc7eaeb076d446726b66baa63411ecc1ba73c3d15554625309e",
+      "contains": [
+        "The NetCDF Copyright."
+      ]
+    },
+    "netcdf-ncpoco-source-4.9.3": {
+      "repository_path": "packaging/native-evidence/netcdf-c/4.9.3/libncpoco-SourceLicence",
+      "source_url": "https://github.com/Unidata/netcdf-c/blob/v4.9.3/libncpoco/SourceLicence",
+      "retrieved_on": "2026-08-12",
+      "sha256": "e80d8692aefcd07ba06f53ed88226e834b6023e2f442b2b9b382572969f4ef5a",
+      "contains": [
+        "## Poco License"
+      ]
+    },
+    "openjpeg-2.5.4": {
+      "repository_path": "packaging/native-evidence/openjpeg/2.5.4/LICENSE",
+      "source_url": "https://github.com/uclouvain/openjpeg/blob/v2.5.4/LICENSE",
+      "retrieved_on": "2026-08-12",
+      "sha256": "a6af136f3e15038a666b61f376612a07d9a4e48cb7c01adbf3e33b3f14ab49b6",
+      "contains": [
+        "/*"
+      ]
+    },
+    "openssl-3.6.0": {
+      "repository_path": "packaging/native-evidence/openssl/3.6.0/LICENSE.txt",
+      "source_url": "https://github.com/openssl/openssl/blob/openssl-3.6.0/LICENSE.txt",
+      "retrieved_on": "2026-08-12",
+      "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "contains": [
+        "Apache License"
+      ]
+    },
+    "openssl-3.6.2": {
+      "repository_path": "packaging/native-evidence/openssl/3.6.2/LICENSE.txt",
+      "source_url": "https://github.com/openssl/openssl/blob/openssl-3.6.2/LICENSE.txt",
+      "retrieved_on": "2026-08-12",
+      "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "contains": [
+        "Apache License"
+      ]
+    },
+    "pcre2-10.47": {
+      "repository_path": "packaging/native-evidence/pcre2/10.47/COPYING",
+      "source_url": "https://github.com/PCRE2Project/pcre2/blob/pcre2-10.47/COPYING",
+      "retrieved_on": "2026-08-12",
+      "sha256": "99272c55f3dcfa07a8a7e15a5c1a33096e4727de74241d65fa049fccfdd59507",
+      "contains": [
+        "PCRE2 LICENCE"
+      ]
+    },
+    "postgresql-16.9": {
+      "repository_path": "packaging/native-evidence/postgresql/16.9/COPYRIGHT",
+      "source_url": "https://github.com/postgres/postgres/blob/REL_16_9/COPYRIGHT",
+      "retrieved_on": "2026-08-12",
+      "sha256": "e3822c4797fadcab31a3fc73f75c28ac20c73d72b565da91e9974cf9398ef4d2",
+      "contains": [
+        "PostgreSQL Database Management System"
+      ]
+    },
+    "qhull-8.0.2": {
+      "repository_path": "packaging/native-evidence/qhull/8.0.2/COPYING.txt",
+      "source_url": "https://github.com/qhull/qhull/blob/613debeaea72ee66626dace9ba1a2eff11b5d37d/COPYING.txt",
+      "retrieved_on": "2026-08-12",
+      "sha256": "106d55c931fd6a84822e5345d900273d059f1c27310d02567ccb313c5d18c55d",
+      "contains": [
+        "Qhull, Copyright (c) 1993-2020"
+      ]
+    },
+    "sqlite": {
+      "repository_path": "packaging/native-evidence/sqlite/copyright.html",
+      "source_url": "https://www.sqlite.org/copyright.html",
+      "retrieved_on": "2026-08-12",
+      "sha256": "44ca9f793055c8e32fc65f65a4f5bcf813a33f5bdaaa084067dd617a4ed3cc70",
+      "contains": [
+        "<!DOCTYPE html>"
+      ]
+    },
+    "tinyxml2-11.0.0": {
+      "repository_path": "packaging/native-evidence/tinyxml2/11.0.0/LICENSE.txt",
+      "source_url": "https://github.com/leethomason/tinyxml2/blob/11.0.0/LICENSE.txt",
+      "retrieved_on": "2026-08-12",
+      "sha256": "9332252e9b9e46db8285d4a3f0bf25f139bf1dca6781b956d57f2302efca6432",
+      "contains": [
+        "This software is provided 'as-is', without any express or implied"
+      ]
+    },
+    "xz-summary-5.6.3": {
+      "repository_path": "packaging/native-evidence/xz/5.6.3/COPYING",
+      "source_url": "https://github.com/tukaani-project/xz/blob/v5.6.3/COPYING",
+      "retrieved_on": "2026-08-12",
+      "sha256": "ee3b35b82f7bb0ba5fd9f13ca34ebbe757a59c05bfde5ab9d50ff4188ed33396",
+      "contains": [
+        "XZ Utils Licensing"
+      ]
+    },
+    "xz-0bsd-5.6.3": {
+      "repository_path": "packaging/native-evidence/xz/5.6.3/COPYING.0BSD",
+      "source_url": "https://github.com/tukaani-project/xz/blob/v5.6.3/COPYING.0BSD",
+      "retrieved_on": "2026-08-12",
+      "sha256": "0b01625d853911cd0e2e088dcfb743261034a091bb379246cb25a14cc4c74bf1",
+      "contains": [
+        "Permission to use, copy, modify, and/or distribute this"
+      ]
+    },
+    "xz-summary-5.8.1": {
+      "repository_path": "packaging/native-evidence/xz/5.8.1/COPYING",
+      "source_url": "https://github.com/tukaani-project/xz/blob/v5.8.1/COPYING",
+      "retrieved_on": "2026-08-12",
+      "sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8",
+      "contains": [
+        "XZ Utils Licensing"
+      ]
+    },
+    "xz-0bsd-5.8.1": {
+      "repository_path": "packaging/native-evidence/xz/5.8.1/COPYING.0BSD",
+      "source_url": "https://github.com/tukaani-project/xz/blob/v5.8.1/COPYING.0BSD",
+      "retrieved_on": "2026-08-12",
+      "sha256": "0b01625d853911cd0e2e088dcfb743261034a091bb379246cb25a14cc4c74bf1",
+      "contains": [
+        "Permission to use, copy, modify, and/or distribute this"
+      ]
+    },
+    "xz-summary-5.8.3": {
+      "repository_path": "packaging/native-evidence/xz/5.8.3/COPYING",
+      "source_url": "https://github.com/tukaani-project/xz/blob/v5.8.3/COPYING",
+      "retrieved_on": "2026-08-12",
+      "sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8",
+      "contains": [
+        "XZ Utils Licensing"
+      ]
+    },
+    "xz-0bsd-5.8.3": {
+      "repository_path": "packaging/native-evidence/xz/5.8.3/COPYING.0BSD",
+      "source_url": "https://github.com/tukaani-project/xz/blob/v5.8.3/COPYING.0BSD",
+      "retrieved_on": "2026-08-12",
+      "sha256": "0b01625d853911cd0e2e088dcfb743261034a091bb379246cb25a14cc4c74bf1",
+      "contains": [
+        "Permission to use, copy, modify, and/or distribute this"
+      ]
+    },
+    "microsoft-runtime-audit": {
+      "repository_path": "packaging/native-evidence/microsoft/vs2022/REDISTRIBUTION_AUDIT.md",
+      "source_url": "https://learn.microsoft.com/visualstudio/releases/2022/redistribution",
+      "retrieved_on": "2026-08-12",
+      "sha256": "720d41e67228a70745bf31fb7dbfa5faac202062c8207566f115fa8f1c12fb31",
+      "contains": [
+        "This is a project-authored release record.",
+        "17.13.35931.197",
+        "a4c2229bdc2a2a630acdc095b4d86008e5c3e3bc7773174354f3da4f5beb9cde"
+      ]
+    }
+  },
+  "sources": {
+    "freexl-source": {
+      "repository_path": "packaging/native-source/freexl/freexl-2.0.0.tar.gz",
+      "source_url": "https://www.gaia-gis.it/gaia-sins/freexl-sources/freexl-2.0.0.tar.gz",
+      "sha256": "176705f1de58ab7c1eebbf5c6de46ab76fcd8b856508dbd28f5648f7c6e1a7f0",
+      "sha512": "663ccc321c2f0dcab8ad9255b2a77066c2046d531a0aa723fb114301fa27b53bf980787dd2548c46541036eceef988c5eedf2bec053adf628929470e67ddc17a"
+    },
+    "geos-3.13.1-source": {
+      "repository_path": "packaging/native-source/geos/geos-3.13.1.tar.bz2",
+      "source_url": "https://download.osgeo.org/geos/geos-3.13.1.tar.bz2",
+      "sha256": "df2c50503295f325e7c8d7b783aca8ba4773919cde984193850cf9e361dfd28c",
+      "sha512": "38a6d8bb05b374160c6e5eb82e5f601915ee44e75bdba0414bb7b1096a62f3cdfbb877389998bd3ff4c77c98927ce95a8d8298dd599a0fcb8ea0e83f174f1744"
+    },
+    "geos-3.14.1-source": {
+      "repository_path": "packaging/native-source/geos/geos-3.14.1.tar.bz2",
+      "source_url": "https://download.osgeo.org/geos/geos-3.14.1.tar.bz2",
+      "sha256": "3c20919cda9a505db07b5216baa980bacdaa0702da715b43f176fb07eff7e716",
+      "sha512": "a5a27c34249a6b7fa8bc5d6d557f278bcc3a81ca188f9f543bee7afb6e47d9f8a545e676c5884c0651530bccd24eb929feaaf95cda8e73b033296073e6626f0d"
+    },
+    "libiconv-source": {
+      "repository_path": "packaging/native-source/libiconv/libiconv-1.18.tar.gz",
+      "source_url": "https://ftp.gnu.org/gnu/libiconv/libiconv-1.18.tar.gz",
+      "sha256": "3b08f5f4f9b4eb82f151a7040bfd6fe6c6fb922efe4b1659c66ea933276965e8",
+      "sha512": "a55eb3b7b785a78ab8918db8af541c9e11deb5ff4f89d54483287711ed797d87848ce0eafffa7ce26d9a7adb4b5a9891cb484f94bd4f51d3ce97a6a47b4c719a"
+    },
+    "libspatialite-source": {
+      "repository_path": "packaging/native-source/libspatialite/libspatialite-5.1.0.tar.gz",
+      "source_url": "https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-5.1.0.tar.gz",
+      "sha256": "43be2dd349daffe016dd1400c5d11285828c22fea35ca5109f21f3ed50605080",
+      "sha512": "2745b373e31cea58623224def6090c491b58409803bb71231450dfa2cfdf3aafc3fc6f680585d55d085008f8cf362c3062ae67ffc7d80257775a22eb81ef1e57"
+    },
+    "pyogrio-89dac9685f8d0ebd0a07d8b93ed51215c3a2fb2c-geos": {
+      "repository_path": "packaging/native-source/vcpkg/pyogrio-89dac9685f8d0ebd0a07d8b93ed51215c3a2fb2c-geos.zip",
+      "source_url": "https://github.com/microsoft/vcpkg",
+      "sha256": "4c424745b7632318ebe5f6bb7262424e27013f5acd6290d13162667f17ca15a5"
+    },
+    "pyogrio-89dac9685f8d0ebd0a07d8b93ed51215c3a2fb2c-libiconv": {
+      "repository_path": "packaging/native-source/vcpkg/pyogrio-89dac9685f8d0ebd0a07d8b93ed51215c3a2fb2c-libiconv.zip",
+      "source_url": "https://github.com/microsoft/vcpkg",
+      "sha256": "217253198cbc165584201ae0450a542b585a5d9d857b90639f01ed6cdc0ada35"
+    },
+    "pyogrio-89dac9685f8d0ebd0a07d8b93ed51215c3a2fb2c-libspatialite": {
+      "repository_path": "packaging/native-source/vcpkg/pyogrio-89dac9685f8d0ebd0a07d8b93ed51215c3a2fb2c-libspatialite.zip",
+      "source_url": "https://github.com/microsoft/vcpkg",
+      "sha256": "a764798ce3681eb54c0226786f2bcecdbb00efdd8639deb02b2615ef73b44526"
+    },
+    "rasterio-e535aaceed8ce77d085ba4895cb6d3eae130722a-freexl": {
+      "repository_path": "packaging/native-source/vcpkg/rasterio-e535aaceed8ce77d085ba4895cb6d3eae130722a-freexl.zip",
+      "source_url": "https://github.com/microsoft/vcpkg",
+      "sha256": "d011f2f9566681fab0729e2e42b293e32ff382c8694c39c61ae88138d832cc9a"
+    },
+    "rasterio-e535aaceed8ce77d085ba4895cb6d3eae130722a-geos": {
+      "repository_path": "packaging/native-source/vcpkg/rasterio-e535aaceed8ce77d085ba4895cb6d3eae130722a-geos.zip",
+      "source_url": "https://github.com/microsoft/vcpkg",
+      "sha256": "1bf9dc339bdd2797adb2af633d29424910ff5ca0a98085c6b6d1b35b3ffd46b7"
+    },
+    "rasterio-e535aaceed8ce77d085ba4895cb6d3eae130722a-libaec": {
+      "repository_path": "packaging/native-source/vcpkg/rasterio-e535aaceed8ce77d085ba4895cb6d3eae130722a-libaec.zip",
+      "source_url": "https://github.com/microsoft/vcpkg",
+      "sha256": "f49ebb2c2aae9d635f734b842bf96345b87aef795a80421f5a59c9f7c877829f"
+    },
+    "rasterio-e535aaceed8ce77d085ba4895cb6d3eae130722a-libiconv": {
+      "repository_path": "packaging/native-source/vcpkg/rasterio-e535aaceed8ce77d085ba4895cb6d3eae130722a-libiconv.zip",
+      "source_url": "https://github.com/microsoft/vcpkg",
+      "sha256": "a18e48c06ea2064d0dc430930f5f0d8f7de4df873196ae1d467fcb50562f8f86"
+    },
+    "rasterio-e535aaceed8ce77d085ba4895cb6d3eae130722a-libspatialite": {
+      "repository_path": "packaging/native-source/vcpkg/rasterio-e535aaceed8ce77d085ba4895cb6d3eae130722a-libspatialite.zip",
+      "source_url": "https://github.com/microsoft/vcpkg",
+      "sha256": "7cc12785eaadcfc3c3013fc852098abfa02b1696922d4153cef02f05c998eee8"
+    }
+  }
+}
