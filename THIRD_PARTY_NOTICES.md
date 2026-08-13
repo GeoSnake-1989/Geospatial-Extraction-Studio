@@ -152,7 +152,7 @@ licensing record identifies the bundled `liblzma` DLLs as 0BSD.
 Microsoft webpage copies are not redistributed. A project-authored audit record
 links to the controlling Microsoft terms and records the reviewed runtime hashes.
 Microsoft runtime approval is valid only on a release host where the collector
-finds the exact complete Visual Studio 2022 installation and installed REDIST
+finds the exact complete Visual Studio Community installation and installed REDIST
 pointer digest recorded by policy. A separate entitlement record limits the
 Community-edition basis to developing, testing, and releasing this Apache-2.0
 open-source project; it does not authorize proprietary or unrelated work. Keep

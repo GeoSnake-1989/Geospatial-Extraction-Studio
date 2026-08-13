@@ -8,21 +8,21 @@ terms; they remain controlling.
 
 - Reviewed: 2026-08-12
 - Visual Studio product observed on the release host: Visual Studio Community
-  2022 (`Microsoft.VisualStudio.Product.Community`)
-- Observed installation version: `17.13.35931.197`
+  2026 (`Microsoft.VisualStudio.Product.Community`)
+- Observed installation version: `18.1.11312.151`
 - Installed REDIST pointer SHA-256:
-  `da53b097e02b08e0fc69706102a60bc384fe756426ae4dc4a855e96f95cb2b9c`
-- Official Visual Studio 2022 redistribution list:
-  https://learn.microsoft.com/visualstudio/releases/2022/redistribution
-- Official Visual Studio Community 2022 license terms:
-  https://visualstudio.microsoft.com/license-terms/vs2022-ga-community/
+  `2d69e3b0ac782d5513b503bafdf269a93c4fec0f1f8efac82bfbfa4b6296aef5`
+- Official Visual Studio 2026 redistribution list:
+  https://learn.microsoft.com/visualstudio/releases/2026/redistribution
+- Official Visual Studio Community 2026 license terms:
+  https://visualstudio.microsoft.com/license-terms/vs2026-ga-community/
 - Stable installed REDIST reference:
-  https://aka.ms/vs/17/redist.txt
+  https://aka.ms/vs/18/redistribution
 
 ## Release conclusion and limitations
 
 The official redistribution list states that a person with a validly licensed
-copy of an eligible Visual Studio 2022 edition may distribute the listed files
+copy of an eligible Visual Studio edition may distribute the listed files
 with their program in unmodified form, subject to that edition's license terms.
 The release collector therefore fails unless it finds the exact complete Visual
 Studio product/version above and the exact installed REDIST pointer digest.

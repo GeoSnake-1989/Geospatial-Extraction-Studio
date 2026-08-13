@@ -3,11 +3,11 @@
   "attested_by": "GeoSnake1989",
   "attested_on": "2026-08-12",
   "use_basis": "osi_approved_open_source_project",
-  "statement": "The release operator confirms that Visual Studio Community 2022 is used solely to develop, test, and release this Apache-2.0 open-source project. This record does not authorize Visual Studio Community use for a proprietary derivative or unrelated project.",
+  "statement": "The release operator confirms that Visual Studio Community 2026 is used solely to develop, test, and release this Apache-2.0 open-source project. This record does not authorize Visual Studio Community use for a proprietary derivative or unrelated project.",
   "product_id": "Microsoft.VisualStudio.Product.Community",
   "project_license": "Apache-2.0",
   "project_license_path": "LICENSE",
   "project_license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
-  "community_terms_url": "https://visualstudio.microsoft.com/license-terms/vs2022-ga-community/",
-  "redistribution_url": "https://learn.microsoft.com/visualstudio/releases/2022/redistribution"
+  "community_terms_url": "https://visualstudio.microsoft.com/license-terms/vs2026-ga-community/",
+  "redistribution_url": "https://learn.microsoft.com/visualstudio/releases/2026/redistribution"
 }

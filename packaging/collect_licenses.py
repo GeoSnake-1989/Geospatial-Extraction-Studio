@@ -277,7 +277,7 @@ def verify_system_evidence(entry: dict, destination: Path, project_root: Path) -
     if not evidence_type:
         return
     component = str(entry['component'])
-    if evidence_type != 'visual_studio_2022':
+    if evidence_type != 'visual_studio':
         raise SystemExit(f'Unknown system evidence for {component}: {evidence_type}')
     if os.name != 'nt':
         raise SystemExit('Microsoft runtime redistribution requires a licensed Windows build host')
@@ -295,7 +295,7 @@ def verify_system_evidence(entry: dict, destination: Path, project_root: Path) -
     installations = json.loads(result.stdout)
     required_fields = {
         'system_product_id', 'system_installation_version', 'system_redist_sha256',
-        'entitlement_record',
+        'system_redist_url', 'entitlement_record',
     }
     missing = sorted(required_fields - approval.keys())
     if missing:
@@ -352,13 +352,14 @@ def verify_system_evidence(entry: dict, destination: Path, project_root: Path) -
     installation = Path(str(eligible[0]['installationPath']))
     redist_pointer = installation / 'Licenses' / '1033' / 'Redist.txt'
     if not redist_pointer.is_file():
-        raise SystemExit('Visual Studio 2022 REDIST pointer is missing')
+        raise SystemExit('Visual Studio REDIST pointer is missing')
     expected_redist_hash = str(approval['system_redist_sha256']).lower()
     if sha256_file(redist_pointer) != expected_redist_hash:
-        raise SystemExit('Visual Studio 2022 REDIST pointer digest changed')
+        raise SystemExit('Visual Studio REDIST pointer digest changed')
     redist_text = redist_pointer.read_text(encoding='utf-8', errors='replace')
-    if 'https://aka.ms/vs/17/redist.txt' not in redist_text:
-        raise SystemExit('Visual Studio 2022 REDIST pointer is not recognized')
+    expected_redist_url = str(approval['system_redist_url'])
+    if not expected_redist_url.startswith('https://') or expected_redist_url not in redist_text:
+        raise SystemExit('Visual Studio REDIST pointer is not recognized')
     shutil.copy2(entitlement_path, destination / 'VISUAL_STUDIO_ENTITLEMENT.json')
 
 

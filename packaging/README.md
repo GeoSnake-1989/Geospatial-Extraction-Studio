@@ -79,7 +79,7 @@ source URL and immutable digest in `native-evidence-registry.json`.
 Corresponding-source archives and exact vcpkg port recipes are retained under
 `packaging/native-source/`. Microsoft webpages are linked, not copied; the
 project-authored redistribution audit records the reviewed runtime hashes.
-Publication also requires the exact complete Visual Studio 2022 installation
+Publication also requires the exact complete Visual Studio Community installation
 and installed REDIST pointer digest recorded by release policy. The collector
 also validates `visual-studio-entitlement.json`, which scopes Community use to
 this Apache-2.0 open-source project.

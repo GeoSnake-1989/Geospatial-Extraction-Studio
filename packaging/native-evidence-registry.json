@@ -412,13 +412,13 @@
       ]
     },
     "microsoft-runtime-audit": {
-      "repository_path": "packaging/native-evidence/microsoft/vs2022/REDISTRIBUTION_AUDIT.md",
-      "source_url": "https://learn.microsoft.com/visualstudio/releases/2022/redistribution",
+      "repository_path": "packaging/native-evidence/microsoft/vs2026/REDISTRIBUTION_AUDIT.md",
+      "source_url": "https://learn.microsoft.com/visualstudio/releases/2026/redistribution",
       "retrieved_on": "2026-08-12",
-      "sha256": "533a5aabdb9408cd2908735b0d9dfeda0b6b0b07d86b05350ad4a6edc4eefd88",
+      "sha256": "583cfb7f4d9972d7303362261617bf1fc95b3dd2a07efb85b4a46fe1eb9046d0",
       "contains": [
         "This is a project-authored release record.",
-        "17.13.35931.197",
+        "18.1.11312.151",
         "a4c2229bdc2a2a630acdc095b4d86008e5c3e3bc7773174354f3da4f5beb9cde"
       ]
     }

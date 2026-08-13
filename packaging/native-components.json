@@ -742,7 +742,7 @@
       "approval": {
         "approved_on": "2026-08-12",
         "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
-        "basis": "The release host must have a complete licensed Visual Studio 2022 installation. The official redistribution list permits unmodified files under VC\\Redist, and the collector verifies the installed product and REDIST pointer.",
+        "basis": "The release host must have the exact complete licensed Visual Studio Community installation recorded by policy. The official redistribution list permits unmodified listed files, and the collector verifies the installed product and REDIST pointer.",
         "covered_wheel_directories": [
           "numpy.libs",
           "pandas.libs",
@@ -758,10 +758,11 @@
           "Retain the verified component notices in every binary distribution."
         ],
         "source_offer_required": false,
-        "system_evidence": "visual_studio_2022",
+        "system_evidence": "visual_studio",
         "system_product_id": "Microsoft.VisualStudio.Product.Community",
-        "system_installation_version": "17.13.35931.197",
-        "system_redist_sha256": "da53b097e02b08e0fc69706102a60bc384fe756426ae4dc4a855e96f95cb2b9c",
+        "system_installation_version": "18.1.11312.151",
+        "system_redist_sha256": "2d69e3b0ac782d5513b503bafdf269a93c4fec0f1f8efac82bfbfa4b6296aef5",
+        "system_redist_url": "https://aka.ms/vs/18/redistribution",
         "entitlement_record": "packaging/visual-studio-entitlement.json"
       }
     },
