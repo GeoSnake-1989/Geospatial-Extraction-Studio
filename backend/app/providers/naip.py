@@ -47,6 +47,7 @@ class NAIPItem:
     asset_metadata: dict[str, Any] | None = None
     stac_item_url: str | None = None
     stac_license_links: tuple[dict[str, str], ...] = ()
+    asset_license_links: tuple[dict[str, str], ...] = ()
 
     @classmethod
     def from_feature(cls, feature: dict[str, Any]) -> "NAIPItem":
@@ -84,6 +85,17 @@ class NAIPItem:
             and link.get("rel") == "license"
             and link.get("href")
         )
+        asset_license_links = tuple(
+            {
+                key: str(link[key])
+                for key in ("href", "title", "type")
+                if link.get(key)
+            }
+            for link in asset.get("links") or []
+            if isinstance(link, dict)
+            and link.get("rel") == "license"
+            and link.get("href")
+        )
         raw_license = feature.get("license") or properties.get("license")
         stac_license = str(raw_license) if raw_license else None
         asset_metadata = {
@@ -107,6 +119,7 @@ class NAIPItem:
             asset_metadata=asset_metadata,
             stac_item_url=stac_item_url,
             stac_license_links=stac_license_links,
+            asset_license_links=asset_license_links,
         )
 
     def footprint(self):
@@ -121,6 +134,13 @@ class NAIPProvider:
     product_name = "NAIP AOI GeoTIFF mosaic"
     attribution = "NAIP imagery provided by USDA Farm Service Agency"
     non_spdx_license_values = {"other", "proprietary", "various"}
+    recognized_license_declarations = {
+        "cc0-1.0",
+        "cc-by-4.0",
+        "pddl-1.0",
+        "public-domain",
+        "us-pd",
+    }
     license_note = (
         "Asset-level STAC license metadata takes precedence over item metadata only "
         "when the declarations do not conflict; item metadata otherwise takes precedence "
@@ -181,9 +201,14 @@ class NAIPProvider:
         license_links = metadata.get("license_links") or []
         if not declaration and not license_links:
             raise ValueError("collection response does not declare or link a license")
-        if declaration.lower() in cls.non_spdx_license_values and not license_links:
+        normalized = declaration.casefold()
+        if normalized in cls.non_spdx_license_values and not license_links:
             raise ValueError(
                 f"collection license '{declaration}' requires a linked license text"
+            )
+        if declaration and normalized not in cls.recognized_license_declarations and not license_links:
+            raise ValueError(
+                f"collection license '{declaration}' is not recognized and has no linked license text"
             )
 
     def effective_item_license(
@@ -199,7 +224,7 @@ class NAIPProvider:
                 "the source record is reviewed"
             )
         if asset_license:
-            return asset_license, "asset", item.stac_license_links
+            return asset_license, "asset", item.asset_license_links
         if item_license:
             return item_license, "item", item.stac_license_links
         collection_license = str(self.collection_metadata.get("license") or "").strip()
@@ -221,10 +246,11 @@ class NAIPProvider:
                     f"NAIP item {item.id} has no effective license declaration or link; "
                     "extraction is disabled until its redistribution terms can be verified"
                 )
-            if declaration.casefold() in self.non_spdx_license_values and not license_links:
+            normalized = declaration.casefold()
+            if declaration and normalized not in self.recognized_license_declarations and not license_links:
                 raise NAIPProviderError(
-                    f"NAIP item {item.id} has {level}-level license '{declaration}' without "
-                    "a same-record linked license text; extraction is disabled until its "
+                    f"NAIP item {item.id} has unrecognized {level}-level license '{declaration}' "
+                    "without a same-record linked license text; extraction is disabled until its "
                     "redistribution terms can be verified"
                 )
 
@@ -252,7 +278,7 @@ class NAIPProvider:
         }
         url: str | None = self.search_url
         features: list[dict[str, Any]] = []
-        headers = {"User-Agent": "GeospatialExtractionStudio/0.4 (local NAIP extractor)"}
+        headers = {"User-Agent": "GeospatialExtractionStudio/0.4.1 (local NAIP extractor)"}
         async with httpx.AsyncClient(timeout=45, headers=headers, follow_redirects=True) as client:
             await self._load_collection_metadata(client)
             while url and len(features) < 5_000:
@@ -374,7 +400,7 @@ class NAIPProvider:
         return selected
 
     async def _sign_items(self, items: list[NAIPItem]) -> list[str]:
-        headers = {"User-Agent": "GeospatialExtractionStudio/0.4 (local NAIP extractor)"}
+        headers = {"User-Agent": "GeospatialExtractionStudio/0.4.1 (local NAIP extractor)"}
         async with httpx.AsyncClient(timeout=30, headers=headers, follow_redirects=True) as client:
             async def sign_item(item: NAIPItem) -> str:
                 try:
@@ -576,6 +602,10 @@ class NAIPProvider:
                     "stac_item_url": item.stac_item_url,
                     "license": item.stac_license,
                     "license_links": list(item.stac_license_links),
+                    "asset_license_links": list(item.asset_license_links),
+                    "effective_license": dict(
+                        zip(("declaration", "level", "links"), self.effective_item_license(item))
+                    ),
                     "providers": list(item.stac_providers),
                     "asset_metadata": item.asset_metadata or {},
                 }
@@ -602,18 +632,15 @@ class NAIPProvider:
     def source_license_summary(self, items: list[NAIPItem]) -> str:
         source_licenses: set[str] = set()
         for item in items:
-            declaration = str(
-                (item.asset_metadata or {}).get("license") or item.stac_license or ""
-            ).strip()
+            declaration, level, effective_links = self.effective_item_license(item)
+            if level == "collection":
+                continue
             if not declaration:
                 continue
-            if (
-                declaration.casefold() in self.non_spdx_license_values
-                and item.stac_license_links
-            ):
+            if effective_links:
                 links = "; ".join(
                     f"{str(link.get('title') or 'linked license')}: {link['href']}"
-                    for link in item.stac_license_links
+                    for link in effective_links
                 )
                 source_licenses.add(f"{declaration} (linked terms: {links})")
             else:

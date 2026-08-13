@@ -159,6 +159,7 @@ def test_source_release_excludes_generated_data_and_package_caches():
     assert "SOURCE-REVISION.txt" in packager
     assert "status --porcelain --untracked-files=all" in packager
     assert "ls-files" in packager
+    assert "not tagged v0.4.1" in packager
 
     readme = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")
     assert "Downloaded data and generated datasets" in readme
@@ -169,6 +170,15 @@ def test_source_release_excludes_generated_data_and_package_caches():
     assert 'frontend-components.json' in packager
     assert 'prepare-runtime.ps1' in packager
     assert 'audit_frozen_binary.py' in packager
+
+    installer_builder = (PROJECT_ROOT / 'packaging' / 'build-installer.ps1').read_text(
+        encoding='utf-8'
+    )
+    assert 'Refusing to publish an installer from a dirty working tree' in installer_builder
+    assert 'tag --points-at' in installer_builder
+    assert "'package-source.ps1'" in installer_builder
+    assert '$provenance.application_source = $applicationSourceProvenance' in installer_builder
+    assert 'archive_sha256 = $sourceArchiveHash' in installer_builder
 
 
 def test_frontend_notices_follow_the_locked_approved_production_graph():

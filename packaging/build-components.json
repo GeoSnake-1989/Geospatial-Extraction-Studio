@@ -25,5 +25,19 @@
       "path": "PyInstaller/bootloader/Windows-64bit-intel/runw.exe",
       "sha256": "cc827834990948043097d7157c8c75bb7d680c8cfa2e5e87a5a81b43eeb7e714"
     }
+  ],
+  "external_components": [
+    {
+      "name": "nsis",
+      "version": "3.12",
+      "license": "Zlib",
+      "license_path": "packaging/build-evidence/nsis/3.12/COPYING",
+      "license_sha256": "388357c1215ff403c5ebde3a5ecd273e68f8b79a579996775245d1ee65442aba",
+      "source_url": "https://nsis.sourceforge.io/License",
+      "executable": "makensis.exe",
+      "executable_sha256": "b043e554afefbfc56315669d0b4779793aeae67f0f2a7a790e2ea91f05298eff",
+      "version_output": "v3.12",
+      "compressor": "zlib"
+    }
   ]
 }

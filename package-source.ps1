@@ -1,10 +1,12 @@
 param(
-    [string]$Destination = (Join-Path $PSScriptRoot '..\Geospatial-Extraction-Studio-source-0.4.0.zip')
+    [string]$Destination = (Join-Path $PSScriptRoot '..\Geospatial-Extraction-Studio-source-0.4.1.zip'),
+    [string]$GitHubDestination
 )
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = (Resolve-Path -LiteralPath $PSScriptRoot).Path
 $destinationPath = [IO.Path]::GetFullPath($Destination)
+$githubDestinationPath = if ($GitHubDestination) { [IO.Path]::GetFullPath($GitHubDestination) } else { $null }
 
 $revisionOutput = & git -C $projectRoot rev-parse --verify HEAD
 if ($LASTEXITCODE -ne 0) {
@@ -22,14 +24,19 @@ $releaseTags = @(& git -C $projectRoot tag --points-at $sourceRevision)
 if ($LASTEXITCODE -ne 0) {
     throw 'Could not inspect release tags for the source revision.'
 }
-$releaseTag = ($releaseTags | Where-Object { $_ -eq 'v0.4.0' } | Select-Object -First 1)
-if (-not $releaseTag) { $releaseTag = 'none' }
+$releaseTag = ($releaseTags | Where-Object { $_ -eq 'v0.4.1' } | Select-Object -First 1)
+if (-not $releaseTag) {
+    throw 'Refusing to package source because the revision is not tagged v0.4.1.'
+}
 
 if ([IO.Path]::GetExtension($destinationPath) -ne '.zip') {
     throw 'The source release destination must use the .zip extension.'
 }
 if (Test-Path -LiteralPath $destinationPath) {
     throw "Refusing to overwrite an existing release archive: $destinationPath"
+}
+if ($githubDestinationPath -and (Test-Path -LiteralPath $githubDestinationPath)) {
+    throw "Refusing to overwrite an existing GitHub source tree: $githubDestinationPath"
 }
 
 $stagingRoot = Join-Path ([IO.Path]::GetTempPath()) ("geospatial-extraction-studio-source-" + [guid]::NewGuid().ToString('N'))
@@ -97,7 +104,9 @@ try {
         'packaging\audit_frozen_binary.py',
         'packaging\runtime-components.json',
         'packaging\build-components.json',
+        'packaging\build-evidence\nsis\3.12\COPYING',
         'packaging\frontend-components.json',
+        'packaging\frontend-evidence\vite\8.1.4\LICENSE.md',
         'packaging\collect_licenses.py',
         'packaging\inspect_native_versions.py',
         'packaging\GeospatialExtractionStudio.spec',
@@ -142,6 +151,27 @@ try {
         }
     }
 
+    $buildPolicy = Get-Content -LiteralPath (
+        Join-Path $stagingProject 'packaging\build-components.json'
+    ) -Raw | ConvertFrom-Json
+    foreach ($component in @($buildPolicy.external_components)) {
+        $evidencePath = Join-Path $stagingProject $component.license_path
+        if (-not (Test-Path -LiteralPath $evidencePath -PathType Leaf) -or
+            (Get-FileHash -LiteralPath $evidencePath -Algorithm SHA256).Hash.ToLowerInvariant() -ne $component.license_sha256) {
+            throw "External build-tool evidence is missing or changed: $($component.name)"
+        }
+    }
+
+    $frontendPolicy = Get-Content -LiteralPath (
+        Join-Path $stagingProject 'packaging\frontend-components.json'
+    ) -Raw | ConvertFrom-Json
+    foreach ($component in @($frontendPolicy.build_components)) {
+        $evidencePath = Join-Path $stagingProject $component.evidence_path
+        if (-not (Test-Path -LiteralPath $evidencePath -PathType Leaf) -or
+            (Get-FileHash -LiteralPath $evidencePath -Algorithm SHA256).Hash.ToLowerInvariant() -ne $component.license_sha256) {
+            throw "Frontend build-tool evidence is missing or changed: $($component.name)"
+        }
+    }
     $destinationParent = Split-Path -Parent $destinationPath
     if (-not (Test-Path -LiteralPath $destinationParent -PathType Container)) {
         New-Item -ItemType Directory -Force -Path $destinationParent | Out-Null
@@ -154,6 +184,14 @@ try {
         "$archiveHash  $([IO.Path]::GetFileName($destinationPath))$([Environment]::NewLine)",
         [Text.UTF8Encoding]::new($false)
     )
+    if ($githubDestinationPath) {
+        $githubParent = Split-Path -Parent $githubDestinationPath
+        if (-not (Test-Path -LiteralPath $githubParent -PathType Container)) {
+            New-Item -ItemType Directory -Force -Path $githubParent | Out-Null
+        }
+        Copy-Item -LiteralPath $stagingProject -Destination $githubDestinationPath -Recurse
+        Write-Output "Created clean GitHub source tree: $githubDestinationPath"
+    }
     Write-Output "Created clean Geospatial Extraction Studio source archive: $destinationPath"
     Write-Output "SHA-256: $archiveHash"
 }

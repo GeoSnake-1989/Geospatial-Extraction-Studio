@@ -9,5 +9,17 @@
     {"name": "react-dom", "display_name": "React DOM", "version": "19.2.7", "license": "MIT", "license_file": "LICENSE", "license_sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"},
     {"name": "scheduler", "display_name": "Scheduler", "version": "0.27.0", "license": "MIT", "license_file": "LICENSE", "license_sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"},
     {"name": "three", "display_name": "three.js", "version": "0.185.1", "license": "MIT", "license_file": "LICENSE", "license_sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"}
+  ],
+  "build_components": [
+    {
+      "name": "vite",
+      "display_name": "Vite build runtime",
+      "version": "8.1.4",
+      "license": "MIT",
+      "license_file": "LICENSE.md",
+      "license_sha256": "b1d741c26b53de1bbc0d4d7d3365b79888f9fe511527544a8a7b8e24dec43147",
+      "evidence_path": "packaging/frontend-evidence/vite/8.1.4/LICENSE.md",
+      "scope": "generated module-loader/runtime code"
+    }
   ]
 }

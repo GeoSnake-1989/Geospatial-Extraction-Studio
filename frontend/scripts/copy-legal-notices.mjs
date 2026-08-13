@@ -1,6 +1,6 @@
 import { spawnSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { copyFileSync, mkdirSync, readFileSync, rmSync, statSync } from 'node:fs'
+import { copyFileSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -84,11 +84,37 @@ for (const [key, runtimePackage] of [...discovered.entries()].sort()) {
   }
 }
 
+for (const approval of policy.build_components || []) {
+  const packageRoot = resolve(frontendRoot, 'node_modules', approval.name)
+  const metadata = JSON.parse(readFileSync(resolve(packageRoot, 'package.json'), 'utf8'))
+  if (metadata.name !== approval.name || metadata.version !== approval.version || metadata.license !== approval.license) {
+    throw new Error(`Frontend build package metadata differs from approved policy: ${approval.name}`)
+  }
+  const packageLicense = resolve(packageRoot, approval.license_file)
+  const evidence = resolve(projectRoot, approval.evidence_path)
+  if (sha256(packageLicense) !== approval.license_sha256 || sha256(evidence) !== approval.license_sha256) {
+    throw new Error(`Frontend build-tool license evidence mismatch: ${approval.name}`)
+  }
+  const tableEntry = `| ${approval.display_name} | ${approval.version} |`
+  if (!notices.includes(tableEntry)) throw new Error(`THIRD_PARTY_NOTICES.md is missing ${approval.name}`)
+  const destinationRoot = resolve(licensesRoot, approval.name)
+  mkdirSync(destinationRoot, { recursive: true })
+  copyFileSync(evidence, resolve(destinationRoot, approval.license_file))
+}
+
+const builtAssets = resolve(outputRoot, 'assets')
+for (const fileName of readdirSync(builtAssets).filter((name) => name.endsWith('.js'))) {
+  const bundledCode = readFileSync(resolve(builtAssets, fileName), 'utf8')
+  if (bundledCode.includes('modulepreload') && bundledCode.includes('MutationObserver')) {
+    throw new Error('Vite module-preload polyfill remains in the production bundle')
+  }
+}
+
 copyFileSync(
   resolve(projectRoot, 'packaging', 'frontend-components.json'),
   resolve(outputRoot, 'FRONTEND_COMPONENT_POLICY.json'),
 )
 
 console.log(
-  `Verified ${legalDocuments.length} Geospatial Extraction Studio documents and ${discovered.size} locked frontend package licenses in ${outputRoot}`,
+  `Verified ${legalDocuments.length} Geospatial Extraction Studio documents and ${discovered.size} locked runtime plus ${(policy.build_components || []).length} build-tool licenses in ${outputRoot}`,
 )

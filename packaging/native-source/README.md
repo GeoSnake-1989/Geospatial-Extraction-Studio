@@ -1,7 +1,8 @@
 # Native corresponding source and rebuild material
 
 This directory retains the source archives and pinned build-recipe snapshots
-referenced by `packaging/native-evidence-registry.json`. Their recorded digests
+referenced by `packaging/native-evidence-registry.json`. The vcpkg snapshots
+are redistributed under Microsoft's MIT license in `vcpkg/LICENSE.txt`. Their recorded digests
 are checked by the installer license collector. Do not modify or recompress
 these artifacts.
 

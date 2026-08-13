@@ -81,7 +81,7 @@ def verified_runtime(
     return runtime_root, critical
 
 
-def verify_build_tools(manifest: dict, license_bundle: Path) -> dict[str, str]:
+def verify_build_tools(manifest: dict, manifest_path: Path, license_bundle: Path) -> dict[str, str]:
     if manifest.get('schema_version') != 1:
         raise SystemExit('Build component policy must use schema version 1')
     versions: dict[str, str] = {}
@@ -100,6 +100,18 @@ def verify_build_tools(manifest: dict, license_bundle: Path) -> dict[str, str]:
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, destination)
         versions[name] = version
+    project_root = manifest_path.resolve().parent.parent
+    for entry in manifest.get('external_components') or []:
+        name = str(entry['name'])
+        source = (project_root / str(entry['license_path'])).resolve()
+        if project_root not in source.parents or not source.is_file():
+            raise SystemExit(f'External build-tool evidence is missing or unsafe: {name}')
+        if sha256_file(source) != str(entry['license_sha256']):
+            raise SystemExit(f'External build-tool license evidence mismatch: {name}')
+        destination = output / name / source.name
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
+        versions[name] = str(entry['version'])
     return versions
 
 
@@ -356,14 +368,19 @@ def verify_frontend_bundle(application: Path, manifest_path: Path, license_bundl
     if not installed_policy.is_file() or sha256_file(installed_policy) != sha256_file(manifest_path):
         raise SystemExit('Frozen frontend component policy is missing or changed')
     licenses_root = frontend_root / 'third-party-licenses' / 'frontend'
-    expected_names = {str(entry['name']) for entry in manifest.get('components') or []}
+    entries = list(manifest.get('components') or []) + list(manifest.get('build_components') or [])
+    expected_names = {str(entry['name']) for entry in entries}
     actual_names = {
         path.name for path in licenses_root.iterdir() if path.is_dir()
     } if licenses_root.is_dir() else set()
     if actual_names != expected_names:
         raise SystemExit('Frozen frontend license directories differ from approved policy')
+    for asset in (frontend_root / 'assets').glob('*.js'):
+        bundled = asset.read_text(encoding='utf-8', errors='replace')
+        if 'modulepreload' in bundled and 'MutationObserver' in bundled:
+            raise SystemExit('Vite module-preload polyfill remains in the frozen frontend bundle')
     records: list[dict] = []
-    for entry in manifest.get('components') or []:
+    for entry in entries:
         relative = Path(str(entry['name'])) / str(entry['license_file'])
         license_path = licenses_root / relative
         actual = sha256_file(license_path) if license_path.is_file() else ''
@@ -381,6 +398,7 @@ def verify_frontend_bundle(application: Path, manifest_path: Path, license_bundl
         'status': 'approved',
         'lockfile_sha256': manifest['lockfile_sha256'],
         'components': records,
+        'module_preload_polyfill': 'disabled-and-absent',
     }
 
 
@@ -491,7 +509,7 @@ def main() -> int:
         args.runtime_archive,
     )
     build_manifest = load_json(args.build_manifest)
-    build_versions = verify_build_tools(build_manifest, license_bundle)
+    build_versions = verify_build_tools(build_manifest, args.build_manifest, license_bundle)
     native_report = load_json(args.native_report)
     expected_executable = application / args.expected_executable
     executable_report, embedded_pyz = executable_provenance(

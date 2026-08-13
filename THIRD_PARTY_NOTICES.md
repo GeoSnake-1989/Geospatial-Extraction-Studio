@@ -29,6 +29,7 @@ packaging method.
 | React DOM | 19.2.7 | MIT | Copyright (c) Meta Platforms, Inc. and affiliates |
 | Scheduler | 0.27.0 | MIT | Copyright (c) Meta Platforms, Inc. and affiliates |
 | three.js | 0.185.1 | MIT | Copyright (c) 2010-2026 three.js authors |
+| Vite build runtime | 8.1.4 | MIT and bundled component licenses | Copyright (c) 2019-present, VoidZero Inc. and Vite contributors |
 
 
 ## Backend runtime components
@@ -119,6 +120,11 @@ contributed hooks package is Apache-2.0 or GPL-2.0-or-later. Their exact license
 files are hash-pinned in `packaging/build-components.json` and copied into the
 installed legal bundle.
 
+NSIS 3.12 contributes the installer and uninstaller stubs. This release uses
+only the zlib compressor; NSIS and that compression module are covered by the
+zlib/libpng license. The exact `makensis.exe` version and SHA-256, selected
+compressor, retained license notice, and final installer digest are fail-closed
+and recorded in the adjacent installer provenance report.
 The final release audit also reads the actual PyInstaller PYZ and executable
 archives. Every compiled Python module must map to this application, the pinned
 CPython archive, or one of the 38 approved runtime distributions with a matching
@@ -128,12 +134,18 @@ bootloader and its immutable executable code sections are hash-verified, and
 the exact outer archive and embedded PYZ inventories are retained with the
 installed notices.
 
+PCRE2 10.47 is recorded as BSD-3-Clause WITH PCRE2-exception, with its optional
+JIT portions separately covered by BSD-2-Clause; the complete upstream PCRE2
+and SLJIT licenses and binary-library exception are retained.
+
 The current pinned wheel build inventories 73 DLLs across 33 component families. All
 73 have evidence-backed approval for their exact wheel scope. Exact upstream
 open-source notices are hash-pinned in `packaging/native-evidence`; GEOS, GNU libiconv,
 FreeXL, and SpatiaLite corresponding-source archives and pinned build recipes
 are retained under `packaging/native-source` and copied into the installed
-license bundle. Rasterio's `szip` DLL is identified by its pinned vcpkg recipe
+license bundle. The retained Microsoft vcpkg recipe snapshots are MIT-licensed;
+their license is hash-pinned and included with both source and installed legal
+bundles. Rasterio's `szip` DLL is identified by its pinned vcpkg recipe
 as libaec's BSD-licensed SZIP compatibility library. XZ's own versioned
 licensing record identifies the bundled `liblzma` DLLs as 0BSD.
 

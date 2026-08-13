@@ -5,6 +5,9 @@ export default defineConfig(({ mode }) => {
   const environment = loadEnv(mode, '.', '')
   return {
     plugins: [react()],
+    build: {
+      modulePreload: { polyfill: false },
+    },
     server: {
       host: '127.0.0.1',
       port: 5173,

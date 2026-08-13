@@ -290,12 +290,35 @@
       ]
     },
     "pcre2-10.47": {
-      "repository_path": "packaging/native-evidence/pcre2/10.47/COPYING",
-      "source_url": "https://github.com/PCRE2Project/pcre2/blob/pcre2-10.47/COPYING",
+      "repository_path": "packaging/native-evidence/pcre2/10.47/LICENCE.md",
+      "source_url": "https://github.com/PCRE2Project/pcre2/blob/pcre2-10.47/LICENCE.md",
       "retrieved_on": "2026-08-12",
-      "sha256": "99272c55f3dcfa07a8a7e15a5c1a33096e4727de74241d65fa049fccfdd59507",
+      "sha256": "197d8a73ffee0d6b09adba2f9c677b5f5aede24edf89258a68e48248d010d811",
       "contains": [
-        "PCRE2 LICENCE"
+        "SPDX-License-Identifier:",
+        "BSD-3-Clause WITH PCRE2-exception",
+        "THE \"BSD\" LICENCE",
+        "EXEMPTION FOR BINARY LIBRARY-LIKE PACKAGES"
+      ]
+    },
+    "pcre2-sljit-10.47": {
+      "repository_path": "packaging/native-evidence/pcre2/10.47/SLJIT-LICENSE",
+      "source_url": "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.47/pcre2-10.47.tar.gz",
+      "retrieved_on": "2026-08-12",
+      "sha256": "5f216505c0f6ea3273caec89e766eef93cdeb7bbb0c429f9360116d7c938feeb",
+      "contains": [
+        "Stack-less Just-In-Time compiler",
+        "Copyright Zoltan Herczeg",
+        "Redistribution and use in source and binary forms"
+      ]
+    },    "vcpkg-mit": {
+      "repository_path": "packaging/native-source/vcpkg/LICENSE.txt",
+      "source_url": "https://github.com/microsoft/vcpkg/blob/4ec74919dbf24931b29347b000c74374e8bbde35/LICENSE.txt",
+      "retrieved_on": "2026-08-12",
+      "sha256": "1ee376fc340e0aa6ad6a3581c94126e741468705096ac92263048a21daa86460",
+      "contains": [
+        "MIT License",
+        "Copyright (c) Microsoft Corporation"
       ]
     },
     "postgresql-16.9": {

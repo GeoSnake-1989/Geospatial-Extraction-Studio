@@ -12,7 +12,43 @@ $binaryRoot = Join-Path $buildRoot 'binary'
 $binaryApp = Join-Path $binaryRoot 'GeospatialExtractionStudio'
 $smokeData = Join-Path $buildRoot 'smoke-data'
 $releaseRoot = Join-Path $projectRoot 'release'
-$version = '0.4.0'
+$version = '0.4.1'
+$expectedReleaseTag = "v$version"
+
+function Get-GESReleaseSourceState {
+    $revisionOutput = @(& git -C $projectRoot rev-parse --verify HEAD 2>&1)
+    if ($LASTEXITCODE -ne 0 -or $revisionOutput.Count -eq 0) {
+        throw 'A committed Git revision is required before publishing an installer.'
+    }
+    $revision = ([string]$revisionOutput[0]).Trim()
+
+    $workingState = @(& git -C $projectRoot status --porcelain --untracked-files=all 2>&1)
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Could not inspect the Git working tree before publishing.'
+    }
+    if ($workingState.Count -gt 0) {
+        throw 'Refusing to publish an installer from a dirty working tree.'
+    }
+
+    $releaseTags = @(& git -C $projectRoot tag --points-at $revision 2>&1)
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Could not inspect release tags before publishing.'
+    }
+    if ($expectedReleaseTag -notin $releaseTags) {
+        throw "Refusing to publish revision $revision without tag $expectedReleaseTag."
+    }
+
+    [pscustomobject]@{
+        revision = $revision
+        tag = $expectedReleaseTag
+    }
+}
+
+$releaseSourceState = if (-not $EngineeringBuild -and -not $SkipNsis) {
+    Get-GESReleaseSourceState
+} else {
+    $null
+}
 
 function Remove-GESBuildDirectory {
     param([string]$Path)
@@ -163,18 +199,100 @@ if (-not $makensisPath) {
     throw 'NSIS makensis.exe was not found. Install NSIS or rerun with -SkipNsis to build only the onedir application.'
 }
 
+$buildPolicy = Get-Content -Raw -LiteralPath (Join-Path $projectRoot 'packaging\build-components.json') | ConvertFrom-Json
+$nsisPolicy = @($buildPolicy.external_components | Where-Object { $_.name -eq 'nsis' })
+if ($nsisPolicy.Count -ne 1) { throw 'Build policy must contain exactly one NSIS record.' }
+$nsisPolicy = $nsisPolicy[0]
+$nsisVersion = (& $makensisPath /VERSION | Select-Object -First 1).Trim()
+$nsisHash = (Get-FileHash -LiteralPath $makensisPath -Algorithm SHA256).Hash.ToLowerInvariant()
+$nsisLicense = Join-Path $projectRoot $nsisPolicy.license_path
+$nsisLicenseHash = if (Test-Path -LiteralPath $nsisLicense -PathType Leaf) {
+    (Get-FileHash -LiteralPath $nsisLicense -Algorithm SHA256).Hash.ToLowerInvariant()
+} else { '' }
+$installerScript = Get-Content -Raw -LiteralPath (Join-Path $projectRoot 'packaging\installer.nsi')
+if ($nsisVersion -ne $nsisPolicy.version_output -or
+    $nsisHash -ne $nsisPolicy.executable_sha256 -or
+    $nsisLicenseHash -ne $nsisPolicy.license_sha256 -or
+    $installerScript -notmatch "(?m)^SetCompressor $([regex]::Escape($nsisPolicy.compressor))\r?$") {
+    throw 'NSIS version, executable, license evidence, or compressor differs from the approved build policy.'
+}
+
 $outputRoot = if ($EngineeringBuild) { $installerBuildRoot } else { $releaseRoot }
 New-Item -ItemType Directory -Force -Path $outputRoot | Out-Null
 $output = Join-Path $outputRoot "Geospatial-Extraction-Studio-Setup-$version.exe"
-if (Test-Path -LiteralPath $output) { Remove-Item -LiteralPath $output -Force }
+$hashPath = "$output.sha256"
+$provenancePath = [IO.Path]::ChangeExtension($output, '.provenance.json')
+foreach ($staleBinaryArtifact in @($output, $hashPath, $provenancePath)) {
+    if (Test-Path -LiteralPath $staleBinaryArtifact) {
+        Remove-Item -LiteralPath $staleBinaryArtifact -Force
+    }
+}
+
+if (-not $EngineeringBuild) {
+    $verifiedSourceState = Get-GESReleaseSourceState
+    if ($verifiedSourceState.revision -ne $releaseSourceState.revision) {
+        throw 'The source revision changed during the release build; restart from a clean tagged revision.'
+    }
+}
+
 & $makensisPath "/DAPP_SOURCE=$binaryApp" "/DOUTPUT_FILE=$output" "/DAPP_VERSION=$version" "/DLICENSE_FILE=$(Join-Path $projectRoot 'LICENSE')" (Join-Path $projectRoot 'packaging\installer.nsi')
 if ($LASTEXITCODE -ne 0) { throw 'NSIS installer build failed.' }
 
 $hash = (Get-FileHash -LiteralPath $output -Algorithm SHA256).Hash.ToLowerInvariant()
-$hashPath = "$output.sha256"
 [IO.File]::WriteAllText($hashPath, "$hash  $([IO.Path]::GetFileName($output))`r`n", [Text.UTF8Encoding]::new($false))
+
+$applicationSourceProvenance = $null
+if (-not $EngineeringBuild) {
+    $sourceArchive = Join-Path $releaseRoot "Geospatial-Extraction-Studio-source-$version.zip"
+    $sourceArchiveChecksum = "$sourceArchive.sha256"
+    foreach ($staleSourceArtifact in @($sourceArchive, $sourceArchiveChecksum)) {
+        if (Test-Path -LiteralPath $staleSourceArtifact) {
+            Remove-Item -LiteralPath $staleSourceArtifact -Force
+        }
+    }
+    try {
+        & (Join-Path $projectRoot 'package-source.ps1') -Destination $sourceArchive
+    } catch {
+        Remove-Item -LiteralPath $output,$hashPath -Force -ErrorAction SilentlyContinue
+        throw
+    }
+    if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $sourceArchive -PathType Leaf)) {
+        Remove-Item -LiteralPath $output,$hashPath -Force -ErrorAction SilentlyContinue
+        throw 'Matching source archive creation failed; the installer is not publishable.'
+    }
+    $sourceArchiveHash = (Get-FileHash -LiteralPath $sourceArchive -Algorithm SHA256).Hash.ToLowerInvariant()
+    $applicationSourceProvenance = [ordered]@{
+        revision = $releaseSourceState.revision
+        tag = $releaseSourceState.tag
+        archive = [IO.Path]::GetFileName($sourceArchive)
+        archive_sha256 = $sourceArchiveHash
+    }
+}
+
+$provenance = [ordered]@{
+    format = 'Geospatial Extraction Studio installer provenance 1'
+    status = 'approved'
+    installer = [ordered]@{ path = [IO.Path]::GetFileName($output); sha256 = $hash }
+}
+if ($applicationSourceProvenance) {
+    $provenance.application_source = $applicationSourceProvenance
+}
+$provenance.builder = [ordered]@{
+        name = 'NSIS'
+        version = $nsisPolicy.version
+        version_output = $nsisVersion
+        executable_sha256 = $nsisHash
+        license = $nsisPolicy.license
+        license_sha256 = $nsisLicenseHash
+        compressor = $nsisPolicy.compressor
+}
+[IO.File]::WriteAllText($provenancePath, ($provenance | ConvertTo-Json -Depth 5) + "`r`n", [Text.UTF8Encoding]::new($false))
 Write-Output "Created installer: $output"
 Write-Output "Created checksum: $hashPath"
+if ($applicationSourceProvenance) {
+    Write-Output "Created matching source archive: $sourceArchive"
+}
+Write-Output "Created provenance: $provenancePath"
 if ($EngineeringBuild) {
     Write-Warning 'This engineering installer was built with unresolved native-library review items and was not placed in release/.'
 }

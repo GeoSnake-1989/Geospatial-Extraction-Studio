@@ -73,6 +73,8 @@ def test_stac_item_preserves_license_provider_and_asset_provenance():
                 "title": "NAIP RGB image",
                 "type": "image/tiff; application=geotiff",
                 "roles": ["data"],
+                "license": "PDDL-1.0",
+                "links": [{"rel": "license", "href": "https://example.test/licenses/asset-pddl"}],
             }
         },
     }
@@ -85,6 +87,7 @@ def test_stac_item_preserves_license_provider_and_asset_provenance():
         "title": "NAIP RGB image",
         "type": "image/tiff; application=geotiff",
         "roles": ["data"],
+        "license": "PDDL-1.0",
     }
     assert item.stac_item_url == "https://example.test/items/tile-2023"
     assert item.stac_license_links == (
@@ -92,6 +95,9 @@ def test_stac_item_preserves_license_provider_and_asset_provenance():
             "href": "https://example.test/licenses/pddl",
             "title": "PDDL terms",
         },
+    )
+    assert item.asset_license_links == (
+        {"href": "https://example.test/licenses/asset-pddl"},
     )
 
 
@@ -212,6 +218,42 @@ def test_selected_item_legacy_license_accepts_item_level_link():
         "(linked terms: Item terms: https://example.test/item-terms)"
     )
 
+
+def test_asset_license_uses_only_asset_level_linked_terms():
+    provider = NAIPProvider()
+    provider.collection_metadata = {
+        "license": "proprietary",
+        "license_links": [{"href": "https://example.test/collection-terms"}],
+    }
+    item = make_item("tile-2023", 2023, (0, 0, 1, 1), "2023-06-01")
+    item = NAIPItem(
+        **{
+            **item.__dict__,
+            "asset_metadata": {"license": "proprietary"},
+            "asset_license_links": (
+                {"href": "https://example.test/asset-terms", "title": "Asset terms"},
+            ),
+        }
+    )
+
+    provider.validate_selected_item_licenses([item])
+    assert provider.source_license_summary([item]) == (
+        "Source asset/item declarations: proprietary "
+        "(linked terms: Asset terms: https://example.test/asset-terms)"
+    )
+
+
+def test_unknown_unlinked_license_declaration_is_rejected():
+    provider = NAIPProvider()
+    provider.collection_metadata = {
+        "license": "proprietary",
+        "license_links": [{"href": "https://example.test/collection-terms"}],
+    }
+    item = make_item("tile-2023", 2023, (0, 0, 1, 1), "2023-06-01")
+    item = NAIPItem(**{**item.__dict__, "stac_license": "made-up-license"})
+
+    with pytest.raises(NAIPProviderError, match="unrecognized item-level license"):
+        provider.validate_selected_item_licenses([item])
 
 def test_conflicting_asset_and_item_licenses_block_selected_item():
     provider = NAIPProvider()
