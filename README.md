@@ -1,9 +1,20 @@
 # Geospatial Extraction Studio
 
+## Download the portable Windows app
+
+**[Download Geospatial Extraction Studio Portable 0.4.4](https://github.com/GeoSnake-1989/Geospatial-Extraction-Studio/releases/download/v0.4.4/Geospatial-Extraction-Studio-Portable-0.4.4.zip)** (approximately 125 MB)
+
+Extract the entire ZIP, then run `GeospatialExtractionStudio.exe`. No installer,
+Python, Node.js, administrator access, or OpenAI connection is required. The
+executable is currently unsigned, so verify the accompanying SHA-256 checksum
+if Windows displays an Unknown publisher or SmartScreen warning. See the
+[latest release](https://github.com/GeoSnake-1989/Geospatial-Extraction-Studio/releases/latest)
+for the checksum, provenance record, and matching source archive.
+
 Geospatial Extraction Studio is the sole maintained application in this workspace. It provides elevation viewing, NAIP aerial-imagery extraction, and OpenStreetMap extraction in one local-first Windows application. A single place search and map define the area of interest, then the user chooses a workflow.
 
 This `Geospatial Extraction Studio` directory is intended to be the root of the
-public GitHub repository. Do not publish its parent workspace as the repository
+GitHub repository. Do not publish its parent workspace as the repository
 root; the parent can contain planning material outside this project's license
 and release controls.
 
