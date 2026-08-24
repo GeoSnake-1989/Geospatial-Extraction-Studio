@@ -20,11 +20,11 @@ The release build performs these gates in order:
    embedded pure-Python module, plus PyInstaller bootloader/archive validation;
 8. frozen-app health/UI smoke test;
 9. fail-closed NSIS 3.12 executable/license/compressor verification;
-10. a second clean-tree and exact `v0.4.1` tag check immediately before publication;
+10. a second clean-tree and exact `v0.4.2` tag check immediately before publication;
 11. NSIS installer, SHA-256 checksum, matching tagged source archive, and
     source-bound installer provenance generation.
 
-A normal build refuses to create `release/Geospatial-Extraction-Studio-Setup-0.4.1.exe` while any matched native component has a status other than `approved` in `native-components.json`. NSIS output is accepted only from the hash-pinned 3.12 `makensis.exe` using the
+A normal build refuses to create `release/Geospatial-Extraction-Studio-Setup-0.4.2.exe` while any matched native component has a status other than `approved` in `native-components.json`. NSIS output is accepted only from the hash-pinned 3.12 `makensis.exe` using the
 zlib compressor; the adjacent `.provenance.json` records the compiler and final
 installer digests, exact source revision and tag, and matching source-archive
 digest. A publication build refuses a dirty tree or a revision without the

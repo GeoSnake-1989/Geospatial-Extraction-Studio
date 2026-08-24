@@ -1,5 +1,5 @@
 param(
-    [string]$Destination = (Join-Path $PSScriptRoot '..\Geospatial-Extraction-Studio-source-0.4.1.zip'),
+    [string]$Destination = (Join-Path $PSScriptRoot '..\Geospatial-Extraction-Studio-source-0.4.2.zip'),
     [string]$GitHubDestination
 )
 
@@ -24,9 +24,9 @@ $releaseTags = @(& git -C $projectRoot tag --points-at $sourceRevision)
 if ($LASTEXITCODE -ne 0) {
     throw 'Could not inspect release tags for the source revision.'
 }
-$releaseTag = ($releaseTags | Where-Object { $_ -eq 'v0.4.1' } | Select-Object -First 1)
+$releaseTag = ($releaseTags | Where-Object { $_ -eq 'v0.4.2' } | Select-Object -First 1)
 if (-not $releaseTag) {
-    throw 'Refusing to package source because the revision is not tagged v0.4.1.'
+    throw 'Refusing to package source because the revision is not tagged v0.4.2.'
 }
 
 if ([IO.Path]::GetExtension($destinationPath) -ne '.zip') {

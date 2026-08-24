@@ -1,4 +1,4 @@
-# Exact Windows development/runtime environment used for the Geospatial Extraction Studio 0.4.1 release.
+# Exact Windows development/runtime environment used for the Geospatial Extraction Studio 0.4.2 release.
 # Regenerate deliberately after reviewing THIRD_PARTY_NOTICES.md and package licenses.
 affine==2.4.0
 annotated-doc==0.0.4

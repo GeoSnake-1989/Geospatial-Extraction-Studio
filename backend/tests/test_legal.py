@@ -166,7 +166,7 @@ def test_source_release_excludes_generated_data_and_package_caches():
     assert "SOURCE-REVISION.txt" in packager
     assert "status --porcelain --untracked-files=all" in packager
     assert "ls-files" in packager
-    assert "not tagged v0.4.1" in packager
+    assert "not tagged v0.4.2" in packager
 
     readme = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")
     assert "Downloaded data and generated datasets" in readme
