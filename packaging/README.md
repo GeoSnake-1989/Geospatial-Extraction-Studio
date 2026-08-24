@@ -2,6 +2,14 @@
 
 The supported design is a PyInstaller **onedir** application wrapped by an NSIS per-user installer. The application serves `frontend/dist` from FastAPI, so installed systems do not need Python, Node.js, Vite, or an OpenAI connection.
 
+The same audited onedir application can be distributed without NSIS as an extract-and-run portable ZIP:
+
+```powershell
+.\packaging\build-portable.ps1
+```
+
+The portable builder requires a clean revision carrying its exact release tag. It invokes the full one-folder dependency, license, native-library, executable-provenance, and smoke-test pipeline; creates a top-level portable folder with usage instructions; verifies the archive by extracting it and matching the launcher digest; and writes adjacent SHA-256, provenance, and matching source-archive artifacts under `release/`. It never enables the engineering-build override. Application data remains under `%LOCALAPPDATA%\Geospatial Extraction Studio\data` rather than inside the extracted program folder.
+
 Run from the repository root:
 
 ```powershell
@@ -20,11 +28,11 @@ The release build performs these gates in order:
    embedded pure-Python module, plus PyInstaller bootloader/archive validation;
 8. frozen-app health/UI smoke test;
 9. fail-closed NSIS 3.12 executable/license/compressor verification;
-10. a second clean-tree and exact `v0.4.2` tag check immediately before publication;
+10. a second clean-tree and exact `v0.4.3` tag check immediately before publication;
 11. NSIS installer, SHA-256 checksum, matching tagged source archive, and
     source-bound installer provenance generation.
 
-A normal build refuses to create `release/Geospatial-Extraction-Studio-Setup-0.4.2.exe` while any matched native component has a status other than `approved` in `native-components.json`. NSIS output is accepted only from the hash-pinned 3.12 `makensis.exe` using the
+A normal build refuses to create `release/Geospatial-Extraction-Studio-Setup-0.4.3.exe` while any matched native component has a status other than `approved` in `native-components.json`. NSIS output is accepted only from the hash-pinned 3.12 `makensis.exe` using the
 zlib compressor; the adjacent `.provenance.json` records the compiler and final
 installer digests, exact source revision and tag, and matching source-archive
 digest. A publication build refuses a dirty tree or a revision without the

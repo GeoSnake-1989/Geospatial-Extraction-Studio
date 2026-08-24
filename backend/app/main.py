@@ -249,7 +249,7 @@ async def lifespan(_: FastAPI):
 
 app = FastAPI(
     title="Geospatial Extraction Studio API",
-    version="0.4.2",
+    version="0.4.3",
     description="Local-first elevation, OpenStreetMap, and NAIP imagery extraction service",
     license_info={"name": "Apache License 2.0", "identifier": "Apache-2.0"},
     lifespan=lifespan,

@@ -12,7 +12,7 @@ $binaryRoot = Join-Path $buildRoot 'binary'
 $binaryApp = Join-Path $binaryRoot 'GeospatialExtractionStudio'
 $smokeData = Join-Path $buildRoot 'smoke-data'
 $releaseRoot = Join-Path $projectRoot 'release'
-$version = '0.4.2'
+$version = '0.4.3'
 $expectedReleaseTag = "v$version"
 
 function Get-GESReleaseSourceState {
@@ -179,7 +179,7 @@ try {
 
 if ($SkipNsis) {
     Write-Output "Created and smoke-tested one-folder application: $binaryApp"
-    exit 0
+    return
 }
 
 $makensis = Get-Command makensis.exe -ErrorAction SilentlyContinue

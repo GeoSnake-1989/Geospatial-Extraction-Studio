@@ -11,7 +11,7 @@ SetCompressor zlib
   !error "OUTPUT_FILE must identify the installer executable"
 !endif
 !ifndef APP_VERSION
-  !define APP_VERSION "0.4.2"
+  !define APP_VERSION "0.4.3"
 !endif
 !ifndef LICENSE_FILE
   !error "LICENSE_FILE must identify the project Apache-2.0 license"

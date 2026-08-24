@@ -400,3 +400,24 @@ def test_launcher_logging_does_not_require_console_streams(
     logging.shutdown()
 
     assert "windowed startup test" in (tmp_path / "application.log").read_text(encoding="utf-8")
+
+
+def test_portable_builder_reuses_audited_onedir_and_is_fail_closed():
+    builder = (PROJECT_ROOT / "packaging" / "build-portable.ps1").read_text(encoding="utf-8")
+    source_packager = (PROJECT_ROOT / "package-source.ps1").read_text(encoding="utf-8")
+
+    assert "Refusing to publish a portable package from a dirty working tree" in builder
+    assert "tag --points-at" in builder
+    assert "-SkipNsis" in builder
+    assert "build-installer.ps1" in builder
+    installer_builder = (
+        PROJECT_ROOT / "packaging" / "build-installer.ps1"
+    ).read_text(encoding="utf-8")
+    assert "Created and smoke-tested one-folder application" in installer_builder
+    assert "exit 0" not in installer_builder
+    assert "EngineeringBuild" not in builder
+    assert "Compress-Archive" in builder
+    assert "Expand-Archive" in builder
+    assert "extracted_executable_digest" in builder
+    assert "package-source.ps1" in builder
+    assert "build-portable.ps1" in source_packager

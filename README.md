@@ -218,6 +218,18 @@ license directories and notices for every included binary and native library.
 
 The installer build is intentionally separate from the source-archive build. It creates a PyInstaller **onedir** application in which native libraries remain separate files, then wraps that directory in a per-user NSIS installer. The installed FastAPI process serves the production frontend itself; end users do not need Python, Node.js, Vite, or an OpenAI connection.
 
+### Portable Windows ZIP
+
+The portable release contains the same audited PyInstaller **onedir** application without an installer. Extract the entire ZIP, keep the executable beside its `_internal` folder, and run `GeospatialExtractionStudio.exe`. No administrator access, Python, Node.js, or OpenAI connection is required. Writable datasets remain under `%LOCALAPPDATA%\Geospatial Extraction Studio\data`, so replacing the extracted application folder does not delete saved work.
+
+Build a clean, tagged portable release with:
+
+```powershell
+.\packaging\build-portable.ps1
+```
+
+The script reuses the installer pipeline's dependency, license, native-library, frozen-binary, and health checks; creates a matching source archive; verifies the ZIP after extraction; and writes adjacent SHA-256 and provenance files. It refuses a dirty tree, a missing release tag, stale output files, or an unapproved native redistribution host. Portable releases are unsigned unless a separate Authenticode signing process is supplied, so Windows may display an Unknown publisher or SmartScreen warning.
+
 ```powershell
 .\packaging\build-installer.ps1
 ```
@@ -265,7 +277,7 @@ Installed program files live under `%LOCALAPPDATA%\Programs\Geospatial Extractio
 On Windows, create the filtered source archive with:
 
 ```powershell
-.\package-source.ps1 -Destination ..\Geospatial-Extraction-Studio-source-0.4.2.zip
+.\package-source.ps1 -Destination ..\Geospatial-Extraction-Studio-source-0.4.3.zip
 ```
 
 The script refuses to overwrite an existing archive, verifies every native
