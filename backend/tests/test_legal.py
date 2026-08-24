@@ -126,12 +126,19 @@ def test_legal_documents_are_available_to_the_api():
         assert Path(response.path).stat().st_size > 0
 
 
-def test_ai_logo_notice_does_not_overstate_copyright_ownership():
+def test_ai_logo_is_recorded_as_branding_not_copyrighted_project_material():
     asset_licenses = (PROJECT_ROOT / "ASSET_LICENSES.md").read_text(encoding="utf-8")
+    provenance = (PROJECT_ROOT / "CONTENT_PROVENANCE.md").read_text(encoding="utf-8")
+    notice = (PROJECT_ROOT / "NOTICE").read_text(encoding="utf-8")
+    readme = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")
 
-    assert "project-owned branding assets" not in asset_licenses
-    assert "No exclusive copyright is claimed in" in asset_licenses
-    assert "Apache License 2.0 does not grant permission" in asset_licenses
+    assert "makes no copyright claim" in asset_licenses
+    assert "grants no copyright license" in asset_licenses
+    assert "does not grant trademark permission" in asset_licenses
+    assert "licenses those rights under the Apache License" not in asset_licenses
+    assert "no copyright claim\nor copyright-license assertion" in provenance
+    assert "logo files are branding, not\ncopyrighted project material" in notice
+    assert "no copyright claim or copyright license" in readme
 
 
 def test_source_release_excludes_generated_data_and_package_caches():

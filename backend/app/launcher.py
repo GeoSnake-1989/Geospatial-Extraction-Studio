@@ -23,6 +23,42 @@ DEFAULT_PORT = 8000
 LAST_PORT = 8020
 
 
+def uvicorn_log_config(log_directory: Path) -> dict:
+    """Create logging that also works in PyInstaller's windowed runtime.
+
+    A windowed PyInstaller executable sets ``sys.stdout`` and ``sys.stderr`` to
+    ``None``. Uvicorn's default formatter probes ``sys.stderr.isatty()``, so it
+    cannot be configured in that environment. Keep server diagnostics in the
+    application's log directory instead of relying on a console stream.
+    """
+    return {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "default": {
+                "format": "%(asctime)s %(levelname)s %(name)s: %(message)s",
+            },
+        },
+        "handlers": {
+            "default": {
+                "class": "logging.FileHandler",
+                "encoding": "utf-8",
+                "filename": str(log_directory / "application.log"),
+                "formatter": "default",
+            },
+        },
+        "loggers": {
+            "uvicorn": {"handlers": ["default"], "level": "INFO", "propagate": False},
+            "uvicorn.error": {"level": "INFO"},
+            "uvicorn.access": {
+                "handlers": ["default"],
+                "level": "INFO",
+                "propagate": False,
+            },
+        },
+    }
+
+
 def configured_port() -> int | None:
     value = os.getenv("GES_BACKEND_PORT")
     if value is None:
@@ -84,7 +120,8 @@ def open_browser_when_ready(port: int) -> None:
 def main() -> int:
     multiprocessing.freeze_support()
     ensure_data_directories()
-    (DATA_ROOT / "logs").mkdir(parents=True, exist_ok=True)
+    log_directory = DATA_ROOT / "logs"
+    log_directory.mkdir(parents=True, exist_ok=True)
 
     port, already_running = select_port()
     application_url = f"http://{HOST}:{port}/"
@@ -94,7 +131,14 @@ def main() -> int:
 
     if os.getenv("GES_NO_BROWSER") != "1":
         threading.Thread(target=open_browser_when_ready, args=(port,), daemon=True).start()
-    uvicorn.run(app, host=HOST, port=port, log_level="info", access_log=False)
+    uvicorn.run(
+        app,
+        host=HOST,
+        port=port,
+        log_level="info",
+        access_log=False,
+        log_config=uvicorn_log_config(log_directory),
+    )
     return 0
 
 

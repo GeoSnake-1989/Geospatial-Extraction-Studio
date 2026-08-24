@@ -3,6 +3,8 @@ from __future__ import annotations
 import fnmatch
 import hashlib
 import json
+import logging.config
+import sys
 from importlib import metadata
 from pathlib import Path
 
@@ -380,3 +382,21 @@ def test_launcher_validates_configured_port(monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setenv("GES_BACKEND_PORT", "70000")
     with pytest.raises(RuntimeError, match="between 1 and 65535"):
         launcher.configured_port()
+
+
+def test_launcher_logging_does_not_require_console_streams(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+):
+    config = launcher.uvicorn_log_config(tmp_path)
+
+    assert config["handlers"]["default"]["class"] == "logging.FileHandler"
+    assert config["handlers"]["default"]["filename"] == str(tmp_path / "application.log")
+    assert "()" not in config["formatters"]["default"]
+
+    monkeypatch.setattr(sys, "stdout", None)
+    monkeypatch.setattr(sys, "stderr", None)
+    logging.config.dictConfig(config)
+    logging.getLogger("uvicorn.error").info("windowed startup test")
+    logging.shutdown()
+
+    assert "windowed startup test" in (tmp_path / "application.log").read_text(encoding="utf-8")

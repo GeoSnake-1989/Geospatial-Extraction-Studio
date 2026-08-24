@@ -182,7 +182,7 @@ exported them.
 | Material | Governing terms |
 | --- | --- |
 | Original application source and documentation | Apache License 2.0 |
-| Project logo files | Apache License 2.0 only to the extent protectable rights subsist; see `ASSET_LICENSES.md` |
+| Project name and logo files | Project branding, with no copyright claim or copyright license; replace them in public distributions of modified versions. See `ASSET_LICENSES.md`. |
 | OpenStreetMap data and derived databases | Open Database License 1.0 and required attribution |
 | USGS and USDA source data | Applicable source record, embedded metadata, and provider terms; generally public domain in the United States when authored solely by the U.S. government |
 | Hosted APIs, tiles, and catalog services | Provider access and usage policies |

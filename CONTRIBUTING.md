@@ -3,7 +3,7 @@
 Geospatial Extraction Studio accepts contributions under Apache License 2.0.
 Under section 5 of that license, material intentionally submitted for inclusion
 is offered under the same license unless the submission is conspicuously marked
-otherwise and accepted in writing by the project owner.
+otherwise and accepted in writing by Jacob Horwitz, the project owner.
 
 ## Right to contribute
 

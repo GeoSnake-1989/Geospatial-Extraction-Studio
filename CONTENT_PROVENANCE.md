@@ -11,16 +11,18 @@ contributors directed the work, selected and arranged the application's
 features, reviewed outputs, tested behavior, and accepted or modified source
 and documentation.
 
-Each human contributor retains copyright in their protectable contribution
-unless that copyright has been assigned. The individual Geospatial Extraction Studio contributors
-license their protectable contributions in this release under the Apache
-License 2.0. The license does not claim exclusive rights in public-domain
-material, third-party material, facts, ideas, or material that applicable law
-does not protect.
+Jacob Horwitz owns the protectable rights in the original project material he
+contributed and licenses that material in this release under the Apache License
+2.0. Other contributors retain copyright in their own protectable
+contributions unless they have assigned it; their accepted contributions are
+licensed for this release under Apache License 2.0. The license does not claim
+exclusive rights in public-domain material, third-party material, facts,
+ideas, or material that applicable law does not protect.
 
-The collective notice "Geospatial Extraction Studio contributors" does not transfer ownership
-between contributors. A distributor must retain records needed to establish
-the origin and licensing of contributions included in a release.
+The copyright notice identifies Jacob Horwitz as the project owner; it does
+not transfer ownership of any later third-party contribution. A distributor
+must retain records needed to establish the origin and licensing of every
+contribution included in a release.
 
 ## Excluded research documents
 
@@ -37,15 +39,14 @@ for use as Geospatial Extraction Studio branding on August 6, 2026. The active
 variant recolors only the connected outer and backdrop regions to match the
 application's dark-green palette.
 
-The owner of the Geospatial Extraction Studio project and canonical repository
-confirmed control of the supplied files and authorized their public release on
-August 7, 2026. This does not assert that every element of the artwork is
-copyrightable. No exclusive copyright is claimed in purely AI-generated or
-otherwise unprotectable material. To the extent protectable rights exist in
-human selection, arrangement, or modifications, those rights are licensed
-under Apache License 2.0 with the application. Apache License 2.0 does not
-grant trademark permission to imply endorsement or the origin of another
-product.
+Jacob Horwitz, the owner of the Geospatial Extraction Studio project and
+canonical repository, confirmed control of the supplied files and authorized
+their public release on August 7, 2026. The project makes no copyright claim
+or copyright-license assertion for either logo file. The files are retained
+solely as Geospatial Extraction Studio source-identifying branding; the
+project's Apache License 2.0 grant does not grant trademark permission. A
+public distribution of a modified version must replace the project name and
+logos with its own branding.
 
 ## Runtime data and third-party components
 

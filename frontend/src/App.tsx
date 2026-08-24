@@ -510,7 +510,7 @@ export default function App() {
           <section className="panel-section search-section">
             <div className="section-label"><span>01</span> Find a location <em>{workflow === 'osm' ? 'Worldwide' : 'U.S.'}</em></div>
             <form className="search-box" onSubmit={searchPlaces}>
-              <Search size={17} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="City, landmark, or address" />
+              <Search size={17} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={workflow === 'osm' ? 'City, landmark, or address worldwide' : 'U.S. city, landmark, or address'} />
               <button type="submit" aria-label="Search">{searching ? <Activity className="spin" size={16} /> : <span>Go</span>}</button>
             </form>
             {places.length > 0 && <div className="search-results">{places.map((place) => <button key={`${place.latitude}-${place.longitude}`} onClick={() => selectPlace(place)}><MapPin size={15} /><span>{place.name}</span></button>)}</div>}
