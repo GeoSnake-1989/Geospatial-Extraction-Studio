@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "attested_by": "GeoSnake1989",
-  "attested_on": "2026-08-12",
+  "attested_on": "2026-08-24",
   "use_basis": "osi_approved_open_source_project",
   "statement": "The release operator confirms that Visual Studio Community 2026 is used solely to develop, test, and release this Apache-2.0 open-source project. This record does not authorize Visual Studio Community use for a proprietary derivative or unrelated project.",
   "product_id": "Microsoft.VisualStudio.Product.Community",

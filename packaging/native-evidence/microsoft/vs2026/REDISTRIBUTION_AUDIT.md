@@ -6,10 +6,10 @@ terms; they remain controlling.
 
 ## Review record
 
-- Reviewed: 2026-08-12
+- Reviewed: 2026-08-24
 - Visual Studio product observed on the release host: Visual Studio Community
   2026 (`Microsoft.VisualStudio.Product.Community`)
-- Observed installation version: `18.1.11312.151`
+- Observed installation version: `18.9.12112.369`
 - Installed REDIST pointer SHA-256:
   `2d69e3b0ac782d5513b503bafdf269a93c4fec0f1f8efac82bfbfa4b6296aef5`
 - Official Visual Studio 2026 redistribution list:

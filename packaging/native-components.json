@@ -740,7 +740,7 @@
       "source": "https://learn.microsoft.com/cpp/windows/latest-supported-vc-redist",
       "status": "approved",
       "approval": {
-        "approved_on": "2026-08-12",
+        "approved_on": "2026-08-24",
         "approval_authority": "Geospatial Extraction Studio evidence-backed release policy; not legal advice",
         "basis": "The release host must have the exact complete licensed Visual Studio Community installation recorded by policy. The official redistribution list permits unmodified listed files, and the collector verifies the installed product and REDIST pointer.",
         "covered_wheel_directories": [
@@ -760,7 +760,7 @@
         "source_offer_required": false,
         "system_evidence": "visual_studio",
         "system_product_id": "Microsoft.VisualStudio.Product.Community",
-        "system_installation_version": "18.1.11312.151",
+        "system_installation_version": "18.9.12112.369",
         "system_redist_sha256": "2d69e3b0ac782d5513b503bafdf269a93c4fec0f1f8efac82bfbfa4b6296aef5",
         "system_redist_url": "https://aka.ms/vs/18/redistribution",
         "entitlement_record": "packaging/visual-studio-entitlement.json"
