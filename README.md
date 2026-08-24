@@ -277,7 +277,7 @@ Installed program files live under `%LOCALAPPDATA%\Programs\Geospatial Extractio
 On Windows, create the filtered source archive with:
 
 ```powershell
-.\package-source.ps1 -Destination ..\Geospatial-Extraction-Studio-source-0.4.3.zip
+.\package-source.ps1 -Destination ..\Geospatial-Extraction-Studio-source-0.4.4.zip
 ```
 
 The script refuses to overwrite an existing archive, verifies every native

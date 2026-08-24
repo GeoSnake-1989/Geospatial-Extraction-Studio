@@ -278,7 +278,7 @@ class NAIPProvider:
         }
         url: str | None = self.search_url
         features: list[dict[str, Any]] = []
-        headers = {"User-Agent": "GeospatialExtractionStudio/0.4.3 (local NAIP extractor)"}
+        headers = {"User-Agent": "GeospatialExtractionStudio/0.4.4 (local NAIP extractor)"}
         async with httpx.AsyncClient(timeout=45, headers=headers, follow_redirects=True) as client:
             await self._load_collection_metadata(client)
             while url and len(features) < 5_000:
@@ -400,7 +400,7 @@ class NAIPProvider:
         return selected
 
     async def _sign_items(self, items: list[NAIPItem]) -> list[str]:
-        headers = {"User-Agent": "GeospatialExtractionStudio/0.4.3 (local NAIP extractor)"}
+        headers = {"User-Agent": "GeospatialExtractionStudio/0.4.4 (local NAIP extractor)"}
         async with httpx.AsyncClient(timeout=30, headers=headers, follow_redirects=True) as client:
             async def sign_item(item: NAIPItem) -> str:
                 try:

@@ -408,7 +408,7 @@ def test_portable_builder_reuses_audited_onedir_and_is_fail_closed():
 
     assert "Refusing to publish a portable package from a dirty working tree" in builder
     assert "tag --points-at" in builder
-    assert "-SkipNsis" in builder
+    assert "$buildArguments = @{ SkipNsis = $true }" in builder
     assert "build-installer.ps1" in builder
     installer_builder = (
         PROJECT_ROOT / "packaging" / "build-installer.ps1"

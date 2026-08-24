@@ -54,7 +54,7 @@ LEGACY_DATA_ROOTS = tuple(
 OSM_CACHE_DIR = Path(os.getenv("OSM_EXTRACTOR_CACHE_DIR", CACHE_DIR / "osmnx"))
 OSM_USER_AGENT = os.getenv(
     "OSM_EXTRACTOR_USER_AGENT",
-    "GeospatialExtractionStudio/0.4.3 (local terrain, NAIP, and OSM extractor)",
+    "GeospatialExtractionStudio/0.4.4 (local terrain, NAIP, and OSM extractor)",
 )
 OSM_OVERPASS_URLS = tuple(
     endpoint.strip()
@@ -69,7 +69,7 @@ NOMINATIM_SEARCH_URL = os.getenv(
 )
 NOMINATIM_USER_AGENT = os.getenv(
     "NOMINATIM_USER_AGENT",
-    "GeospatialExtractionStudio/0.4.3 (local terrain, NAIP, and OSM extractor)",
+    "GeospatialExtractionStudio/0.4.4 (local terrain, NAIP, and OSM extractor)",
 )
 NOMINATIM_MIN_INTERVAL_SECONDS = float(
     os.getenv("NOMINATIM_MIN_INTERVAL_SECONDS", "1.0")

@@ -8,7 +8,7 @@ $buildRoot = Join-Path $projectRoot 'build'
 $binaryApp = Join-Path $buildRoot 'binary\GeospatialExtractionStudio'
 $portableBuildRoot = Join-Path $buildRoot 'portable'
 $releaseRoot = Join-Path $projectRoot 'release'
-$version = '0.4.3'
+$version = '0.4.4'
 $expectedTag = "v$version"
 $archiveName = "Geospatial-Extraction-Studio-Portable-$version.zip"
 $archivePath = Join-Path $releaseRoot $archiveName
@@ -53,8 +53,8 @@ foreach ($path in @($archivePath, $checksumPath, $provenancePath, $sourceArchive
     }
 }
 
-$buildArguments = @('-SkipNsis')
-if ($SkipDependencyInstall) { $buildArguments += '-SkipDependencyInstall' }
+$buildArguments = @{ SkipNsis = $true }
+if ($SkipDependencyInstall) { $buildArguments.SkipDependencyInstall = $true }
 & (Join-Path $PSScriptRoot 'build-installer.ps1') @buildArguments
 if ($LASTEXITCODE -ne 0) { throw 'Audited one-folder application build failed.' }
 if (-not (Test-Path -LiteralPath (Join-Path $binaryApp 'GeospatialExtractionStudio.exe') -PathType Leaf)) {

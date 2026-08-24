@@ -12,7 +12,7 @@ $binaryRoot = Join-Path $buildRoot 'binary'
 $binaryApp = Join-Path $binaryRoot 'GeospatialExtractionStudio'
 $smokeData = Join-Path $buildRoot 'smoke-data'
 $releaseRoot = Join-Path $projectRoot 'release'
-$version = '0.4.3'
+$version = '0.4.4'
 $expectedReleaseTag = "v$version"
 
 function Get-GESReleaseSourceState {
