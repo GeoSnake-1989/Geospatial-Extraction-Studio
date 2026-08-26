@@ -2,7 +2,7 @@
 
 ## Download the portable Windows app
 
-**[Download Geospatial Extraction Studio Portable 0.4.4](https://github.com/GeoSnake-1989/Geospatial-Extraction-Studio/releases/download/v0.4.4/Geospatial-Extraction-Studio-Portable-0.4.4.zip)** (approximately 125 MB)
+**[Download Geospatial Extraction Studio Portable 0.4.5](https://github.com/GeoSnake-1989/Geospatial-Extraction-Studio/releases/download/v0.4.5/Geospatial-Extraction-Studio-Portable-0.4.5.zip)** (approximately 125 MB)
 
 Extract the entire ZIP, then run `GeospatialExtractionStudio.exe`. No installer,
 Python, Node.js, administrator access, or OpenAI connection is required. The
@@ -288,7 +288,7 @@ Installed program files live under `%LOCALAPPDATA%\Programs\Geospatial Extractio
 On Windows, create the filtered source archive with:
 
 ```powershell
-.\package-source.ps1 -Destination ..\Geospatial-Extraction-Studio-source-0.4.4.zip
+.\package-source.ps1 -Destination ..\Geospatial-Extraction-Studio-source-0.4.5.zip
 ```
 
 The script refuses to overwrite an existing archive, verifies every native

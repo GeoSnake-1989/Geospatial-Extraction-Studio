@@ -272,6 +272,9 @@ def test_publication_build_freshly_extracts_and_audits_the_pinned_runtime():
     assert 'Remove-Item -LiteralPath (Assert-BuildChild $runtimeRoot)' in preparer
     assert '& tar -xf $archivePath' in preparer
     assert 'prepare-runtime.ps1' in builder
+    assert 'previousBuildPath = $env:PATH' in builder
+    assert '$env:PATH = $approvedBuildPath -join [IO.Path]::PathSeparator' in builder
+    assert '$env:PATH = $previousBuildPath' in builder
     assert '--runtime-manifest' in builder
     assert '--runtime-archive' in builder
     assert 'audit_frozen_binary.py' in builder

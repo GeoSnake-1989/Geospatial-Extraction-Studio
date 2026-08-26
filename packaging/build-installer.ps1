@@ -12,7 +12,7 @@ $binaryRoot = Join-Path $buildRoot 'binary'
 $binaryApp = Join-Path $binaryRoot 'GeospatialExtractionStudio'
 $smokeData = Join-Path $buildRoot 'smoke-data'
 $releaseRoot = Join-Path $projectRoot 'release'
-$version = '0.4.4'
+$version = '0.4.5'
 $expectedReleaseTag = "v$version"
 
 function Get-GESReleaseSourceState {
@@ -106,12 +106,22 @@ if ($EngineeringBuild) { $licenseArguments += '--allow-unverified-native' }
 if ($LASTEXITCODE -ne 0) { throw 'Installer copyright/license preflight failed.' }
 
 $previousConsoleBuild = $env:GES_BUILD_CONSOLE
-if ($EngineeringBuild) { $env:GES_BUILD_CONSOLE = '1' } else { Remove-Item Env:GES_BUILD_CONSOLE -ErrorAction SilentlyContinue }
+$previousBuildPath = $env:PATH
+$systemRoot = $env:SystemRoot
+if (-not $systemRoot) { throw 'SystemRoot is required for a reproducible Windows release build.' }
+$approvedBuildPath = @(
+    (Split-Path -Parent $Python),
+    (Join-Path $systemRoot 'System32'),
+    $systemRoot
+) | Select-Object -Unique
+$env:PATH = $approvedBuildPath -join [IO.Path]::PathSeparator
 try {
+    if ($EngineeringBuild) { $env:GES_BUILD_CONSOLE = '1' } else { Remove-Item Env:GES_BUILD_CONSOLE -ErrorAction SilentlyContinue }
     & $Python -m PyInstaller --noconfirm --clean --distpath $binaryRoot --workpath (Join-Path $installerBuildRoot 'pyinstaller') (Join-Path $projectRoot 'packaging\GeospatialExtractionStudio.spec')
     if ($LASTEXITCODE -ne 0) { throw 'PyInstaller build failed.' }
 } finally {
     $env:GES_BUILD_CONSOLE = $previousConsoleBuild
+    $env:PATH = $previousBuildPath
 }
 
 $licenseRoot = Join-Path $installerBuildRoot 'licenses'
