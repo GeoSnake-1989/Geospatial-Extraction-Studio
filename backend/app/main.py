@@ -249,7 +249,7 @@ async def lifespan(_: FastAPI):
 
 app = FastAPI(
     title="Geospatial Extraction Studio API",
-    version="0.4.5",
+    version="0.4.6",
     description="Local-first elevation, OpenStreetMap, and NAIP imagery extraction service",
     license_info={"name": "Apache License 2.0", "identifier": "Apache-2.0"},
     lifespan=lifespan,
@@ -363,8 +363,6 @@ async def run_extraction(job_id: str, request: ExtractionRequest) -> None:
                 "processed": str(processed_path),
                 "source_evidence": str(evidence_path),
                 "documentation": str(documentation_path),
-                "original_download": f"/api/datasets/{dataset_id}/download/original",
-                "processed_download": f"/api/datasets/{dataset_id}/download/processed",
                 "documentation_download": f"/api/datasets/{dataset_id}/download/documentation",
                 "package_download": f"/api/datasets/{dataset_id}/download/package",
             },
@@ -539,7 +537,6 @@ async def run_naip_extraction(job_id: str, request: NAIPExtractionRequest) -> No
                 "preview": str(preview_path),
                 "documentation": str(documentation_path),
                 "manifest_download": f"/api/naip/imagery/{imagery_id}/download/manifest",
-                "imagery_download": f"/api/naip/imagery/{imagery_id}/download/imagery",
                 "documentation_download": f"/api/naip/imagery/{imagery_id}/download/documentation",
                 "package_download": f"/api/naip/imagery/{imagery_id}/download/package",
                 "preview_download": f"/api/naip/imagery/{imagery_id}/preview",
@@ -766,6 +763,11 @@ def download_naip_imagery(
     if not item:
         raise HTTPException(status_code=404, detail="NAIP imagery not found")
     try:
+        if kind == "imagery":
+            raise HTTPException(
+                status_code=410,
+                detail="Individual GeoTIFF downloads are retired. Download the package to retain the data license and attribution notice.",
+            )
         if kind == "package":
             paths = naip_imagery_storage_paths(item)
             if not paths[0].is_file() or not paths[1].is_file():
@@ -949,6 +951,11 @@ def download_dataset(dataset_id: str, kind: str) -> FileResponse:
     if not item:
         raise HTTPException(status_code=404, detail="Dataset not found")
     try:
+        if kind in {"original", "processed"}:
+            raise HTTPException(
+                status_code=410,
+                detail="Individual GeoTIFF downloads are retired. Download the package to retain the data license and attribution notice.",
+            )
         if kind == "package":
             candidates = dataset_storage_paths(item, "original")
             path = next((candidate for candidate in candidates if candidate.is_file()), None)

@@ -420,7 +420,9 @@ def test_portable_builder_reuses_audited_onedir_and_is_fail_closed():
     assert "exit 0" not in installer_builder
     assert "EngineeringBuild" not in builder
     assert "Compress-Archive" in builder
-    assert "Expand-Archive" in builder
+    assert "Expand-Archive" not in builder
+    assert "ZipFileExtensions]::ExtractToFile" in builder
+    assert "Portable archive contains a path outside the verification directory" in builder
     assert "extracted_executable_digest" in builder
     assert "package-source.ps1" in builder
     assert "build-portable.ps1" in source_packager

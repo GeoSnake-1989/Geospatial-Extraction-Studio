@@ -80,6 +80,8 @@ def test_elevation_job_groups_dem_and_source_evidence(
     evidence = json.loads(Path(result["files"]["source_evidence"]).read_text(encoding="utf-8"))
     assert evidence["data_type"] == "Digital Elevation Model (DEM)"
     assert evidence["output"]["sha256"]
+    assert "original_download" not in result["files"]
+    assert "processed_download" not in result["files"]
     assert saved == [result]
 
 

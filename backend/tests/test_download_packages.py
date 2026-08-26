@@ -5,6 +5,8 @@ import json
 from pathlib import Path
 from zipfile import ZipFile
 
+from fastapi import HTTPException
+
 from app import main
 
 
@@ -57,6 +59,7 @@ def test_dem_package_contains_raster_and_source_proof_for_legacy_history(
             f"{folder}/{folder}.tif",
             f"{folder}/SOURCE_PROVENANCE.json",
             f"{folder}/SOURCE_PROVENANCE.md",
+            f"{folder}/DATA_LICENSE_NOTICE.md",
         }
         assert archive.read(f"{folder}/{folder}.tif") == b"dem-raster"
         evidence = json.loads(archive.read(f"{folder}/SOURCE_PROVENANCE.json"))
@@ -66,6 +69,9 @@ def test_dem_package_contains_raster_and_source_proof_for_legacy_history(
         ]
         assert evidence["output"]["filename"] == f"{folder}.tif"
         assert evidence["output"]["sha256"]
+        notice = archive.read(f"{folder}/DATA_LICENSE_NOTICE.md").decode("utf-8")
+        assert "Data license and attribution notice" in notice
+        assert item["provider"] in notice
     _finish_response(response)
     assert not archive_path.exists()
 
@@ -127,11 +133,34 @@ def test_aerial_package_contains_raster_and_source_proof_for_legacy_history(
             f"{folder}/{folder}.tif",
             f"{folder}/SOURCE_PROVENANCE.json",
             f"{folder}/SOURCE_PROVENANCE.md",
+            f"{folder}/DATA_LICENSE_NOTICE.md",
         }
         assert archive.read(f"{folder}/{folder}.tif") == b"aerial-raster"
         evidence = json.loads(archive.read(f"{folder}/SOURCE_PROVENANCE.json"))
         assert evidence["items"][0]["source_href"] == "https://example.test/naip.tif"
         assert evidence["output"]["filename"] == f"{folder}.tif"
         assert evidence["output"]["sha256"]
+        notice = archive.read(f"{folder}/DATA_LICENSE_NOTICE.md").decode("utf-8")
+        assert "Data license and attribution notice" in notice
+        assert item["provider"] in notice
     _finish_response(response)
     assert not archive_path.exists()
+
+
+def test_individual_raster_downloads_are_retired_to_preserve_notices(monkeypatch):
+    item = {"id": "abc123def456", "files": {}}
+    monkeypatch.setattr(main, "get_dataset", lambda requested_id: item)
+    monkeypatch.setattr(main, "get_naip_imagery", lambda requested_id: item)
+
+    for download in (
+        lambda: main.download_dataset("abc123def456", "original"),
+        lambda: main.download_dataset("abc123def456", "processed"),
+        lambda: main.download_naip_imagery("abc123def456", "imagery"),
+    ):
+        try:
+            download()
+        except HTTPException as exc:
+            assert exc.status_code == 410
+            assert "package" in str(exc.detail).lower()
+        else:
+            raise AssertionError("Individual raster download must be retired")

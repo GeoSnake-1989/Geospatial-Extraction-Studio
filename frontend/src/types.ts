@@ -62,8 +62,6 @@ export type DatasetResult = {
     processed: string
     source_evidence?: string
     documentation?: string
-    original_download: string
-    processed_download: string
     documentation_download?: string
     package_download?: string
   }
@@ -189,7 +187,6 @@ export type NAIPImageryResult = {
     preview: string
     documentation?: string
     manifest_download: string
-    imagery_download: string
     documentation_download?: string
     package_download?: string
     preview_download: string

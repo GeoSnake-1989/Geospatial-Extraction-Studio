@@ -197,6 +197,7 @@ a[href$="/download/original"], a[href$="/download/imagery"] { display: none; }
 .osm-pane { background: radial-gradient(circle at 50% 20%, rgba(72,126,105,.12), transparent 38%), #101b19; }
 .osm-summary { height: calc(100% - 58px); min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: safe center; overflow-y: auto; padding: 30px; text-align: center; scrollbar-width: thin; scrollbar-color: #344a43 transparent; }
 .osm-summary > * { flex: 0 0 auto; }
+.service-use-notice { max-width: 500px; margin: 14px 0 0; color: #d7be89; font-size: 10px; line-height: 1.55; }
 .osm-hero { max-width: 480px; }
 .osm-hero > span { width: 60px; height: 60px; display: grid; place-items: center; margin: 0 auto 15px; color: var(--gold); border: 1px solid rgba(226,185,111,.22); border-radius: 16px; background: rgba(226,185,111,.07); }
 .osm-hero h2 { margin: 0; font-family: Georgia, serif; color: #d9e2de; font-size: 24px; font-weight: 500; }

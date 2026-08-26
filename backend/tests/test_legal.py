@@ -169,7 +169,7 @@ def test_source_release_excludes_generated_data_and_package_caches():
     assert "SOURCE-REVISION.txt" in packager
     assert "status --porcelain --untracked-files=all" in packager
     assert "ls-files" in packager
-    assert "not tagged v0.4.5" in packager
+    assert "not tagged v0.4.6" in packager
 
     readme = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")
     assert "Downloaded data and generated datasets" in readme
@@ -235,3 +235,14 @@ def test_custom_tile_configuration_requires_visible_terms():
         "VITE_OSM_TILE_LICENSE_URL=",
     ):
         assert setting in example
+
+
+def test_public_osm_service_scope_is_visible_to_users_and_distributors():
+    readme = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")
+    notices = (PROJECT_ROOT / "THIRD_PARTY_NOTICES.md").read_text(encoding="utf-8")
+    frontend = (PROJECT_ROOT / "frontend" / "src" / "App.tsx").read_text(encoding="utf-8")
+
+    expected = "not reliable or suitable for scaled or commercial deployment"
+    assert expected in readme
+    assert expected in notices
+    assert expected in frontend

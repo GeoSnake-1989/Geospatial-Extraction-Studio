@@ -6,9 +6,9 @@ $ErrorActionPreference = 'Stop'
 $projectRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $buildRoot = Join-Path $projectRoot 'build'
 $binaryApp = Join-Path $buildRoot 'binary\GeospatialExtractionStudio'
-$portableBuildRoot = Join-Path $buildRoot 'portable'
+$portableBuildRoot = Join-Path $buildRoot 'p'
 $releaseRoot = Join-Path $projectRoot 'release'
-$version = '0.4.5'
+$version = '0.4.6'
 $expectedTag = "v$version"
 $archiveName = "Geospatial-Extraction-Studio-Portable-$version.zip"
 $archivePath = Join-Path $releaseRoot $archiveName
@@ -34,6 +34,34 @@ function Get-ReleaseSourceState {
     [pscustomobject]@{ revision = $revision; tag = $expectedTag }
 }
 
+function Expand-VerifiedZipArchive {
+    param(
+        [Parameter(Mandatory = $true)][string]$ArchivePath,
+        [Parameter(Mandatory = $true)][string]$DestinationPath
+    )
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    $resolvedDestination = [IO.Path]::GetFullPath($DestinationPath)
+    $destinationPrefix = $resolvedDestination + [IO.Path]::DirectorySeparatorChar
+    [IO.Directory]::CreateDirectory($resolvedDestination) | Out-Null
+    $archive = [IO.Compression.ZipFile]::OpenRead($ArchivePath)
+    try {
+        foreach ($entry in $archive.Entries) {
+            $relativePath = $entry.FullName.Replace('/', [IO.Path]::DirectorySeparatorChar)
+            $outputPath = [IO.Path]::GetFullPath((Join-Path $resolvedDestination $relativePath))
+            if (-not $outputPath.StartsWith($destinationPrefix, [StringComparison]::OrdinalIgnoreCase)) {
+                throw "Portable archive contains a path outside the verification directory: $($entry.FullName)"
+            }
+            if ([string]::IsNullOrEmpty($entry.Name)) {
+                [IO.Directory]::CreateDirectory($outputPath) | Out-Null
+                continue
+            }
+            [IO.Directory]::CreateDirectory([IO.Path]::GetDirectoryName($outputPath)) | Out-Null
+            [IO.Compression.ZipFileExtensions]::ExtractToFile($entry, $outputPath, $true)
+        }
+    } finally {
+        $archive.Dispose()
+    }
+}
 function Remove-PortableBuildDirectory {
     param([string]$Path)
     $resolved = [IO.Path]::GetFullPath($Path)
@@ -42,7 +70,7 @@ function Remove-PortableBuildDirectory {
         throw "Refusing to remove a path outside the build directory: $resolved"
     }
     if (Test-Path -LiteralPath $resolved) {
-        Remove-Item -LiteralPath $resolved -Recurse -Force
+        [IO.Directory]::Delete($resolved, $true)
     }
 }
 
@@ -102,9 +130,8 @@ $executableHash = (Get-FileHash -Algorithm SHA256 -LiteralPath (
     Join-Path $stagingApp 'GeospatialExtractionStudio.exe'
 )).Hash.ToLowerInvariant()
 
-$verificationRoot = Join-Path $portableBuildRoot 'verification'
-New-Item -ItemType Directory -Force -Path $verificationRoot | Out-Null
-Expand-Archive -LiteralPath $archivePath -DestinationPath $verificationRoot
+$verificationRoot = Join-Path $portableBuildRoot 'v'
+Expand-VerifiedZipArchive -ArchivePath $archivePath -DestinationPath $verificationRoot
 $verifiedApp = Join-Path $verificationRoot "Geospatial-Extraction-Studio-Portable-$version"
 $verifiedExecutable = Join-Path $verifiedApp 'GeospatialExtractionStudio.exe'
 if (-not (Test-Path -LiteralPath $verifiedExecutable -PathType Leaf)) {

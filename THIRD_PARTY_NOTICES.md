@@ -168,6 +168,8 @@ Geospatial Extraction Studio displays OpenStreetMap data, uses the public Nomina
 user-triggered place searches, and uses configured Overpass endpoints for
 explicitly requested feature extracts.
 
+Public OSM services are acceptable for modest, user-triggered local use only. They are not reliable or suitable for scaled or commercial deployment. Before any such deployment, configure a contracted provider or an appropriately operated self-hosted service and comply with its controlling terms.
+
 - Map data copyright OpenStreetMap contributors.
 - OpenStreetMap data is available under the Open Database License 1.0:
   https://www.openstreetmap.org/copyright

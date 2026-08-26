@@ -2,7 +2,7 @@
 
 ## Download the portable Windows app
 
-**[Download Geospatial Extraction Studio Portable 0.4.5](https://github.com/GeoSnake-1989/Geospatial-Extraction-Studio/releases/download/v0.4.5/Geospatial-Extraction-Studio-Portable-0.4.5.zip)** (approximately 125 MB)
+**[Download Geospatial Extraction Studio Portable 0.4.6](https://github.com/GeoSnake-1989/Geospatial-Extraction-Studio/releases/download/v0.4.6/Geospatial-Extraction-Studio-Portable-0.4.6.zip)** (approximately 125 MB)
 
 Extract the entire ZIP, then run `GeospatialExtractionStudio.exe`. No installer,
 Python, Node.js, administrator access, or OpenAI connection is required. The
@@ -30,8 +30,8 @@ and release controls.
 - Adjust ArcGIS-style vertical exaggeration continuously from a flat `0×` surface through `4×`; `1×` preserves real-world vertical-to-horizontal scale.
 - Toggle a translucent sea-level (`0 m`) reference plane and compare it with the terrain-floor elevation; the source vertical datum remains visible so the reference is not mistaken for a datum conversion.
 - Inspect CRS, NoData, horizontal units, vertical units, and vertical datum without inventing missing metadata.
-- Download one ZIP that expands into a folder containing the DEM GeoTIFF, JSON source evidence, and human-readable source documentation; raw GeoTIFF endpoints remain available for compatibility.
-- Store every DEM in its own acquisition folder with JSON and Markdown source-evidence records and a SHA-256 checksum.
+- Download one ZIP that expands into a folder containing the DEM GeoTIFF, JSON source evidence, human-readable source documentation, and a dedicated data-license and attribution notice. Individual GeoTIFF downloads are deliberately unavailable so the notice stays with the data.
+- Store every DEM in its own acquisition folder with JSON and Markdown source-evidence records, including provider license and attribution fields, and a SHA-256 checksum.
 
 ### NAIP aerial imagery
 
@@ -41,8 +41,8 @@ and release controls.
 - Choose natural-color RGB or four-band RGB plus near-infrared output.
 - Enforce a native-resolution pixel limit before reading remote imagery, then write a tiled, compressed AOI GeoTIFF with overviews and a bounded PNG preview.
 - Preserve a JSON source-item manifest containing acquisition dates, source asset URLs, resolution, CRS, and selected tile identifiers.
-- Store each aerial GeoTIFF, preview, source manifest, and human-readable source-evidence record in its own extraction folder, including a SHA-256 checksum.
-- Download one ZIP that expands into a folder containing the aerial GeoTIFF, JSON source manifest, and human-readable source documentation; reopen or delete completed imagery from local history.
+- Store each aerial GeoTIFF, preview, source manifest, and human-readable source-evidence record in its own extraction folder, including provider license and attribution fields and a SHA-256 checksum.
+- Download one ZIP that expands into a folder containing the aerial GeoTIFF, JSON source manifest, human-readable source documentation, and a dedicated data-license and attribution notice; reopen or delete completed imagery from local history.
 
 ### OpenStreetMap features
 
@@ -122,7 +122,7 @@ Use the **Storage** button in the top bar to see disk usage. **Clear cache** rem
 
 ## Service configuration
 
-The defaults are suitable for modest, directly user-triggered local use. Public OSM and Planetary Computer services have usage policies and no SLA. Deployments with many users should configure an appropriate hosted or self-hosted provider.
+The defaults are acceptable for modest, directly user-triggered local use. Public OSM services are not reliable or suitable for scaled or commercial deployment. Before that use, configure an appropriate contracted or self-hosted provider. Public OSM and Planetary Computer services have usage policies and no SLA.
 
 Environment variables:
 
@@ -288,7 +288,7 @@ Installed program files live under `%LOCALAPPDATA%\Programs\Geospatial Extractio
 On Windows, create the filtered source archive with:
 
 ```powershell
-.\package-source.ps1 -Destination ..\Geospatial-Extraction-Studio-source-0.4.5.zip
+.\package-source.ps1 -Destination ..\Geospatial-Extraction-Studio-source-0.4.6.zip
 ```
 
 The script refuses to overwrite an existing archive, verifies every native

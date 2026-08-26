@@ -58,5 +58,5 @@ export const demoDataset: DatasetResult = {
     license: 'Not source elevation data',
     vertical_datum: 'Not applicable',
   },
-  files: { original: '', processed: '', original_download: '', processed_download: '' },
+  files: { original: '', processed: '' },
 }

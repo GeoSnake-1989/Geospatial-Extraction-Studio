@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Any
 from zipfile import ZIP_DEFLATED, ZIP_STORED, ZipFile
 
+from .data_notices import NOTICE_FILENAME, data_license_notice_markdown
+
 
 def safe_package_component(value: str, fallback: str) -> str:
     ascii_value = (
@@ -82,6 +84,7 @@ def build_raster_package(
 ) -> Path:
     payload = source_evidence_payload(evidence)
     markdown = source_evidence_markdown(title, payload)
+    notice = data_license_notice_markdown(payload)
     archive_path.parent.mkdir(parents=True, exist_ok=True)
     partial_path = archive_path.with_suffix(f"{archive_path.suffix}.part")
     partial_path.unlink(missing_ok=True)
@@ -100,6 +103,11 @@ def build_raster_package(
             archive.writestr(
                 f"{folder_name}/SOURCE_PROVENANCE.md",
                 markdown,
+                compress_type=ZIP_DEFLATED,
+            )
+            archive.writestr(
+                f"{folder_name}/{NOTICE_FILENAME}",
+                notice,
                 compress_type=ZIP_DEFLATED,
             )
         partial_path.replace(archive_path)
