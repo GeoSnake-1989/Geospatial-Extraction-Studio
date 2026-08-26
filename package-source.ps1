@@ -94,7 +94,6 @@ try {
         'CONTENT_PROVENANCE.md',
         'ASSET_LICENSES.md',
         'SOURCE-REVISION.txt',
-        'CONTRIBUTING.md',
         'backend\requirements.lock.txt',
         'backend\requirements-installer.lock.txt',
         'backend\requirements-build.txt',

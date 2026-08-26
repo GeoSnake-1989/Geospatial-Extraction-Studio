@@ -208,8 +208,8 @@ Publish source releases from a clean checkout. Do not include `.venv`,
 data, `data/app.db`, runtime logs, temporary files, or PDFs. Retain `LICENSE`,
 `NOTICE`, `THIRD_PARTY_NOTICES.md`, `CONTENT_PROVENANCE.md`,
 `ASSET_LICENSES.md`, `backend/requirements.lock.txt`, and
-`frontend/pnpm-lock.yaml`. Contributions from other people should follow
-`CONTRIBUTING.md` so the project retains a clear licensing record.
+`frontend/pnpm-lock.yaml`. This repository is owner-maintained and does not
+accept external contributions, issues, or pull requests.
 
 Before the first GitHub publication, initialize the repository locally and
 review both the proposed source files and ignored files:

@@ -102,11 +102,14 @@ def test_excluded_research_pdfs_are_not_present():
     assert not list(PROJECT_ROOT.glob("*.pdf"))
 
 
-def test_public_release_governance_documents_are_present():
-    contributing = (PROJECT_ROOT / "CONTRIBUTING.md").read_text(encoding="utf-8")
+def test_owner_only_release_governance_is_explicit():
+    readme = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")
+    provenance = (PROJECT_ROOT / "CONTENT_PROVENANCE.md").read_text(encoding="utf-8")
     asset_licenses = (PROJECT_ROOT / "ASSET_LICENSES.md").read_text(encoding="utf-8")
 
-    assert "Developer Certificate of Origin" in contributing
+    assert not (PROJECT_ROOT / "CONTRIBUTING.md").exists()
+    assert "does not accept external contributions, issues, or pull requests" in " ".join(readme.split())
+    assert "owner-maintained and does not accept external" in " ".join(provenance.split())
     assert "Apache License 2.0" in asset_licenses
     assert "confirmed this authorization on August 7, 2026" in asset_licenses
 

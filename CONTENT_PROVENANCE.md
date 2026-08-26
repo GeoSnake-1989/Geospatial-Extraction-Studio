@@ -6,23 +6,21 @@ copyright registration.
 
 ## Application source and documentation
 
-Geospatial Extraction Studio was developed with assistance from OpenAI Codex and ChatGPT. Human
-contributors directed the work, selected and arranged the application's
-features, reviewed outputs, tested behavior, and accepted or modified source
-and documentation.
+Geospatial Extraction Studio was developed with assistance from OpenAI Codex and ChatGPT. Jacob
+Horwitz directed the work, selected and arranged the application's features,
+reviewed outputs, tested behavior, and accepted or modified source and
+documentation.
 
 Jacob Horwitz owns the protectable rights in the original project material he
 contributed and licenses that material in this release under the Apache License
-2.0. Other contributors retain copyright in their own protectable
-contributions unless they have assigned it; their accepted contributions are
-licensed for this release under Apache License 2.0. The license does not claim
-exclusive rights in public-domain material, third-party material, facts,
-ideas, or material that applicable law does not protect.
+2.0. This repository is owner-maintained and does not accept external
+contributions. The license does not claim exclusive rights in public-domain
+material, third-party material, facts, ideas, or material that applicable law
+does not protect.
 
-The copyright notice identifies Jacob Horwitz as the project owner; it does
-not transfer ownership of any later third-party contribution. A distributor
-must retain records needed to establish the origin and licensing of every
-contribution included in a release.
+The copyright notice identifies Jacob Horwitz as the project owner. A
+distributor must retain records needed to establish the origin and licensing
+of every item included in a release.
 
 ## Excluded research documents
 
@@ -77,8 +75,8 @@ For every external release, retain:
 - the configured tile provider's attribution and usage terms; and
 - records showing the origin and review of material newly added to the release;
   and
-- contributor sign-offs or equivalent records establishing the right to submit
-  material added by people other than the project owner.
+- an owner review confirming that no unapproved third-party contribution is
+  included in the release.
 
 Before publishing through GitHub, create the repository locally and inspect
 both `git status --short` and `git status --short --ignored`. A `.gitignore`
